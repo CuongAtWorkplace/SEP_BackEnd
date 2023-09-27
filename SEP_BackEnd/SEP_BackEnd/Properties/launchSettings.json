@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "SEP_BackEnd": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:52568;http://localhost:52569"
+    }
+  }
+}
