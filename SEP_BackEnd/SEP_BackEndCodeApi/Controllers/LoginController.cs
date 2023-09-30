@@ -8,6 +8,8 @@ using System.Text;
 
 namespace SEP_BackEndCodeApi.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class LoginController : ControllerBase
     {
         private IConfiguration _config;
@@ -76,7 +78,7 @@ namespace SEP_BackEndCodeApi.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public IActionResult Index()
+        public IActionResult Resigter()
         {
             return Ok();
         }
