@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\SEP_BackEndCodeApi.props" />
+</Project>
