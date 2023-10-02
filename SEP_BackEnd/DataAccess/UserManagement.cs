@@ -1,13 +1,8 @@
 ﻿using BussinessObject.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess
 {
-    
+
     public class UserManagement
     {
         private static UserManagement instance = null;
@@ -15,15 +10,15 @@ namespace DataAccess
         private UserManagement() { }
         public static UserManagement Instance
         {
-            get 
-            { 
-                lock(instanceLock)
+            get
+            {
+                lock (instanceLock)
                 {
                     if (instance == null)
                     {
                         instance = new UserManagement();
                     }
-                    return instance;    
+                    return instance;
                 }
             }
         }
@@ -57,7 +52,7 @@ namespace DataAccess
         }
         public User GetUserByEmail(string email)
         {
-            User? rp = null;
+            User? rp ;
             try
             {
                 var db = new DB_SEP490Context();
@@ -69,5 +64,67 @@ namespace DataAccess
             }
             return rp;
         }
+        public void Update(User user)
+        {
+            try
+            {
+                User rp = GetUserById(user.UserId);
+                if (rp != null)
+                {
+                    var db = new DB_SEP490Context();
+                    User u = new User
+                    {
+                        UserId = user.UserId,
+                        FullName = user.FullName,
+                        Address = user.Address,
+                        Email = user.Email,
+                        Password = user.Password,
+                        Phone = user.Phone,
+                        RoleId = 1,
+                        IsBan = false,
+                        Image = user.Image,
+                    };
+                    db.Entry<User>(u).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("This user does not exist.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public void AddNew(User user)
+        {
+            try
+            {
+                User rp = GetUserByEmail(user.Email);
+                if (rp == null)
+                {
+                    var db = new DB_SEP490Context();
+                    User u = new User
+                    {
+                        FullName = user.FullName,
+                        Address = user.Address,
+                        Email = user.Email,
+                        Password = user.Password,
+                        Phone = user.Phone,
+                        RoleId = 1,
+                        IsBan = false,
+                        Image = null,
+                    };
+                    db.Users.Add(u);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }
