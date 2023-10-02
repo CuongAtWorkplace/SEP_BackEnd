@@ -1,4 +1,6 @@
 using BussinessObject.Models;
+using DataAccess.Repositories.IReporitory;
+using DataAccess.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -37,6 +39,12 @@ namespace SEP_BackEndCodeApi
 
                     };
                 });
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            //builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
 
 
             var app = builder.Build();

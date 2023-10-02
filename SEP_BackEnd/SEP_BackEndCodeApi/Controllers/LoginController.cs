@@ -1,5 +1,6 @@
 ﻿using BussinessObject.Models;
 using DataAccess.DTO;
+using DataAccess.Repositories.IReporitory;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -8,15 +9,19 @@ using System.Text;
 
 namespace SEP_BackEndCodeApi.Controllers
 {
+
+    [Route("api/[controller]")]
+    [ApiController]
     public class LoginController : ControllerBase
     {
         private IConfiguration _config;
         private readonly DB_SEP490Context _db;
-       public LoginController(IConfiguration config , DB_SEP490Context db) 
+        private readonly IUserRepository _user;
+       public LoginController(IUserRepository user,IConfiguration config , DB_SEP490Context db) 
         { 
             _config = config;
             _db = db;
-            
+            _user = user;
         }
 
         private User AuthenticateUser(string email, string password)
@@ -27,7 +32,7 @@ namespace SEP_BackEndCodeApi.Controllers
         }
 
         [HttpPost]
-        private IActionResult Login(LoginDTO login)
+        public IActionResult Login(LoginDTO login)
         {
             try
             {
@@ -75,10 +80,51 @@ namespace SEP_BackEndCodeApi.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        //[HttpPost]
+        //[Route("register")]
+        //public async Task<IActionResult> Resigter([FromBody] RegistrationModel registrationModel)
+        //{
+        //    try
+        //    {
+        //        var checkUser = await _user.GetUserByEmail(registrationModel.Email);
+        //        if (checkUser != null)
+        //        {
+        //            return BadRequest(new { Message = "Tên người dùng đã tồn tại." });
+        //        }
+        //        User user = new User
+        //        {
+        //            Email = registrationModel.Email,
+        //            FullName= registrationModel.FullName,
+        //            Password = registrationModel.Password,
+        //            Address= registrationModel.Address,
+        //            Description = registrationModel.Description,
+        //            Phone= registrationModel.Phone,
+        //            FeedbackId=1,
+        //            Image=null,
+        //            IsBan=false,
+        //            RoleId=1,
+        //            Token=null
+        //        };
+        //        await _user.AddNew(user);
 
-        public IActionResult Index()
+        //        // Trả về thông tin đăng ký thành công
+        //        return Ok(new { Message = "Đăng ký thành công" });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(new { Message = "Đăng ký thất bại", Error = ex.Message });
+        //    }
+        //    return Ok();
+        //}
+        public class RegistrationModel
         {
-            return Ok();
+            public string Email { get; set; }
+            public string Password { get; set; }
+            public string FullName { get; set; }
+            public string Phone { get; set; }
+            public string Address { get; set; }
+            public string Description { get; set; }
+            // Thêm các thông tin khác cần thiết cho đăng ký
         }
     }
 }
