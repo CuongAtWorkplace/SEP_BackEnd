@@ -80,42 +80,42 @@ namespace SEP_BackEndCodeApi.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-        //[HttpPost]
-        //[Route("register")]
-        //public async Task<IActionResult> Resigter([FromBody] RegistrationModel registrationModel)
-        //{
-        //    try
-        //    {
-        //        var checkUser = await _user.GetUserByEmail(registrationModel.Email);
-        //        if (checkUser != null)
-        //        {
-        //            return BadRequest(new { Message = "Tên người dùng đã tồn tại." });
-        //        }
-        //        User user = new User
-        //        {
-        //            Email = registrationModel.Email,
-        //            FullName= registrationModel.FullName,
-        //            Password = registrationModel.Password,
-        //            Address= registrationModel.Address,
-        //            Description = registrationModel.Description,
-        //            Phone= registrationModel.Phone,
-        //            FeedbackId=1,
-        //            Image=null,
-        //            IsBan=false,
-        //            RoleId=1,
-        //            Token=null
-        //        };
-        //        await _user.AddNew(user);
+        [HttpPost]
+        [Route("register")]
+        public  IActionResult Resigter([FromBody] RegistrationModel registrationModel)
+        {
+            try
+            {
+                var checkUser = _user.GetUserByEmail(registrationModel.Email);
+                if (checkUser != null)
+                {
+                    return BadRequest(new { Message = "Tên người dùng đã tồn tại." });
+                }
+                User user = new User
+                {
+                    Email = registrationModel.Email,
+                    FullName = registrationModel.FullName,
+                    Password = registrationModel.Password,
+                    Address = registrationModel.Address,
+                    Description = registrationModel.Description,
+                    Phone = registrationModel.Phone,
+                    FeedbackId = 1,
+                    Image = null,
+                    IsBan = false,
+                    RoleId = 1,
+                    Token = null
+                };
+               _user.AddNew(user);
 
-        //        // Trả về thông tin đăng ký thành công
-        //        return Ok(new { Message = "Đăng ký thành công" });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(new { Message = "Đăng ký thất bại", Error = ex.Message });
-        //    }
-        //    return Ok();
-        //}
+                // Trả về thông tin đăng ký thành công
+                return Ok(new { Message = "Đăng ký thành công" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = "Đăng ký thất bại", Error = ex.Message });
+            }
+            return Ok();
+        }
         public class RegistrationModel
         {
             public string Email { get; set; }
