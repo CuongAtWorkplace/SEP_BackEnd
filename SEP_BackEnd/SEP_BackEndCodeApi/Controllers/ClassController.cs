@@ -1,18 +1,16 @@
 ﻿using BussinessObject.Models;
 using DataAccess.Repositories.IReporitory;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace SEP_BackEndCodeApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClassController : ControllerBase
+    public class ClassController : Controller
     {
         private IConfiguration _config;
         private readonly DB_SEP490Context _db;
         private readonly IUserRepository _user;
-
         public ClassController(IUserRepository user, IConfiguration config, DB_SEP490Context db)
         {
             _config = config;
@@ -20,17 +18,25 @@ namespace SEP_BackEndCodeApi.Controllers
             _user = user;
         }
 
-        [HttpGet]
-        public IActionResult ClassList()
+        [HttpGet("GetAllClass")]
+        public IActionResult getAllClass()
         {
-            try
+            var listClass = _db.Classes.ToList();    
+            if (listClass == null)
             {
-                return Ok(_db.Classes.ToList());
-            } 
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
+                return NotFound();
             }
+            return Ok(listClass);
+        }
+        [HttpGet("GetClassById/{Classid}")]
+        public IActionResult GetClassById(int Classid)
+        {
+            var listClass = _db.Classes.Where(x => x.ClassId == Classid).ToList();
+            if (listClass == null)
+            {
+                return NotFound();
+            }
+            return Ok(listClass);
         }
     }
 }

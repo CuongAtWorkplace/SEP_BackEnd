@@ -52,7 +52,7 @@ namespace DataAccess
         }
         public User GetUserByEmail(string email)
         {
-            User? rp ;
+            User? rp;
             try
             {
                 var db = new DB_SEP490Context();
@@ -125,6 +125,9 @@ namespace DataAccess
                 throw new Exception(ex.Message);
             }
         }
+        public void AddNew1(User user)
+        {
 
+        }
     }
 }
