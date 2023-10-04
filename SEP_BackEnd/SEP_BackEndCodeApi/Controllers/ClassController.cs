@@ -13,6 +13,13 @@ namespace SEP_BackEndCodeApi.Controllers
         private readonly DB_SEP490Context _db;
         private readonly IUserRepository _user;
 
+        public ClassController(IUserRepository user, IConfiguration config, DB_SEP490Context db)
+        {
+            _config = config;
+            _db = db;
+            _user = user;
+        }
+
         [HttpGet]
         public IActionResult ClassList()
         {
