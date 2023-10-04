@@ -618,6 +618,9 @@
         }
       },
       "DataAccess/1.0.0": {
+        "dependencies": {
+          "BussinessObject": "1.0.0"
+        },
         "runtime": {
           "DataAccess.dll": {}
         }

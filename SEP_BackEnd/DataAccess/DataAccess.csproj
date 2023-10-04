@@ -10,4 +10,8 @@
     <Folder Include="Repositories\IReporitory\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BussinessObject\BussinessObject.csproj" />
+  </ItemGroup>
+
 </Project>
