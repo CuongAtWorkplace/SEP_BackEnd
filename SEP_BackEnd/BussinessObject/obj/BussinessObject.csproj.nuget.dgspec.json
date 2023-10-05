@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Desktop\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj": {}
+    "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Desktop\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj": {
+    "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Desktop\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj",
+        "projectUniqueName": "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj",
         "projectName": "BussinessObject",
-        "projectPath": "C:\\Users\\User\\Desktop\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Desktop\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\obj\\",
+        "projectPath": "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj",
+        "packagesPath": "C:\\Users\\lyxin\\.nuget\\packages\\",
+        "outputPath": "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\lyxin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

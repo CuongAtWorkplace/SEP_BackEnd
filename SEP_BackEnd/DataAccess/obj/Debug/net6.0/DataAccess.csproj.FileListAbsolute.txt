@@ -10,3 +10,18 @@ C:\Users\User\Desktop\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\D
 C:\Users\User\Desktop\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
 C:\Users\User\Desktop\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\DataAccess.pdb
 C:\Users\User\Desktop\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
+D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
+D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\bin\Debug\net6.0\DataAccess.dll
+D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\bin\Debug\net6.0\DataAccess.pdb
+D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\bin\Debug\net6.0\BussinessObject.dll
+D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\bin\Debug\net6.0\BussinessObject.pdb
+D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\DataAccess.csproj.AssemblyReference.cache
+D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfoInputs.cache
+D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfo.cs
+D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CoreCompileInputs.cache
+D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CopyComplete
+D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\DataAccess.dll
+D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
+D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\DataAccess.pdb
+D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll

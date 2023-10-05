@@ -10,4 +10,12 @@
     <Folder Include="Repositories\IReporitory\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BussinessObject\BussinessObject.csproj" />
+  </ItemGroup>
+
 </Project>
