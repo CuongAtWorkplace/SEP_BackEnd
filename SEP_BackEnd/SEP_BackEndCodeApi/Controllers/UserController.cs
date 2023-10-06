@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SEP_BackEndCodeApi.Controllers
 {
+    [Route("api/[controller]/[action]")]
+    [ApiController]
     public class UserController : Controller
     {
         private IConfiguration _config;
@@ -21,14 +23,14 @@ namespace SEP_BackEndCodeApi.Controllers
         [HttpGet("GetUserById/{UserID}")]
         public IActionResult GetTeacherById(int UserID)
         {
-            var listClass = _db.Users.Where(x => x.UserId == UserID && x.RoleId ==1).ToList();
+            var listClass = _db.Users.Where(x => x.UserId == UserID && x.RoleId == 1).ToList();
             if (listClass == null)
             {
                 return NotFound();
             }
             return Ok(listClass);
         }
-
+        [HttpGet]
         public IActionResult GetAllUser()
         {
             var lstUser = user.GetUserList();

@@ -86,7 +86,7 @@ namespace DataAccess
             }
         }
 
-        public void AddNews(Course course)
+        public void AddNewCourse(Course course)
         {
             try
             {
