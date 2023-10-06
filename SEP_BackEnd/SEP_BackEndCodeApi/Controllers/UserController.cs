@@ -59,5 +59,12 @@ namespace SEP_BackEndCodeApi.Controllers
             return Ok(list);
 
         }
+
+        [HttpPost("AddNewUser")]
+        public async Task<IActionResult> AddNewUser(UserVM userVM)
+        {
+            var result = await _adminRepository.AddUser(userVM);
+            return Ok();
+        }
     }
 }

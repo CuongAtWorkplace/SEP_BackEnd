@@ -22,9 +22,12 @@ namespace DataAccess.Repositories
             _mapper = mapper;
         }
 
-        public Task<UserVM> AddUser(UserVM user)
+        public async Task<bool> AddUser(UserVM userVM)
         {
-            throw new NotImplementedException();
+            var user = _mapper.Map<User>(userVM);
+            _context.Users.Add(user);
+            bool result = await _context.SaveChangesAsync() > 0;
+            return result;
         }
 
         public Task<User> DeleteUser(int Id)
