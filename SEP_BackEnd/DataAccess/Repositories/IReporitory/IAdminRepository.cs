@@ -11,9 +11,9 @@ namespace DataAccess.Repositories.IReporitory
     public interface IAdminRepository
     {
         Task<List<UserVM>> GetAllUser();
-        Task<User> GetUserById(int id);
-        Task<User> SearchUserByName(string name);
+        Task<User> GetUserById(int Id);
+        Task<List<UserVM>> SearchUserByName(string name);
         Task<UserVM> AddUser(UserVM user);
-        Task<User> DeleteUser(int id);
+        Task<User> DeleteUser(int Id);
     }
 }

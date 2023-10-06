@@ -41,6 +41,7 @@ namespace SEP_BackEndCodeApi
                     };
                 });
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddTransient<IAdminRepository, AdminManagement>();
             //builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddCors(c =>
             {

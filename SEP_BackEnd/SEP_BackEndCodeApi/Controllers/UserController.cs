@@ -12,16 +12,14 @@ namespace SEP_BackEndCodeApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IConfiguration _config;
-        private readonly DB_SEP490Context _context;
-        private readonly IUserRepository _user;
-        private readonly IMapper _mapper; 
-        public UserController(IUserRepository user, IConfiguration config, DB_SEP490Context db, IMapper mapper)
+        //private IConfiguration _config;
+        //private readonly DB_SEP490Context _context;
+        //private readonly IUserRepository _user;
+        //private readonly IMapper _mapper; 
+        private readonly IAdminRepository _adminRepository;
+        public UserController(IAdminRepository adminRepository)
         {
-            _config = config;
-            _context = db;
-            _user = user;
-            _mapper = mapper;
+            _adminRepository = adminRepository;
         }
 
         [HttpGet("GetListUser")]
@@ -29,11 +27,8 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                List<User> users = await _context.Users.ToListAsync();
-                var list = _mapper.Map<List<UserVM>>(users);
+                var list = await _adminRepository.GetAllUser();
                 return Ok(list);
-                //var list = _user.GetUser();
-                //return Ok(list);
             }
             catch (Exception)
             {
@@ -47,8 +42,8 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                User users = await _context.Users.FirstOrDefaultAsync(x => x.UserId == Id);
-                return Ok(users);
+                var list = await _adminRepository.GetUserById(Id);
+                return Ok(list);
             }
             catch (Exception)
             {
@@ -57,5 +52,12 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
+        [HttpGet("GetUserByName/{name}")]
+        public async Task<IActionResult> GetUserByName(string name)
+        {
+            var list = await _adminRepository.SearchUserByName(name);
+            return Ok(list);
+
+        }
     }
 }

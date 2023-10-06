@@ -27,7 +27,7 @@ namespace DataAccess.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<User> DeleteUser(int id)
+        public Task<User> DeleteUser(int Id)
         {
             throw new NotImplementedException();
         }
@@ -40,18 +40,23 @@ namespace DataAccess.Repositories
             return result;
         }
 
-        public async Task<User> GetUserById(int id)
+        public async Task<User> GetUserById(int Id)
         {
-            var users = await _context.Users.FirstOrDefaultAsync(x => x.UserId == id);
+            var users = await _context.Users.FirstOrDefaultAsync(x => x.UserId == Id);
             return users;
         }
 
-        public async Task<User> SearchUserByName(string name)
+        public async Task<List<UserVM>> SearchUserByName(string name)
         {
-            //var users = await _context.Users.Where(x => x.FullName == name).ToListAsync();
-            //var result = _mapper.Map<List<UserVM>>(users);
-            //return result;
-            throw new NotImplementedException();
+            List<User> users = new List<User>();
+            if (!String.IsNullOrEmpty(name))
+            {
+                users = await _context.Users.Where(x => x.FullName.Contains(name)).ToListAsync();
+            }
+            var list = _mapper.Map<List<UserVM>>(users);
+            return list;
         }
+
+
     }
 }
