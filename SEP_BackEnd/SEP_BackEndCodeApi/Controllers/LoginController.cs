@@ -87,6 +87,7 @@ namespace SEP_BackEndCodeApi.Controllers
             try
             {
                 var checkUser = _user.GetUserByEmail(registrationModel.Email);
+
                 if (checkUser != null)
                 {
                     return BadRequest(new { Message = "Tên người dùng đã tồn tại." });
