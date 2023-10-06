@@ -12,13 +12,13 @@ namespace DataAccess.DTO
 
         public int ClassId { get; set; }
         public int? TeacherId { get; set; }
-        public int? TeacherName { get; set; }
+        public string? TeacherName { get; set; }
         public int? CourseId { get; set; }
-        public int? CourseName { get; set; }
+        public string? CourseName { get; set; }
         public int? NumberStudent { get; set; }
         public string? Topic { get; set; }
         public int? QuizzeId { get; set; }
-        public int? QuizzeName { get; set; }
+        public string? QuizzeName { get; set; }
         public string? Schedule { get; set; }
         public string? Fee { get; set; }
         public string? NumberOfWeek { get; set; }
@@ -30,5 +30,9 @@ namespace DataAccess.DTO
         public int? Status { get; set; }
         public bool? IsDelete { get; set; }
         public string? TokenClass { get; set; }
+
+        public virtual Course? Course { get; set; }
+        public virtual Quizze? Quizze { get; set; }
+        public virtual User? Teacher { get; set; }
     }
 }
