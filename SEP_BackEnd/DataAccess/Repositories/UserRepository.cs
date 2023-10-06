@@ -1,4 +1,5 @@
 ﻿using BussinessObject.Models;
+using DataAccess.DTO;
 using DataAccess.Repositories.IReporitory;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,6 @@ namespace DataAccess.Repositories
     public class UserRepository : IUserRepository
     {
         public void AddNew(User user)=> UserManagement.Instance.AddNew(user);
-        
 
         public IEnumerable<User> GetUser() => UserManagement.Instance.GetUser();
 
@@ -20,5 +20,9 @@ namespace DataAccess.Repositories
         public User GetUserById(int userId) => UserManagement.Instance.GetUserById(userId);
 
         public void Update(User user) => UserManagement.Instance.AddNew(user);
+
+        public IEnumerable<UserDTO> GetUserList() => UserManagement.Instance.GetUserList();
+
+       
     }
 }
