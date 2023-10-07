@@ -80,7 +80,6 @@ namespace SEP_BackEndCodeApi.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-        
         [HttpPost]
         [Route("register")]
         public  IActionResult Resigter([FromBody] RegistrationModel registrationModel)
@@ -88,7 +87,6 @@ namespace SEP_BackEndCodeApi.Controllers
             try
             {
                 var checkUser = _user.GetUserByEmail(registrationModel.Email);
-
                 if (checkUser != null)
                 {
                     return BadRequest(new { Message = "Tên người dùng đã tồn tại." });
@@ -118,7 +116,6 @@ namespace SEP_BackEndCodeApi.Controllers
             }
             return Ok();
         }
-        
         public class RegistrationModel
         {
             public string Email { get; set; }

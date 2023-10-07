@@ -40,7 +40,7 @@ namespace SEP_BackEndCodeApi
                     };
                 });
             builder.Services.AddScoped<IUserRepository, UserRepository>();
-            //builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddCors(c =>
             {
                 c.AddPolicy("AllowOrigin", option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

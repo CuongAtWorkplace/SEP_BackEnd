@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace SEP_BackEndCodeApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : Controller
     {
@@ -27,7 +27,7 @@ namespace SEP_BackEndCodeApi.Controllers
         [HttpGet("GetUserById/{UserID}")]
         public IActionResult GetTeacherById(int UserID)
         {
-            var listClass = _db.Users.Where(x => x.UserId == UserID && x.RoleId ==1).ToList();
+            var listClass = _db.Users.Where(x => x.UserId == UserID && x.RoleId == 1).ToList();
             if (listClass == null)
             {
                 return NotFound();
@@ -35,6 +35,12 @@ namespace SEP_BackEndCodeApi.Controllers
             return Ok(listClass);
         }
 
+        [HttpGet]
+        public IActionResult GetAllUser()
+        {
+            var lstUser = user.GetUserList();
+            return Ok(lstUser);
+        }
 
         [HttpGet("GetImage/{UserID}")]
         public IActionResult GetUserImage(int UserID)
