@@ -1,6 +1,7 @@
 ﻿using BussinessObject.Models;
 using DataAccess.Repositories.IReporitory;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace SEP_BackEndCodeApi.Controllers
 {
@@ -10,14 +11,14 @@ namespace SEP_BackEndCodeApi.Controllers
     {
         private IConfiguration _config;
         private readonly DB_SEP490Context _db;
-        private readonly IUserRepository _user;
+        private readonly ICourseRepository _course;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CourseController(IUserRepository user, IConfiguration config, DB_SEP490Context db, IWebHostEnvironment webHostEnvironment)
+        public CourseController(ICourseRepository course, IConfiguration config, DB_SEP490Context db, IWebHostEnvironment webHostEnvironment)
         {
             _config = config;
             _db = db;
-            _user = user;
+            _course = course;
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -45,8 +46,63 @@ namespace SEP_BackEndCodeApi.Controllers
             var imageStream = System.IO.File.OpenRead(imagePath);
             return File(imageStream, "image/jpeg"); // Thay đổi kiểu MIME theo định dạng của hình ảnh
         }
+        [HttpGet]
+        public IActionResult GetAllCourse()
+        {
+            try
+            {
+                var listCourse = _course.GetCourseList();
+                return Ok(listCourse);
+            }
+            catch(Exception ex) {
+                throw new Exception(ex.Message);
+            }
+            
+        }
+        [HttpGet]
+        public IActionResult GetCourseById(int courseId) {
+            try
+            {
+                Course Course = _course.getCourseById(courseId);
+                return Ok(Course);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
-
+        [HttpGet]
+        public IActionResult GetCourseByName(string courseName)
+        {
+            try
+            {
+                var Course = _course.getCourseByName(courseName);
+                return Ok(Course);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        [HttpPost]
+        public IActionResult AddNewCouse(Course course)
+        {
+            try
+            {
+                _course.AddNewCourse(course);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        [HttpPut]
+        public IActionResult UpdateCourse(Course course)
+        {
+            return Ok();
+        }
 
     }
 }

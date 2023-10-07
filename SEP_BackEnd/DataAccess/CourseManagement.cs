@@ -41,7 +41,7 @@ namespace DataAccess
             return list;
         }
 
-        public IEnumerable<Course> getNewsByName(string nameCourse)
+        public IEnumerable<Course> getCourseByName(string nameCourse)
         {
             List<Course> listCourseByName = new List<Course>();
             try

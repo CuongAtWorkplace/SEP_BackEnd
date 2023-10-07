@@ -14,7 +14,7 @@ namespace DataAccess.Repositories.IReporitory
         void AddNewCourse(Course course);
         Course CourseFirst();
         Course getCourseById(int courseId); 
-        IEnumerable<Course> getNewsByName(string nameCourse);
+        IEnumerable<Course> getCourseByName(string nameCourse);
         IEnumerable<Course> GetCourseList();
     }
 }
