@@ -80,6 +80,7 @@ namespace SEP_BackEndCodeApi.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        
         [HttpPost]
         [Route("register")]
         public  IActionResult Resigter([FromBody] RegistrationModel registrationModel)
@@ -117,6 +118,7 @@ namespace SEP_BackEndCodeApi.Controllers
             }
             return Ok();
         }
+        
         public class RegistrationModel
         {
             public string Email { get; set; }
