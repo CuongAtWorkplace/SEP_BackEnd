@@ -1,4 +1,5 @@
 ﻿using BussinessObject.Models;
+using DataAccess.DTO;
 
 namespace DataAccess
 {
@@ -36,6 +37,36 @@ namespace DataAccess
             }
             return userList;
         }
+        public IEnumerable<UserDTO> GetUserList()
+        {
+            List<UserDTO> userList = new List<UserDTO>();
+            try
+            {
+                using (var db = new DB_SEP490Context())
+                {
+                    userList = (from u in db.Users
+                                join r in db.Roles on u.RoleId equals r.RoleId
+                                select new UserDTO
+                                {
+                                    Id = u.UserId,
+                                    FullName = u.FullName,
+                                    Email = u.Email,
+                                    Password = u.Password,
+                                    Phone = u.Phone,
+                                    Address = u.Address,
+                                    RoleId = u.RoleId,
+                                    RoleName = r.RoleName,
+                                    CreateDate = u.CreateDate,
+                                }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return userList;
+        }
+
         public User GetUserById(int userId)
         {
             User? rp = null;
@@ -124,10 +155,6 @@ namespace DataAccess
             {
                 throw new Exception(ex.Message);
             }
-        }
-        public void AddNew1(User user)
-        {
-
         }
     }
 }

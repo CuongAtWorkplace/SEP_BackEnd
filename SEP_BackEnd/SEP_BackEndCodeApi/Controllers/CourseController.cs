@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SEP_BackEndCodeApi.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class CourseController : Controller
     {
         private IConfiguration _config;
