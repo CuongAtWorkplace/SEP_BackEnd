@@ -14,6 +14,6 @@ namespace DataAccess.Repositories.IReporitory
         User GetUserByEmail(string email);
          void Update(User user);
         void AddNew(User user);
-
+        IEnumerable<DTO.UserDTO> GetUserList();
     }
 }

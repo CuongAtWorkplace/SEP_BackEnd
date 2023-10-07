@@ -8,10 +8,12 @@ namespace BussinessObject.Models
         public Class()
         {
             ListStudentClasses = new HashSet<ListStudentClass>();
+            QuizzeInClasses = new HashSet<QuizzeInClass>();
             RoomCallVideos = new HashSet<RoomCallVideo>();
         }
 
         public int ClassId { get; set; }
+        public string? ClassName { get; set; }
         public int? TeacherId { get; set; }
         public int? CourseId { get; set; }
         public int? NumberStudent { get; set; }
@@ -34,6 +36,7 @@ namespace BussinessObject.Models
         public virtual StatusClass? StatusNavigation { get; set; }
         public virtual User? Teacher { get; set; }
         public virtual ICollection<ListStudentClass> ListStudentClasses { get; set; }
+        public virtual ICollection<QuizzeInClass> QuizzeInClasses { get; set; }
         public virtual ICollection<RoomCallVideo> RoomCallVideos { get; set; }
     }
 }

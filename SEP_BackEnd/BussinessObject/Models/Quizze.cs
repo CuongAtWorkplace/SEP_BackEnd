@@ -9,6 +9,7 @@ namespace BussinessObject.Models
         {
             Classes = new HashSet<Class>();
             Questions = new HashSet<Question>();
+            QuizzeInClasses = new HashSet<QuizzeInClass>();
             QuizzeResults = new HashSet<QuizzeResult>();
         }
 
@@ -28,6 +29,7 @@ namespace BussinessObject.Models
         public virtual User? ModifiedByNavigation { get; set; }
         public virtual ICollection<Class> Classes { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
+        public virtual ICollection<QuizzeInClass> QuizzeInClasses { get; set; }
         public virtual ICollection<QuizzeResult> QuizzeResults { get; set; }
     }
 }
