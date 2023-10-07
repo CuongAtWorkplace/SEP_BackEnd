@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SEP_BackEndCodeApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class CourseController : Controller
     {
