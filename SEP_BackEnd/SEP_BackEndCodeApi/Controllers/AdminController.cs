@@ -10,14 +10,11 @@ namespace SEP_BackEndCodeApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class AdminController : ControllerBase
     {
-        //private IConfiguration _config;
-        //private readonly DB_SEP490Context _context;
-        //private readonly IUserRepository _user;
-        //private readonly IMapper _mapper; 
+
         private readonly IAdminRepository _adminRepository;
-        public UserController(IAdminRepository adminRepository)
+        public AdminController(IAdminRepository adminRepository)
         {
             _adminRepository = adminRepository;
         }
