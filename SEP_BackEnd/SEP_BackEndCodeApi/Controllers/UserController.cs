@@ -115,6 +115,7 @@ namespace SEP_BackEndCodeApi.Controllers
             }
             return Ok(listClass);
         }
+
         [HttpPut("UpdateStudentById/{UserID}")]
         public ActionResult UpdateUserInfo(int UserID, [FromBody] User updatedUser)
         {
@@ -215,5 +216,42 @@ namespace SEP_BackEndCodeApi.Controllers
            }
         */
 
+        [HttpGet("GetAllStudentInClass")]
+        public IActionResult GetAllStudentInClass()
+        {
+            try
+            {
+                var listStudent = _db.Users.Where(x => x.RoleId == 2).ToList();
+                if (listStudent == null)
+                {
+                    return NotFound();
+                }
+                return Ok(listStudent);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
+        }
+
+        [HttpGet("GetStudentInClassById/{userId}")]
+        public IActionResult GetStudentInClassById(int userId)
+        {
+            try
+            {
+                var student = _db.Users.Where(x => x.UserId == userId && x.RoleId == 2).ToList();
+                if (student == null)
+                {
+                    return NotFound();
+                }
+                return Ok(student);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
+        }
     }
 }
