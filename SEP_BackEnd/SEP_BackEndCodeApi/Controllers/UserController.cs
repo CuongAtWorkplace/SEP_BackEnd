@@ -4,6 +4,9 @@ using DataAccess.Repositories.IReporitory;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using static System.Net.Mime.MediaTypeNames;
+using System.Net;
+using System.Numerics;
 
 namespace SEP_BackEndCodeApi.Controllers
 {
@@ -216,12 +219,26 @@ namespace SEP_BackEndCodeApi.Controllers
            }
         */
 
-        [HttpGet("GetAllStudentInClass")]
-        public IActionResult GetAllStudentInClass()
+        [HttpGet("GetAllStudentInClass/{classId}")]
+        public IActionResult GetAllStudentInClass(int classId)
         {
             try
             {
-                var listStudent = _db.Users.Where(x => x.RoleId == 2).ToList();
+                var listStudent = _db.ListStudentClasses.
+                    Include(t => t.User).
+                    Where(c => c.ClassId == classId).
+                    Select(x => new StudentsInClassDTO()
+                    {
+                        ListStudentInClassId = x.ListStudentInClassId,
+                        ClassId = x.ClassId,
+                        UserId = x.UserId,
+                        FullName = x.User.FullName,
+                        Email = x.User.Email,
+                        Phone = x.User.Phone,
+                        Image = x.User.Image,
+                        Address = x.User.Address,
+                        CreateDate = x.CreateDate
+                    }).ToList();
                 if (listStudent == null)
                 {
                     return NotFound();
@@ -232,7 +249,6 @@ namespace SEP_BackEndCodeApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            
         }
 
         [HttpGet("GetStudentInClassById/{userId}")]
@@ -240,7 +256,7 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                var student = _db.Users.Where(x => x.UserId == userId && x.RoleId == 2).ToList();
+                var student = _db.Users.FirstOrDefault(x => x.UserId == userId);
                 if (student == null)
                 {
                     return NotFound();
@@ -251,7 +267,6 @@ namespace SEP_BackEndCodeApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            
         }
     }
 }
