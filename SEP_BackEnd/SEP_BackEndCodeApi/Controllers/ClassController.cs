@@ -21,29 +21,53 @@ namespace SEP_BackEndCodeApi.Controllers
         [HttpGet("GetAllClass/{Num}")]
         public IActionResult GetAllClassWithCourse(int Num)
         {
-            var randomClassesWithCourse = _db.Classes
-                .OrderBy(x => Guid.NewGuid())
-                .Take(Num+1)
-                .Join(
-                    _db.Courses,
-                    classObj => classObj.CourseId,
-                    course => course.CourseId,
-                    (classObj, course) => new
-                    {
-                        ClassId = classObj.ClassId,
-                        ClassName = classObj.ClassName,
-                        courseId = classObj.CourseId,
-                        CourseName = course.CourseName,
-                    })
-                .ToList();
+            var randomClassesWithCourse = Enumerable.Empty<object>();
 
-            if (randomClassesWithCourse == null)
+            if (Num == 0)
+            {
+                randomClassesWithCourse = _db.Classes
+                    .Join(
+                        _db.Courses,
+                        classObj => classObj.CourseId,
+                        course => course.CourseId,
+                        (classObj, course) => new
+                        {
+                            ClassId = classObj.ClassId,
+                            ClassName = classObj.ClassName,
+                            courseId = classObj.CourseId,
+                            CourseName = course.CourseName,
+                        })
+                    .ToList();
+            }
+            else
+            {
+                randomClassesWithCourse = _db.Classes
+                    .OrderBy(x => Guid.NewGuid())
+                    .Take(Num + 1)
+                    .Join(
+                        _db.Courses,
+                        classObj => classObj.CourseId,
+                        course => course.CourseId,
+                        (classObj, course) => new
+                        {
+                            ClassId = classObj.ClassId,
+                            ClassName = classObj.ClassName,
+                            courseId = classObj.CourseId,
+                            CourseName = course.CourseName,
+                        })
+                    .ToList();
+            }
+
+            if (randomClassesWithCourse.Any())
+            {
+                return Ok(randomClassesWithCourse);
+            }
+            else
             {
                 return NotFound();
             }
-
-            return Ok(randomClassesWithCourse);
         }
+
 
 
         [HttpGet("GetClassById/{Classid}")]
