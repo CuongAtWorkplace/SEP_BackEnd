@@ -17,13 +17,15 @@ namespace SEP_BackEndCodeApi
             // Add services to the container.
 
             builder.Services.AddControllers();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<DB_SEP490Context>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DB")));
             builder.Services.AddScoped<DB_SEP490Context>();
 
-
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(option =>
@@ -39,8 +41,7 @@ namespace SEP_BackEndCodeApi
 
                     };
                 });
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+         
             builder.Services.AddCors(c =>
             {
                 c.AddPolicy("AllowOrigin", option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
@@ -55,11 +56,13 @@ namespace SEP_BackEndCodeApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseCors(option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
+            app.UseAuthentication();
 
             app.MapControllers();
 
