@@ -18,16 +18,34 @@ namespace SEP_BackEndCodeApi.Controllers
             _user = user;
         }
 
-        [HttpGet("GetAllClass")]
-        public IActionResult getAllClass()
+        [HttpGet("GetAllClass/{Num}")]
+        public IActionResult GetAllClassWithCourse(int Num)
         {
-            var listClass = _db.Classes.ToList();    
-            if (listClass == null)
+            var randomClassesWithCourse = _db.Classes
+                .OrderBy(x => Guid.NewGuid())
+                .Take(Num+1)
+                .Join(
+                    _db.Courses,
+                    classObj => classObj.CourseId,
+                    course => course.CourseId,
+                    (classObj, course) => new
+                    {
+                        ClassId = classObj.ClassId,
+                        ClassName = classObj.ClassName,
+                        courseId = classObj.CourseId,
+                        CourseName = course.CourseName,
+                    })
+                .ToList();
+
+            if (randomClassesWithCourse == null)
             {
                 return NotFound();
             }
-            return Ok(listClass);
+
+            return Ok(randomClassesWithCourse);
         }
+
+
         [HttpGet("GetClassById/{Classid}")]
         public IActionResult GetClassById(int Classid)
         {
