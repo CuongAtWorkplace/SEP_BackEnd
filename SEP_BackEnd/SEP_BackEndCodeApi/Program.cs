@@ -48,7 +48,6 @@ namespace SEP_BackEndCodeApi
                 c.AddPolicy("AllowOrigin", option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
 
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
