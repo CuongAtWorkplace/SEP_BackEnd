@@ -14,4 +14,8 @@
     <ProjectReference Include="..\BussinessObject\BussinessObject.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BussinessObject\BussinessObject.csproj" />
+  </ItemGroup>
+
 </Project>

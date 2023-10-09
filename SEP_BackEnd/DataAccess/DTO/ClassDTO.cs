@@ -1,24 +1,25 @@
-﻿using System;
+﻿using BussinessObject.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace BussinessObject.Models
+namespace DataAccess.DTO
 {
-    public partial class Class
+    public class ClassDTO
     {
-        public Class()
-        {
-            ListStudentClasses = new HashSet<ListStudentClass>();
-            QuizzeInClasses = new HashSet<QuizzeInClass>();
-            RoomCallVideos = new HashSet<RoomCallVideo>();
-        }
 
         public int ClassId { get; set; }
         public string? ClassName { get; set; }
         public int? TeacherId { get; set; }
+        public string? TeacherName { get; set; }
         public int? CourseId { get; set; }
+        public string? CourseName { get; set; }
         public int? NumberStudent { get; set; }
         public string? Topic { get; set; }
         public int? QuizzeId { get; set; }
+        public string? QuizzeName { get; set; }
         public string? Schedule { get; set; }
         public string? Fee { get; set; }
         public string? NumberOfWeek { get; set; }
@@ -33,10 +34,6 @@ namespace BussinessObject.Models
 
         public virtual Course? Course { get; set; }
         public virtual Quizze? Quizze { get; set; }
-        public virtual StatusClass? StatusNavigation { get; set; }
         public virtual User? Teacher { get; set; }
-        public virtual ICollection<ListStudentClass> ListStudentClasses { get; set; }
-        public virtual ICollection<QuizzeInClass> QuizzeInClasses { get; set; }
-        public virtual ICollection<RoomCallVideo> RoomCallVideos { get; set; }
     }
 }

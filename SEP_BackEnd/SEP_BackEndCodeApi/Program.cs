@@ -18,6 +18,7 @@ namespace SEP_BackEndCodeApi
             // Add services to the container.
 
             builder.Services.AddControllers();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -56,11 +57,13 @@ namespace SEP_BackEndCodeApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseCors(option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
+            app.UseAuthentication();
 
             app.MapControllers();
 

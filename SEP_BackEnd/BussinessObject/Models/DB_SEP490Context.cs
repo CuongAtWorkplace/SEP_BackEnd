@@ -29,6 +29,7 @@ namespace BussinessObject.Models
         public virtual DbSet<Question> Questions { get; set; } = null!;
         public virtual DbSet<Quizze> Quizzes { get; set; } = null!;
         public virtual DbSet<QuizzeAnswer> QuizzeAnswers { get; set; } = null!;
+        public virtual DbSet<QuizzeInClass> QuizzeInClasses { get; set; } = null!;
         public virtual DbSet<QuizzeResult> QuizzeResults { get; set; } = null!;
         public virtual DbSet<ReportUser> ReportUsers { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
@@ -61,6 +62,8 @@ namespace BussinessObject.Models
             modelBuilder.Entity<Class>(entity =>
             {
                 entity.ToTable("Class");
+
+                entity.Property(e => e.ClassName).HasMaxLength(100);
 
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
 
@@ -298,6 +301,28 @@ namespace BussinessObject.Models
                     .HasConstraintName("FK__QuizzeAns__Quest__68487DD7");
             });
 
+            modelBuilder.Entity<QuizzeInClass>(entity =>
+            {
+                entity.HasKey(e => e.QuizzeInClass1)
+                    .HasName("PK__QuizzeIn__C0E4B2E7E10671BA");
+
+                entity.ToTable("QuizzeInClass");
+
+                entity.Property(e => e.QuizzeInClass1).HasColumnName("QuizzeInClass");
+
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Class)
+                    .WithMany(p => p.QuizzeInClasses)
+                    .HasForeignKey(d => d.ClassId)
+                    .HasConstraintName("FK__QuizzeInC__Class__40F9A68C");
+
+                entity.HasOne(d => d.Quizze)
+                    .WithMany(p => p.QuizzeInClasses)
+                    .HasForeignKey(d => d.QuizzeId)
+                    .HasConstraintName("FK__QuizzeInC__Quizz__41EDCAC5");
+            });
+
             modelBuilder.Entity<QuizzeResult>(entity =>
             {
                 entity.ToTable("QuizzeResult");
@@ -379,6 +404,10 @@ namespace BussinessObject.Models
                 entity.ToTable("User");
 
                 entity.Property(e => e.Address).HasMaxLength(225);
+
+                entity.Property(e => e.Balance).HasColumnType("money");
+
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Email).HasMaxLength(225);
 
