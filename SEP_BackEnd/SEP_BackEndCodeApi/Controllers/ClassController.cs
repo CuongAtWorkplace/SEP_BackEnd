@@ -71,6 +71,48 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
+        [HttpGet("{name}")]
+        public IActionResult GetClassWithCourseAndClassName(String name)
+        {
+            var listClass = _db.Classes.Where(x => x.ClassName.Contains(name)).ToList();
+            if (listClass == null)
+            {
+                var listClass2 = _db.Classes.Join( _db.Courses,classItem => classItem.CourseId,course => course.CourseId,(classItem, course) => new
+         {
+             ClassId = classItem.ClassId,
+             ClassName = classItem.ClassName,
+             CourseName = course.CourseName,
+             CourseId = classItem.CourseId,
+
+                })
+     .Where(result => result.CourseName.Contains(name))
+     .ToList();
+
+                return Ok(listClass2);
+            }
+            return Ok(listClass);
+        
+        }
+
+
+        [HttpGet("{Order}")]
+        public IActionResult GetClassByDate(string Order)
+        {
+            if (Order.Equals("ascend")) {
+                var listClass = _db.Classes.OrderBy(x => x.CreateDate).ToList();
+                return Ok(listClass);
+            }
+
+            if (Order.Equals("descend"))
+            {
+                    var listClass = _db.Classes.OrderByDescending(x => x.CreateDate).ToList();
+                return Ok(listClass);
+            }
+            return Ok();
+        }
+
+
+
         [HttpGet("GetClassById/{Classid}")]
         public IActionResult GetClassById(int Classid)
         {
