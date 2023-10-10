@@ -225,8 +225,9 @@ namespace SEP_BackEndCodeApi.Controllers
            }
         */
 
+        //danh sanh nguoi hoc trong lop do
         [HttpGet("{classId}")]
-        public IActionResult GetAllStudentInClass(int classId)
+        public IActionResult GetListStudentInClass(int classId)
         {
             try
             {
@@ -257,8 +258,9 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
+        //chi tiet nguoi hoc trong lop do
         [HttpGet("{userId}")]
-        public IActionResult GetStudentInClassById(int userId)
+        public IActionResult GetStudentDetailInClass(int userId)
         {
             try
             {
@@ -272,6 +274,35 @@ namespace SEP_BackEndCodeApi.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        //chinh sua thong tin nguoi dung*
+        [HttpPut]
+        public IActionResult EditProfile(User user)
+        {
+            try
+            {
+                User u = _db.Users.FirstOrDefault(n => n.UserId == user.UserId);
+                if (u is null)
+                {
+                    return StatusCode(444, "User is not found");
+                }
+                else
+                {
+                    u.FullName = user.FullName;
+                    u.Phone = user.Phone;
+                    u.Image = user.Image;
+                    u.Description = user.Description;
+                    u.Address = user.Address;
+                    _db.Users.Update(u);
+                    int result = _db.SaveChanges();
+                    return Ok(result);
+                }
+            }
+            catch
+            {
+                return Conflict();
             }
         }
     }
