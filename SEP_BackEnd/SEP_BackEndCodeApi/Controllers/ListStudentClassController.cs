@@ -90,6 +90,42 @@ namespace SEP_BackEndCodeApi.Controllers
                 return BadRequest($"Lỗi: {ex.Message}");
             }
         }
+        [HttpGet("AllUserClassRegister/{userId}")]
+        public IActionResult AllUserClassRegister(int userId)
+        {
+            try
+            {
+                // Lấy danh sách classId từ biến classroom
+                var classroom = _db.ListStudentClasses
+                    .Where(c => c.UserId == userId)
+                    .Select(c => c.ClassId)
+                    .ToList();
+
+                if (classroom == null)
+                {
+                    return NotFound("Lớp học không tồn tại.");
+                }
+
+                // Kiểm tra xem người dùng tồn tại với UserId cụ thể
+                bool userExists = classroom.Any();
+                if (!userExists)
+                {
+                    return NotFound("Người dùng không tồn tại.");
+                }
+
+                // Lấy tất cả các lớp học có classId nằm trong danh sách classroom
+                var classes = _db.Classes
+                    .Where(c => classroom.Contains(c.ClassId))
+                    .ToList();
+
+                // Trả về danh sách các lớp học
+                return Ok(classes);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Lỗi: {ex.Message}");
+            }
+        }
 
     }
 }
