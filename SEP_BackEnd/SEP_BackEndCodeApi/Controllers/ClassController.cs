@@ -82,8 +82,8 @@ namespace SEP_BackEndCodeApi.Controllers
             return Ok(listClass);
         }
 
-        [HttpGet("GetAllClassDetail")]
-        public IActionResult GetAllClassDetail()
+        [HttpGet("{userId}")]
+        public IActionResult GetAllClassToTeacher(int userId)
         {
             //List<ClassDTO> list = new List<ClassDTO>();
             try
@@ -94,7 +94,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 {
                     return NotFound();
                 }
-                var result = allClass.Select(x => new ClassDTO()
+                var result = allClass.Where(u => u.TeacherId == userId).Select(x => new ClassDTO()
                 {
                     ClassId = x.ClassId, ClassName = x.ClassName,
                     TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
@@ -113,8 +113,8 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
-        [HttpGet("ClassDetail/{classId}")]
-        public IActionResult GetClassDetailById(int classId)
+        [HttpGet("{classId}")]
+        public IActionResult GetClassToTeacherById(int classId)
         {
             //List<ClassDTO> list = new List<ClassDTO>();
             try

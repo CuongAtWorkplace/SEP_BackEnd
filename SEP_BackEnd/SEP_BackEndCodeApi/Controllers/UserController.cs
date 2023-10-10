@@ -225,7 +225,7 @@ namespace SEP_BackEndCodeApi.Controllers
            }
         */
 
-        [HttpGet("GetAllStudentInClass/{classId}")]
+        [HttpGet("{classId}")]
         public IActionResult GetAllStudentInClass(int classId)
         {
             try
@@ -257,7 +257,7 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
-        [HttpGet("GetStudentInClassById/{userId}")]
+        [HttpGet("{userId}")]
         public IActionResult GetStudentInClassById(int userId)
         {
             try
