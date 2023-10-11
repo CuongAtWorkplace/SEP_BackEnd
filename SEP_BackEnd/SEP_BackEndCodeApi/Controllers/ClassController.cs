@@ -244,7 +244,7 @@ namespace SEP_BackEndCodeApi.Controllers
         [HttpGet("{text}")]
         public ActionResult<Class> SearchClass(string text)
         {
-            List<Class> classs = _db.Classes.Where(c => c.ClassName.Contains(text) && c.Topic.Contains(text)).ToList();
+            List<Class> classs = _db.Classes.Where(c => c.ClassName.Contains(text) || c.Topic.Contains(text)).ToList();
             if (classs is null) return NotFound();
             else return Ok(classs);
         }
