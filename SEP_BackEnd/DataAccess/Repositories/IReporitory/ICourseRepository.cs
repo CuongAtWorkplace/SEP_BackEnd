@@ -16,5 +16,6 @@ namespace DataAccess.Repositories.IReporitory
         Course getCourseById(int courseId); 
         IEnumerable<Course> getCourseByName(string nameCourse);
         IEnumerable<Course> GetCourseList();
+        IEnumerable<Class> getClassInCourse(int courseId);
     }
 }
