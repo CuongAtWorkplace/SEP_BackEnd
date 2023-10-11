@@ -56,6 +56,21 @@ namespace DataAccess
             return listCourseByName;
         }
 
+        public IEnumerable<Class> getClassInCourse(int courseId)
+        {
+            List<Class> listClassInCourse = new List<Class>();
+            try
+            {
+                var db = new DB_SEP490Context();
+                listClassInCourse = db.Classes.Where(x => x.CourseId== courseId).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return listClassInCourse;
+        }
+
         public Course getCourseById(int courseId)
         {
             Course? news = null;

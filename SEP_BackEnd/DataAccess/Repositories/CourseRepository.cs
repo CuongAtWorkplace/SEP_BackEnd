@@ -23,5 +23,8 @@ namespace DataAccess.Repositories
         public IEnumerable<Course> getCourseByName(string nameCourse) => CourseManagement.Instance.getCourseByName(nameCourse);
 
         public void Update(Course course) => CourseManagement.Instance.Update(course);
+
+        public IEnumerable<Class> getClassInCourse(int courseId) => CourseManagement.Instance.getClassInCourse(courseId);
+        
     }
 }
