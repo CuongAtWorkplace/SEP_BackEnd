@@ -50,7 +50,7 @@ namespace SEP_BackEndCodeApi.Controllers
         public IActionResult GetAllCourse()
         {
             try
-            {2
+            {
                 var listCourse = _course.GetCourseList();
                 return Ok(listCourse);
             }
@@ -118,6 +118,20 @@ namespace SEP_BackEndCodeApi.Controllers
             try
             {
                 _course.Update(course);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult DeleteCourse(Course course)
+        {
+            try
+            {
+                _course.DeleteCourse(course);
                 return Ok();
             }
             catch (Exception ex)
