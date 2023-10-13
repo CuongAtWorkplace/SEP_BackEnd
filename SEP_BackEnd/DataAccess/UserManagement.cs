@@ -23,13 +23,13 @@ namespace DataAccess
                 }
             }
         }
-        public IEnumerable<User> GetUser()
+        public IEnumerable<User> GetListUser(int roleId)
         {
             List<User> userList = new List<User>();
             try
             {
                 var db = new DB_SEP490Context();
-                userList = db.Users.ToList();
+                userList = db.Users.Where(x => x.RoleId == roleId).ToList();
             }
             catch (Exception ex)
             {
@@ -37,7 +37,8 @@ namespace DataAccess
             }
             return userList;
         }
-        public IEnumerable<UserDTO> GetUserList()
+
+        public IEnumerable<UserDTO> GetUserList(int roleId)
         {
             List<UserDTO> userList = new List<UserDTO>();
             try
@@ -46,6 +47,7 @@ namespace DataAccess
                 {
                     userList = (from u in db.Users
                                 join r in db.Roles on u.RoleId equals r.RoleId
+                                where u.RoleId == roleId
                                 select new UserDTO
                                 {
                                     Id = u.UserId,
@@ -128,6 +130,7 @@ namespace DataAccess
                 throw new Exception(ex.Message);
             }
         }
+
         public void AddNew(User user)
         {
             try

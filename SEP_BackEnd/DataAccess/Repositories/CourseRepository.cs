@@ -14,7 +14,7 @@ namespace DataAccess.Repositories
 
         public Course CourseFirst() => CourseManagement.Instance.CourseFirst();
 
-        public void Delete(Course Course) => CourseManagement.Instance.Delete(Course);
+        public void DeleteCourse(Course Course) => CourseManagement.Instance.DeleteCourse(Course);
 
         public Course getCourseById(int courseId) => CourseManagement.Instance.getCourseById(courseId);
 

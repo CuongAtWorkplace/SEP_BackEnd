@@ -9,7 +9,7 @@ namespace DataAccess.Repositories.IReporitory
 {
     public interface ICourseRepository
     {
-        void Delete(Course Course);
+        void DeleteCourse(Course Course);
         void Update(Course course);
         void AddNewCourse(Course course);
         Course CourseFirst();

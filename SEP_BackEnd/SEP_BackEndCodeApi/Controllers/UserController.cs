@@ -39,9 +39,9 @@ namespace SEP_BackEndCodeApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllUser()
+        public IActionResult GetAllUser(int roleId)
         {
-            var lstUser = user.GetUserList();
+            var lstUser = user.GetUserList(roleId);
             return Ok(lstUser);
         }
 

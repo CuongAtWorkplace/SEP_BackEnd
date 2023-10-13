@@ -245,7 +245,19 @@ namespace SEP_BackEndCodeApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+        [HttpPut]
+        public IActionResult UpdateClassManager(Class classUpdate)
+        {
+            try
+            {
+               
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
 
     }
