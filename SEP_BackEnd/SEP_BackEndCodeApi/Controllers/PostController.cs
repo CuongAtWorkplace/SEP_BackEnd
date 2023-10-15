@@ -2,11 +2,11 @@
 
 namespace SEP_BackEndCodeApi.Controllers
 {
-    public class PostController : Controller
+    public class PostController : ControllerBase
     {
         public IActionResult Index()
         {
-            return View();
+            return Ok();
         }
     }
 }
