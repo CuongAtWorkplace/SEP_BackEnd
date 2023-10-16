@@ -10,44 +10,20 @@ namespace DataAccess.Repositories
 {
     public class PostRepository : IPostRepository
     {
-        public void AddNewPost(Post post)
-        {
-            throw new NotImplementedException();
-        }
+        public void AddNewPost(Post post) => PostManagement.Instance.AddNewPost(post);
 
-        public IEnumerable<Post> getCourseByName(string namePost)
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<Post> getPostByName(string namePost) => PostManagement.Instance.getPostByName(namePost);
 
-        public Post getPostById(int PostId)
-        {
-            throw new NotImplementedException();
-        }
+        public Post getPostById(int PostId) => PostManagement.Instance.getPostById(PostId);
 
-        public IEnumerable<Post> GetPostList()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<Post> GetPostList() => PostManagement.Instance.GetPostList();
 
-        public IEnumerable<Post> GetPostListActive()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<Post> GetPostListActive() => PostManagement.Instance.GetPostListActive();
 
-        public void HideComment(UserCommentPost commentPost)
-        {
-            throw new NotImplementedException();
-        }
+        public void HideComment(UserCommentPost commentPost) => PostManagement.Instance.HideComment(commentPost);
 
-        public void Update(Post post)
-        {
-            throw new NotImplementedException();
-        }
+        public void Update(Post post)=> PostManagement.Instance.Update(post);
 
-        public void UpdatePostActive(Post post)
-        {
-            throw new NotImplementedException();
-        }
+        public void UpdatePostActive(Post post) => PostManagement.Instance.UpdatePostActive(post);
     }
 }
