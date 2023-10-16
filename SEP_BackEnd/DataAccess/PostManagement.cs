@@ -65,7 +65,7 @@ namespace DataAccess
             try
             {
                 var db = new DB_SEP490Context();
-                listPostByName = db.Posts.Where(x => x.Equals(namePost)).ToList();
+                listPostByName = db.Posts.Where(x => x.Title.Equals(namePost)).ToList();
             }
             catch (Exception ex)
             {
@@ -74,20 +74,7 @@ namespace DataAccess
             return listPostByName;
         }
 
-        //public IEnumerable<Class> getClassInCourse(int courseId)
-        //{
-        //    List<Class> listClassInCourse = new List<Class>();
-        //    try
-        //    {
-        //        var db = new DB_SEP490Context();
-        //        listClassInCourse = db.Classes.Where(x => x.CourseId == courseId).ToList();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception(ex.Message);
-        //    }
-        //    return listClassInCourse;
-        //}
+       
 
         public Post getPostById(int PostId)
         {
@@ -108,21 +95,17 @@ namespace DataAccess
         {
             try
             {
-               
-                
                     var db = new DB_SEP490Context();
                     Post PostAdd = new Post
                     {
-                        PostId = 1,
+                        PostId = post.PostId,
                         ContentPost = post.ContentPost,
                         CreateBy = post.CreateBy,
-                        CreateByNavigation = null,
                         Description = post.Description,
                         CreateDate = DateTime.Now,
                         Image = post.Image,
                         LikeAmout = 0,
                         Title = post.Title,
-                        UserCommentPosts = null,
                         IsActive = false,
                     };
                     db.Posts.Add(PostAdd);
@@ -171,6 +154,70 @@ namespace DataAccess
                         CreateDate = post.CreateDate,
                         Image = post.Image,
                         LikeAmout = 0,
+                        Title = post.Title,
+                        UserCommentPosts = null,
+                        IsActive = true,
+                    };
+                    db.Entry<Post>(post).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void UpdateLikePost(Post post)
+        {
+            try
+            {
+                Post PostUpdate = getPostById(post.PostId);
+                if (PostUpdate != null)
+                {
+                    var db = new DB_SEP490Context();
+                    Post PostAdd = new Post
+                    {
+                        PostId = post.PostId,
+                        ContentPost = post.ContentPost,
+                        CreateBy = post.CreateBy,
+                        CreateByNavigation = post.CreateByNavigation,
+                        Description = post.Description,
+                        CreateDate = post.CreateDate,
+                        Image = post.Image,
+                        LikeAmout = post.LikeAmout + 1,
+                        Title = post.Title,
+                        UserCommentPosts = null,
+                        IsActive = true,
+                    };
+                    db.Entry<Post>(post).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void UpdateUnLikePost(Post post)
+        {
+            try
+            {
+                Post PostUpdate = getPostById(post.PostId);
+                if (PostUpdate != null)
+                {
+                    var db = new DB_SEP490Context();
+                    Post PostAdd = new Post
+                    {
+                        PostId = post.PostId,
+                        ContentPost = post.ContentPost,
+                        CreateBy = post.CreateBy,
+                        CreateByNavigation = post.CreateByNavigation,
+                        Description = post.Description,
+                        CreateDate = post.CreateDate,
+                        Image = post.Image,
+                        LikeAmout = post.LikeAmout - 1,
                         Title = post.Title,
                         UserCommentPosts = null,
                         IsActive = true,
