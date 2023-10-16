@@ -59,7 +59,7 @@ namespace DataAccess
             return list;
         }
 
-        public IEnumerable<Post> getCourseByName(string namePost)
+        public IEnumerable<Post> getPostByName(string namePost)
         {
             List<Post> listPostByName = new List<Post>();
             try
@@ -108,16 +108,15 @@ namespace DataAccess
         {
             try
             {
-                Post PostNew = getPostById(post.PostId);
-                if (PostNew == null)
-                {
+               
+                
                     var db = new DB_SEP490Context();
                     Post PostAdd = new Post
                     {
                         PostId = 1,
                         ContentPost = post.ContentPost,
                         CreateBy = post.CreateBy,
-                        CreateByNavigation = post.CreateByNavigation,
+                        CreateByNavigation = null,
                         Description = post.Description,
                         CreateDate = DateTime.Now,
                         Image = post.Image,
@@ -128,7 +127,7 @@ namespace DataAccess
                     };
                     db.Posts.Add(PostAdd);
                     db.SaveChanges();
-                }
+                
             }
             catch (Exception ex)
             {

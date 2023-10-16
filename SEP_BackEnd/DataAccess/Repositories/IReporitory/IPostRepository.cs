@@ -11,7 +11,7 @@ namespace DataAccess.Repositories.IReporitory
     {
         IEnumerable<Post> GetPostList();
         IEnumerable<Post> GetPostListActive();
-        IEnumerable<Post> getCourseByName(string namePost);
+        IEnumerable<Post> getPostByName(string namePost);
         Post getPostById(int PostId);
         void AddNewPost(Post post);
         void Update(Post post);
