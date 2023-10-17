@@ -27,10 +27,9 @@ namespace SEP_BackEndCodeApi.Controllers
                 var list = await _adminRepository.GetAllUser();
                 return Ok(list);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                return BadRequest(ex.Message);
             }
         }
 
@@ -42,26 +41,38 @@ namespace SEP_BackEndCodeApi.Controllers
                 var list = await _adminRepository.GetUserById(Id);
                 return Ok(list);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpGet("GetUserByName/{name}")]
         public async Task<IActionResult> GetUserByName(string name)
         {
-            var list = await _adminRepository.SearchUserByName(name);
-            return Ok(list);
+            try
+            {
+                var list = await _adminRepository.SearchUserByName(name);
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
 
         }
 
         [HttpPost("AddNewUser")]
         public async Task<IActionResult> AddNewUser(UserVM userVM)
         {
-            var result = await _adminRepository.AddUser(userVM);
-            return Ok();
+            try
+            {
+                var result = await _adminRepository.AddUser(userVM);
+                return Ok();
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+            
         }
     }
 }
