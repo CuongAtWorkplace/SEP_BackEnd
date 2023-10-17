@@ -112,6 +112,38 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
-       
+        [HttpPost]
+        public async Task<IActionResult> UploadImage(IFormFile file)
+        {
+            try
+            {
+                // Check if a file was uploaded
+                if (file == null || file.Length == 0)
+                {
+                    return BadRequest("No file uploaded.");
+                }
+
+                // Get the original file name from the uploaded file
+                var originalFileName = DateTime.UtcNow.Ticks;
+
+                // Construct the full path to save the image with the original file name
+                var imagePath = Path.Combine(@"C:\Users\ngoba\OneDrive\Máy tính\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\Photos\", $"{originalFileName}.jpg");
+
+                // Save the image with the original file name
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                // Now you can use 'originalFileName' in your application if needed
+
+                return Ok(originalFileName+".jpg");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
+        }
+
     }
 }
