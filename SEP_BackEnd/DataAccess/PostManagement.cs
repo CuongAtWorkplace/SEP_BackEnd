@@ -98,7 +98,6 @@ namespace DataAccess
                     var db = new DB_SEP490Context();
                     Post PostAdd = new Post
                     {
-                        PostId = post.PostId,
                         ContentPost = post.ContentPost,
                         CreateBy = post.CreateBy,
                         Description = post.Description,
