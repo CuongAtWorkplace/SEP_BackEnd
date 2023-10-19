@@ -33,6 +33,20 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
+        [HttpGet("GetListReport")]
+        public async Task<IActionResult> GetListReport()
+        {
+            try
+            {
+                var list = await _adminRepository.GetListReport();
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("GetUserById/{Id}")]
         public async Task<IActionResult> GetUserById(int Id)
         {

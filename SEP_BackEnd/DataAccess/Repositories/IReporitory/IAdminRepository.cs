@@ -15,5 +15,6 @@ namespace DataAccess.Repositories.IReporitory
         Task<List<UserVM>> SearchUserByName(string name);
         Task<bool> AddUser(UserVM user);
         Task<User> DeleteUser(int Id);
+        Task<List<ReportVM>> GetListReport(); 
     }
 }

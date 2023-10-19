@@ -14,6 +14,7 @@ namespace DataAccess.AutoMapper
         public ApplicationMapper() 
         {
             CreateMap<User, UserVM>().ReverseMap();
+            CreateMap<ReportUser, ReportVM>().ReverseMap();
         }
         
     }

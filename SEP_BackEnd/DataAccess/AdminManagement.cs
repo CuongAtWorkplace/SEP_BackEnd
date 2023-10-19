@@ -43,6 +43,14 @@ namespace DataAccess.Repositories
             return result;
         }
 
+        public async Task<List<ReportVM>> GetListReport()
+        {
+            var reports = await _context.ReportUsers.ToListAsync();
+            var result = _mapper.Map<List<ReportVM>>(reports);
+
+            return result;
+        }
+
         public async Task<User> GetUserById(int Id)
         {
             var users = await _context.Users.FirstOrDefaultAsync(x => x.UserId == Id);
