@@ -1,4 +1,6 @@
 ﻿using BussinessObject.Models;
+using DataAccess.DTO;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -231,6 +233,50 @@ namespace DataAccess
             }
         }
 
+        public void AddComment(UserCommentPost commentPost)
+        {
+            try
+            {
+                var db = new DB_SEP490Context();
+                db.UserCommentPosts.Add(commentPost);
+                db.SaveChanges();
+            }catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public IEnumerable<CommentDTO> ListCommentPost(int postId)
+        {
+            List<CommentDTO> list = new List<CommentDTO>();
+            try
+            {
+                
+                var db = new DB_SEP490Context();
+                var listData = db.UserCommentPosts.Include(x=>x.User).Where(x=>x.PostId == postId).ToList();
+                foreach (var item in listData)
+                {
+                    CommentDTO comment = new CommentDTO
+                    {
+                        Id = item.UserCommentPostId,
+                        Content = item.Content,
+                        CreateDate = item.CreateDate,
+                        PostId = item.PostId,
+                        UserName = item.User.FullName,
+                        IsActive = item.IsActive,
+                        LikeAmount = item.LikeAmount,
+                    };
+                    list.Add(comment);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return list;
+        }
+
         public void HideComment(UserCommentPost commentPost)
         {
             try
@@ -242,7 +288,6 @@ namespace DataAccess
                 };
                     db.Entry<UserCommentPost>(u).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     db.SaveChanges();
-               
             }
             catch (Exception ex)
             {
