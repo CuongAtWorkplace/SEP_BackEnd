@@ -16,5 +16,6 @@ namespace BussinessObject.ResourceModel.ViewModel
         public string? Reason { get; set; }
         public string? EvidenceImage { get; set; }
         public bool? IsChecked { get; set; }
+        public int TotalReport { get; set; }
     }
 }

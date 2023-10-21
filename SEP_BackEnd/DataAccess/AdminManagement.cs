@@ -51,6 +51,30 @@ namespace DataAccess.Repositories
             return result;
         }
 
+        public  async Task<int> GetTotalCourse()
+        {
+            int count = await _context.Courses.CountAsync();
+            return count;
+        }
+
+        public async Task<int> GetTotalPost()
+        {
+            int count = await _context.Posts.CountAsync();
+            return count;
+        }
+
+        public async Task<int> GetTotalReport()
+        {
+            int count = await _context.ReportUsers.CountAsync();
+            return count;
+        }
+
+        public async Task<int> GetTotalUser()
+        {
+            int count = await _context.Users.CountAsync();
+            return count;
+        }
+
         public async Task<User> GetUserById(int Id)
         {
             var users = await _context.Users.FirstOrDefaultAsync(x => x.UserId == Id);

@@ -88,5 +88,62 @@ namespace SEP_BackEndCodeApi.Controllers
             catch (Exception ex) { return BadRequest(ex.Message); }
             
         }
+
+        [HttpGet("GetTotalReport")]
+        public async Task<IActionResult> GetTotalReport()
+        {
+            try
+            {
+                var count = await _adminRepository.GetTotalReport();
+                return Ok(count);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetTotalUser")]
+        public async Task<IActionResult> GetTotalUser()
+        {
+            try
+            {
+                var count = await _adminRepository.GetTotalUser();
+                return Ok(count);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetTotalPost")]
+        public async Task<IActionResult> GetTotalPost()
+        {
+            try
+            {
+                var count = await _adminRepository.GetTotalPost();
+                return Ok(count);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetTotalCourse")]
+        public async Task<IActionResult> GetTotalCourse()
+        {
+            try
+            {
+                var count = await _adminRepository.GetTotalCourse();
+                return Ok(count);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }
