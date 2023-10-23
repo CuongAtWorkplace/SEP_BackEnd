@@ -89,55 +89,25 @@ namespace SEP_BackEndCodeApi.Controllers
             
         }
 
-        [HttpGet("GetTotalReport")]
-        public async Task<IActionResult> GetTotalReport()
+        [HttpGet("GetTotal")]
+        public async Task<IActionResult> GetTotalDashboard()
         {
             try
             {
-                var count = await _adminRepository.GetTotalReport();
-                return Ok(count);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+                TotalCount data = new TotalCount();
+                var countUser = await _adminRepository.GetTotalUser();
+                data.TotalUser = countUser;
 
-        [HttpGet("GetTotalUser")]
-        public async Task<IActionResult> GetTotalUser()
-        {
-            try
-            {
-                var count = await _adminRepository.GetTotalUser();
-                return Ok(count);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+                var countPost = await _adminRepository.GetTotalPost();
+                data.TotalPost = countPost;
 
-        [HttpGet("GetTotalPost")]
-        public async Task<IActionResult> GetTotalPost()
-        {
-            try
-            {
-                var count = await _adminRepository.GetTotalPost();
-                return Ok(count);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+                var countCourse = await _adminRepository.GetTotalCourse();
+                data.Totalcourse = countCourse;
 
-        [HttpGet("GetTotalCourse")]
-        public async Task<IActionResult> GetTotalCourse()
-        {
-            try
-            {
-                var count = await _adminRepository.GetTotalCourse();
-                return Ok(count);
+                var countReport = await _adminRepository.GetTotalReport();
+                data.TotalReport = countReport;
+
+                return Ok(data);
             }
             catch (Exception ex)
             {
