@@ -74,7 +74,7 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                post.Update(postU);
+                post.UpdatePostActive(postU);
                 return Ok();
             }
             catch (Exception ex)
@@ -82,6 +82,22 @@ namespace SEP_BackEndCodeApi.Controllers
                 throw new Exception(ex.Message);
             }
         }
+
+        [HttpGet("{Id}")]
+        public IActionResult GetUserPost(int Id)
+        {
+            try
+            {
+                var classroom = _db.Posts.Where(c => c.CreateBy == Id).ToList();
+                return Ok(classroom);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
 
         [HttpPut]
         public IActionResult UpdatePostActive(Post postU)
@@ -200,6 +216,32 @@ namespace SEP_BackEndCodeApi.Controllers
             {
                 return StatusCode(500, $"Internal server error: {ex}");
             }
+        }
+
+
+        [HttpGet("{PostId}")]
+        public IActionResult GetImage(int PostId)
+        {
+            // Lấy thông tin về khóa học dựa trên courseId
+            var user = _db.Posts.FirstOrDefault(c => c.PostId == PostId);
+
+            if (user == null || string.IsNullOrEmpty(user.Image))
+            {
+                return NotFound(); // Trả về lỗi 404 nếu không tìm thấy khóa học hoặc không có tên tệp hình ảnh
+            }
+
+            // Đường dẫn đầy đủ tới tệp hình ảnh
+            var imagePath = Path.Combine(@"C:\Users\ngoba\OneDrive\Máy tính\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\Photos\", user.Image);
+
+            // Kiểm tra xem tệp hình ảnh có tồn tại không
+            if (!System.IO.File.Exists(imagePath))
+            {
+                return NotFound(); // Trả về lỗi 404 nếu tệp hình ảnh không tồn tại
+            }
+
+            // Trả về hình ảnh dưới dạng tệp stream
+            var imageStream = System.IO.File.OpenRead(imagePath);
+            return File(imageStream, "image/jpeg"); // Thay đổi kiểu MIME theo định dạng của hình ảnh
         }
 
     }

@@ -149,17 +149,17 @@ namespace DataAccess
                     {
                         PostId = post.PostId,
                         ContentPost = post.ContentPost,
-                        CreateBy = post.CreateBy,
+                        CreateBy = PostUpdate.CreateBy,
                         CreateByNavigation = post.CreateByNavigation,
                         Description = post.Description,
-                        CreateDate = post.CreateDate,
+                        CreateDate = PostUpdate.CreateDate,
                         Image = post.Image,
                         LikeAmout = 0,
                         Title = post.Title,
                         UserCommentPosts = null,
                         IsActive = true,
                     };
-                    db.Entry<Post>(post).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.Entry<Post>(PostAdd).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     db.SaveChanges();
                 }
             }
