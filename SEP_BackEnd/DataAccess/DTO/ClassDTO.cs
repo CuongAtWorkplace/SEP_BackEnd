@@ -36,4 +36,23 @@ namespace DataAccess.DTO
         public virtual Quizze? Quizze { get; set; }
         public virtual User? Teacher { get; set; }
     }
+    public class ClassAllDAO
+    {
+        public string? ClassName { get; set; }
+        public string? TeacherName { get; set; }
+        public string? CourseName { get; set; }
+        public int? NumberStudent { get; set; }
+        public string? Topic { get; set; }
+        public int? QuizzeId { get; set; }
+        public string? QuizzeName { get; set; }
+        public string? Schedule { get; set; }
+        public string? Fee { get; set; }
+        public string? NumberOfWeek { get; set; }
+        public string? NumberPhone { get; set; }
+        public string? Description { get; set; }
+        public DateTime? CreateDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public int? Status { get; set; }
+    }
 }

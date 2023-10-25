@@ -1,4 +1,5 @@
 ﻿using BussinessObject.Models;
+using DataAccess.DTO;
 using DataAccess.Repositories.IReporitory;
 using System;
 using System.Collections.Generic;
@@ -25,5 +26,13 @@ namespace DataAccess.Repositories
         public void Update(Post post)=> PostManagement.Instance.Update(post);
 
         public void UpdatePostActive(Post post) => PostManagement.Instance.UpdatePostActive(post);
+
+        public void UpdateLikePost(Post post) => PostManagement.Instance.UpdateLikePost(post);
+
+        public void UpdateUnLikePost(Post post) => PostManagement.Instance.UpdateUnLikePost(post);
+
+        public void AddComment(UserCommentPost commentPost) => PostManagement.Instance.AddComment(commentPost);
+
+        public IEnumerable<CommentDTO> ListCommentPost(int postId) => PostManagement.Instance.ListCommentPost(postId);
     }
 }
