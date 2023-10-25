@@ -27,6 +27,7 @@ namespace SEP_BackEndCodeApi.Controllers
             var list = post.GetPostList();
             return Ok(list);
         }
+
         [HttpGet]
         public IActionResult GetPostByName(string PostName)
         {
@@ -97,6 +98,7 @@ namespace SEP_BackEndCodeApi.Controllers
         }
 
 
+
         [HttpPut]
         public IActionResult UpdatePostActive(Post postU)
         {
@@ -118,6 +120,63 @@ namespace SEP_BackEndCodeApi.Controllers
             try
             {
                 post.AddNewPost(postadd);   
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult ListCommentPost(int postId)
+        {
+            try
+            {
+                post.ListCommentPost(postId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        [HttpPost]
+        public IActionResult AddCommentPost(UserCommentPost commentPost)
+        {
+            try
+            {
+                post.AddComment(commentPost);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+        [HttpPut]
+        public IActionResult UpdateLikePost(Post Post)
+        {
+            try
+            {
+                post.UpdateLikePost(Post);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+        [HttpPut]
+        public IActionResult UpdateUnLikePost(Post Post)
+        {
+            try
+            {
+                post.UpdateUnLikePost(Post);
                 return Ok();
             }
             catch (Exception ex)

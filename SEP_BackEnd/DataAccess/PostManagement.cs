@@ -1,4 +1,6 @@
 ﻿using BussinessObject.Models;
+using DataAccess.DTO;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -65,7 +67,7 @@ namespace DataAccess
             try
             {
                 var db = new DB_SEP490Context();
-                listPostByName = db.Posts.Where(x => x.Equals(namePost)).ToList();
+                listPostByName = db.Posts.Where(x => x.Title.Equals(namePost)).ToList();
             }
             catch (Exception ex)
             {
@@ -74,20 +76,7 @@ namespace DataAccess
             return listPostByName;
         }
 
-        //public IEnumerable<Class> getClassInCourse(int courseId)
-        //{
-        //    List<Class> listClassInCourse = new List<Class>();
-        //    try
-        //    {
-        //        var db = new DB_SEP490Context();
-        //        listClassInCourse = db.Classes.Where(x => x.CourseId == courseId).ToList();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception(ex.Message);
-        //    }
-        //    return listClassInCourse;
-        //}
+       
 
         public Post getPostById(int PostId)
         {
@@ -108,20 +97,16 @@ namespace DataAccess
         {
             try
             {
-               
-                
                     var db = new DB_SEP490Context();
                     Post PostAdd = new Post
                     {
                         ContentPost = post.ContentPost,
                         CreateBy = post.CreateBy,
-                        CreateByNavigation = null,
                         Description = post.Description,
                         CreateDate = DateTime.Now,
                         Image = post.Image,
                         LikeAmout = 0,
                         Title = post.Title,
-                        UserCommentPosts = null,
                         IsActive = false,
                     };
                     db.Posts.Add(PostAdd);
@@ -184,6 +169,114 @@ namespace DataAccess
             }
         }
 
+        public void UpdateLikePost(Post post)
+        {
+            try
+            {
+                Post PostUpdate = getPostById(post.PostId);
+                if (PostUpdate != null)
+                {
+                    var db = new DB_SEP490Context();
+                    Post PostAdd = new Post
+                    {
+                        PostId = post.PostId,
+                        ContentPost = post.ContentPost,
+                        CreateBy = post.CreateBy,
+                        CreateByNavigation = post.CreateByNavigation,
+                        Description = post.Description,
+                        CreateDate = post.CreateDate,
+                        Image = post.Image,
+                        LikeAmout = post.LikeAmout + 1,
+                        Title = post.Title,
+                        UserCommentPosts = null,
+                        IsActive = true,
+                    };
+                    db.Entry<Post>(post).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void UpdateUnLikePost(Post post)
+        {
+            try
+            {
+                Post PostUpdate = getPostById(post.PostId);
+                if (PostUpdate != null)
+                {
+                    var db = new DB_SEP490Context();
+                    Post PostAdd = new Post
+                    {
+                        PostId = post.PostId,
+                        ContentPost = post.ContentPost,
+                        CreateBy = post.CreateBy,
+                        CreateByNavigation = post.CreateByNavigation,
+                        Description = post.Description,
+                        CreateDate = post.CreateDate,
+                        Image = post.Image,
+                        LikeAmout = post.LikeAmout - 1,
+                        Title = post.Title,
+                        UserCommentPosts = null,
+                        IsActive = true,
+                    };
+                    db.Entry<Post>(post).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void AddComment(UserCommentPost commentPost)
+        {
+            try
+            {
+                var db = new DB_SEP490Context();
+                db.UserCommentPosts.Add(commentPost);
+                db.SaveChanges();
+            }catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public IEnumerable<CommentDTO> ListCommentPost(int postId)
+        {
+            List<CommentDTO> list = new List<CommentDTO>();
+            try
+            {
+                
+                var db = new DB_SEP490Context();
+                var listData = db.UserCommentPosts.Include(x=>x.User).Where(x=>x.PostId == postId).ToList();
+                foreach (var item in listData)
+                {
+                    CommentDTO comment = new CommentDTO
+                    {
+                        Id = item.UserCommentPostId,
+                        Content = item.Content,
+                        CreateDate = item.CreateDate,
+                        PostId = item.PostId,
+                        UserName = item.User.FullName,
+                        IsActive = item.IsActive,
+                        LikeAmount = item.LikeAmount,
+                    };
+                    list.Add(comment);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return list;
+        }
+
         public void HideComment(UserCommentPost commentPost)
         {
             try
@@ -195,7 +288,6 @@ namespace DataAccess
                 };
                     db.Entry<UserCommentPost>(u).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     db.SaveChanges();
-               
             }
             catch (Exception ex)
             {
