@@ -39,9 +39,9 @@ namespace SEP_BackEndCodeApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllUser()
+        public IActionResult GetAllUser(int roleId)
         {
-            var lstUser = user.GetUserList();
+            var lstUser = user.GetUserList(roleId);
             return Ok(lstUser);
         }
 
@@ -113,6 +113,30 @@ namespace SEP_BackEndCodeApi.Controllers
         }
 
 
+        [HttpPut("UpdateBalanceStudent/{balance}/{UserID}")]
+        public IActionResult UpdateBalanceStudent(long balance , int UserID)
+        {
+            var user = _db.Users.FirstOrDefault(x => x.UserId == UserID && x.RoleId == 2);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+            user.Balance -= balance; // Trừ đi balance mới từ balance hiện tại
+
+            try
+            {
+                _db.SaveChanges(); // Lưu thay đổi vào cơ sở dữ liệu
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi khi lưu vào cơ sở dữ liệu nếu cần
+                return BadRequest("Lỗi khi cập nhật balance: " + ex.Message);
+            }
+
+            return Ok();
+        }
+    
 
         [HttpGet("GetStudentById/{UserID}")]
         public IActionResult GetStudentById(int UserID)

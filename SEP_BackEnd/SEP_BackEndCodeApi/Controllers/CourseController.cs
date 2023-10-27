@@ -85,6 +85,20 @@ namespace SEP_BackEndCodeApi.Controllers
                 throw new Exception(ex.Message);
             }
         }
+
+        [HttpGet]
+        public IActionResult GetClassInCourse(int courseId)
+        {
+            try
+            {
+                var Course = _course.getClassInCourse(courseId);
+                return Ok(Course);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         [HttpPost]
         public IActionResult AddNewCouse(Course course)
         {
@@ -101,7 +115,29 @@ namespace SEP_BackEndCodeApi.Controllers
         [HttpPut]
         public IActionResult UpdateCourse(Course course)
         {
-            return Ok();
+            try
+            {
+                _course.Update(course);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult DeleteCourse(Course course)
+        {
+            try
+            {
+                _course.DeleteCourse(course);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
     }

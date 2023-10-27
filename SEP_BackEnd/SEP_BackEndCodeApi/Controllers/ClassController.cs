@@ -21,6 +21,45 @@ namespace SEP_BackEndCodeApi.Controllers
             _user = user;
         }
 
+        [HttpGet]
+        public IActionResult GetAllClass()
+        {
+            try
+            {
+                List<ClassAllDAO> listAllClass = new List<ClassAllDAO>();
+
+                var listJoinUsersClass = _db.Users.Include(x => x.Classes).ToList();
+                var listJoinClasCourse = _db.Classes.Include(o => o.Course).Include(o => o.Teacher).ToList();
+
+                foreach (var y in listJoinClasCourse)
+                {
+                    ClassAllDAO c = new ClassAllDAO
+                    {
+                        ClassName = y.ClassName,
+                        TeacherName = y.Teacher.FullName,
+                        CourseName = y.Course.CourseName,
+                        Topic = y.Topic,
+                        Fee = y.Fee,
+                        NumberOfWeek = y.NumberOfWeek,
+                        CreateDate = y.CreateDate,
+                        Schedule = y.Schedule,
+                        NumberPhone = y.NumberPhone,
+                        StartDate = y.StartDate,
+                        EndDate = y.EndDate,
+                        Status = y.Status,
+                    };
+                    listAllClass.Add(c);
+                }
+
+                return Ok(listAllClass);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+           
+        }
+
         [HttpGet("GetAllClass/{Num}")]
         public IActionResult GetAllClassWithCourse(int Num)
         {
@@ -70,6 +109,48 @@ namespace SEP_BackEndCodeApi.Controllers
                 return NotFound();
             }
         }
+
+        [HttpGet("{name}")]
+        public IActionResult GetClassWithCourseAndClassName(String name)
+        {
+            var listClass = _db.Classes.Where(x => x.ClassName.Contains(name)).ToList();
+            if (listClass == null)
+            {
+                var listClass2 = _db.Classes.Join( _db.Courses,classItem => classItem.CourseId,course => course.CourseId,(classItem, course) => new
+         {
+             ClassId = classItem.ClassId,
+             ClassName = classItem.ClassName,
+             CourseName = course.CourseName,
+             CourseId = classItem.CourseId,
+
+                })
+     .Where(result => result.CourseName.Contains(name))
+     .ToList();
+
+                return Ok(listClass2);
+            }
+            return Ok(listClass);
+        
+        }
+
+
+        [HttpGet("{Order}")]
+        public IActionResult GetClassByDate(string Order)
+        {
+            if (Order.Equals("ascend")) {
+                var listClass = _db.Classes.OrderBy(x => x.CreateDate).ToList();
+                return Ok(listClass);
+            }
+
+            if (Order.Equals("descend"))
+            {
+                    var listClass = _db.Classes.OrderByDescending(x => x.CreateDate).ToList();
+                return Ok(listClass);
+            }
+            return Ok();
+        }
+
+
 
         [HttpGet("GetClassById/{Classid}")]
         public IActionResult GetClassById(int Classid)
@@ -203,6 +284,43 @@ namespace SEP_BackEndCodeApi.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+        [HttpPut]
+        public IActionResult UpdateClassManager(Class classUpdate)
+        {
+            try
+            {
+               var checkClass = _db.Classes.Where(x =>x.ClassId== classUpdate.ClassId).FirstOrDefault();
+                if (checkClass != null)
+                {
+                    _db.Entry<Class>(classUpdate).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    _db.SaveChanges();
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult CreateClassManager(Class classCreate)
+        {
+            try
+            {
+                var checkClass = _db.Classes.Where(x => x.ClassId == classCreate.ClassId).FirstOrDefault();
+                if (checkClass == null)
+                {
+                    _db.Classes.Add(classCreate);
+                    _db.SaveChanges();
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 
