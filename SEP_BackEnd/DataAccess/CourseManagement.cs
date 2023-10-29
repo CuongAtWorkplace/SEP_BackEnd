@@ -56,6 +56,21 @@ namespace DataAccess
             return listCourseByName;
         }
 
+        public IEnumerable<Class> getClassInCourse(int courseId)
+        {
+            List<Class> listClassInCourse = new List<Class>();
+            try
+            {
+                var db = new DB_SEP490Context();
+                listClassInCourse = db.Classes.Where(x => x.CourseId== courseId).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return listClassInCourse;
+        }
+
         public Course getCourseById(int courseId)
         {
             Course? news = null;
@@ -90,8 +105,8 @@ namespace DataAccess
         {
             try
             {
-                Course news1 = getCourseById(course.CourseId);
-                if (news1 == null)
+                Course courseNews = getCourseById(course.CourseId);
+                if (courseNews == null)
                 {
                     var db = new DB_SEP490Context();
                     db.Courses.Add(course);
@@ -112,7 +127,7 @@ namespace DataAccess
                 if (courseUpdate != null)
                 {
                     var db = new DB_SEP490Context();
-                    db.Entry<Course>(courseUpdate).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.Entry<Course>(course).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     db.SaveChanges();
                 }
             }
@@ -122,7 +137,7 @@ namespace DataAccess
             }
         }
 
-        public void Delete(Course Course)
+        public void DeleteCourse(Course Course)
         {
             try
             {
@@ -130,7 +145,17 @@ namespace DataAccess
                 if (course != null)
                 {
                     var db = new DB_SEP490Context();
-                    db.Courses.Remove(course);
+                    Course course1 = new Course
+                    {
+                        CourseId = course.CourseId,
+                        CourseName = course.CourseName,
+                        Description = course.Description,
+                        CreateDate = course.CreateDate,
+                        Image = course.Image,
+                        IsDelete = true
+                    };
+                    db.Entry<Course>(course1).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                  
                     db.SaveChanges();
                 }
             }

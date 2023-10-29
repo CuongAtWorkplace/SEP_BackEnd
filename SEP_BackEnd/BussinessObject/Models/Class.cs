@@ -13,7 +13,6 @@ namespace BussinessObject.Models
         }
 
         public int ClassId { get; set; }
-        public string? ClassName { get; set; }
         public int? TeacherId { get; set; }
         public int? CourseId { get; set; }
         public int? NumberStudent { get; set; }
@@ -30,6 +29,7 @@ namespace BussinessObject.Models
         public int? Status { get; set; }
         public bool? IsDelete { get; set; }
         public string? TokenClass { get; set; }
+        public string? Classname { get; set; }
 
         public virtual Course? Course { get; set; }
         public virtual Quizze? Quizze { get; set; }

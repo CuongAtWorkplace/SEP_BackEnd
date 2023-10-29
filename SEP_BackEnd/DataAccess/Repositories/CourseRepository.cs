@@ -14,7 +14,7 @@ namespace DataAccess.Repositories
 
         public Course CourseFirst() => CourseManagement.Instance.CourseFirst();
 
-        public void Delete(Course Course) => CourseManagement.Instance.Delete(Course);
+        public void DeleteCourse(Course Course) => CourseManagement.Instance.DeleteCourse(Course);
 
         public Course getCourseById(int courseId) => CourseManagement.Instance.getCourseById(courseId);
 
@@ -23,5 +23,8 @@ namespace DataAccess.Repositories
         public IEnumerable<Course> getCourseByName(string nameCourse) => CourseManagement.Instance.getCourseByName(nameCourse);
 
         public void Update(Course course) => CourseManagement.Instance.Update(course);
+
+        public IEnumerable<Class> getClassInCourse(int courseId) => CourseManagement.Instance.getClassInCourse(courseId);
+        
     }
 }

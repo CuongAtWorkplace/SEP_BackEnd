@@ -30,12 +30,12 @@ namespace BussinessObject.Models
         public string? Image { get; set; }
         public string? Description { get; set; }
         public string? Address { get; set; }
-        public DateTime? CreateDate { get; set; }
         public int? FeedbackId { get; set; }
         public int? RoleId { get; set; }
         public string? Token { get; set; }
         public bool? IsBan { get; set; }
         public decimal? Balance { get; set; }
+        public DateTime? CreateDate { get; set; }
 
         public virtual Feedback? Feedback { get; set; }
         public virtual Role? Role { get; set; }

@@ -9,11 +9,11 @@ namespace DataAccess.Repositories.IReporitory
 {
     public interface IUserRepository
     {
-        IEnumerable<User> GetUser();
+        IEnumerable<User> GetListUser(int roleId);
         User GetUserById(int userId);
         User GetUserByEmail(string email);
         void Update(User user);
         void AddNew(User user);
-        IEnumerable<DTO.UserDTO> GetUserList();
+        IEnumerable<DTO.UserDTO> GetUserList(int roleId);
     }
 }

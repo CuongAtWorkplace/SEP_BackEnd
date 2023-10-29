@@ -26,6 +26,10 @@ namespace SEP_BackEndCodeApi
             builder.Services.AddScoped<DB_SEP490Context>();
 
             builder.Services.AddAutoMapper(typeof(ApplicationMapper));
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>(); 
+            builder.Services.AddScoped<IPostRepository, PostRepository>();
+            //builder.Services.AddScoped<IClassRepository, ClassRepository>();
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(option =>
@@ -43,7 +47,6 @@ namespace SEP_BackEndCodeApi
                 });
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IAdminRepository, AdminManagement>();
-            //builder.Services.AddTransient<IAdminRepository, AdminManagement>();
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddCors(c =>
             {
