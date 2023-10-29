@@ -13,8 +13,11 @@ namespace DataAccess.AutoMapper
     {
         public ApplicationMapper() 
         {
-            CreateMap<User, UserVM>().ReverseMap();
-            CreateMap<ReportUser, ReportVM>().ReverseMap();
+            CreateMap<User, UserVM>()
+                .ForMember(x => x.Status, otp => otp.MapFrom(x => x.IsBan ?? true ? "Ban" : "Active"));
+            CreateMap<ReportUser, ReportVM>()
+                .ForMember(dest => dest.FromAccount, otp => otp.MapFrom(src => src.FromUserNavigation.FullName))
+                .ForMember(dest => dest.ToAccount, otp => otp.MapFrom(src => src.FromUserNavigation.FullName));
         }
         
     }

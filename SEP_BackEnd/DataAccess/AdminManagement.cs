@@ -45,7 +45,9 @@ namespace DataAccess.Repositories
 
         public async Task<List<ReportVM>> GetListReport()
         {
-            var reports = await _context.ReportUsers.ToListAsync();
+            var reports = await _context.ReportUsers
+                .Include(x => x.FromUserNavigation)
+                .ToListAsync();
             var result = _mapper.Map<List<ReportVM>>(reports);
 
             return result;

@@ -14,6 +14,6 @@ namespace BussinessObject.ResourceModel.ViewModel
         public string? Phone { get; set; }
         public string? Image { get; set; }
         public string? Address { get; set; }
-        public bool? IsBan { get; set; }
+        public string? Status { get; set; }
     }
 }
