@@ -326,7 +326,7 @@ namespace SEP_BackEndCodeApi.Controllers
 
         //chinh sua thong tin lop hoc*
         [HttpPut]
-        public IActionResult EditClass(Class eClass)
+        public IActionResult EditClass(EditClassDTO eClass)
         {
             try
             {
@@ -448,6 +448,25 @@ namespace SEP_BackEndCodeApi.Controllers
                     TokenClass = x.TokenClass
                 }).FirstOrDefault();
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        //cac lop hoc chua bat dau
+        [HttpGet]
+        public IActionResult GetListEmptyClass()
+        {
+            try
+            {
+                var listClass = _db.Classes.Where(x => x.TeacherId == null).ToList();
+                if (listClass == null)
+                {
+                    return NotFound();
+                }
+                return Ok(listClass);
             }
             catch (Exception ex)
             {
