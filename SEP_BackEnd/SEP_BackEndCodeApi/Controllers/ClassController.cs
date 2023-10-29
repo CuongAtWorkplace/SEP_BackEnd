@@ -35,7 +35,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 {
                     ClassAllDAO c = new ClassAllDAO
                     {
-                        ClassName = y.ClassName,
+                        ClassName = y.Classname,
                         TeacherName = y.Teacher.FullName,
                         CourseName = y.Course.CourseName,
                         Topic = y.Topic,
@@ -75,7 +75,7 @@ namespace SEP_BackEndCodeApi.Controllers
                         (classObj, course) => new
                         {
                             ClassId = classObj.ClassId,
-                            ClassName = classObj.ClassName,
+                            ClassName = classObj.Classname,
                             courseId = classObj.CourseId,
                             CourseName = course.CourseName,
                         })
@@ -93,7 +93,7 @@ namespace SEP_BackEndCodeApi.Controllers
                         (classObj, course) => new
                         {
                             ClassId = classObj.ClassId,
-                            ClassName = classObj.ClassName,
+                            ClassName = classObj.Classname,
                             courseId = classObj.CourseId,
                             CourseName = course.CourseName,
                         })
@@ -113,13 +113,13 @@ namespace SEP_BackEndCodeApi.Controllers
         [HttpGet("{name}")]
         public IActionResult GetClassWithCourseAndClassName(String name)
         {
-            var listClass = _db.Classes.Where(x => x.ClassName.Contains(name)).ToList();
+            var listClass = _db.Classes.Where(x => x.Classname.Contains(name)).ToList();
             if (listClass == null)
             {
                 var listClass2 = _db.Classes.Join( _db.Courses,classItem => classItem.CourseId,course => course.CourseId,(classItem, course) => new
          {
              ClassId = classItem.ClassId,
-             ClassName = classItem.ClassName,
+             ClassName = classItem.Classname,
              CourseName = course.CourseName,
              CourseId = classItem.CourseId,
 
@@ -177,7 +177,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 }
                 var result = allClass.Select(x => new ClassDTO()
                 {
-                    ClassId = x.ClassId, ClassName = x.ClassName,
+                    ClassId = x.ClassId, ClassName = x.Classname,
                     TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId, CourseName = x.Course.CourseName,
                     NumberStudent = x.NumberStudent, Topic = x.Topic,
@@ -208,7 +208,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 }
                 var result = allClass.Where(cd => cd.ClassId == classId).Select(x => new ClassDTO()
                 {
-                    ClassId = x.ClassId, ClassName = x.ClassName,
+                    ClassId = x.ClassId, ClassName = x.Classname,
                     TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId, CourseName = x.Course.CourseName,
                     NumberStudent = x.NumberStudent, Topic = x.Topic,
@@ -238,7 +238,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 }
                 var result = allClass.OrderBy(ob => ob.CreateDate).Take(5).Select(x => new ClassDTO()
                 {
-                    ClassId = x.ClassId, ClassName = x.ClassName,
+                    ClassId = x.ClassId, ClassName = x.Classname,
                     TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId, CourseName = x.Course.CourseName,
                     NumberStudent = x.NumberStudent, Topic = x.Topic,
@@ -268,7 +268,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 }
                 var result = allClass.OrderBy(ob => ob.CreateDate).Take(5).Select(x => new ClassDTO()
                 {
-                    ClassId = x.ClassId, ClassName = x.ClassName,
+                    ClassId = x.ClassId, ClassName = x.Classname,
                     TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId, CourseName = x.Course.CourseName,
                     NumberStudent = x.NumberStudent, Topic = x.Topic,
