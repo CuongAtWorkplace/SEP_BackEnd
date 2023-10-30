@@ -339,7 +339,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 {
                     c.ClassName = eClass.ClassName;
                     c.Topic = eClass.Topic;
-                    c.QuizzeId = eClass.QuizzeId;
+                    //c.QuizzeId = eClass.QuizzeId;
                     c.Schedule = eClass.Schedule;
                     c.Fee = eClass.Fee;
                     c.NumberOfWeek = eClass.NumberOfWeek;
