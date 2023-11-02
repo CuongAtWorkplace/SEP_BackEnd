@@ -16,8 +16,11 @@ namespace DataAccess.AutoMapper
             CreateMap<User, UserVM>()
                 .ForMember(x => x.Status, otp => otp.MapFrom(x => x.IsBan ?? true ? "Ban" : "Active"));
             CreateMap<ReportUser, ReportVM>()
-                .ForMember(dest => dest.FromAccount, otp => otp.MapFrom(src => src.FromUserNavigation.UserId))
-                .ForMember(dest => dest.ToAccount, otp => otp.MapFrom(src => src.FromUserNavigation.UserId));
+                .ForMember(dest => dest.FromAccountName, otp => otp.MapFrom(src => src.FromUserNavigation.FullName))
+                .ForMember(dest => dest.ToAccountName, otp => otp.MapFrom(src => src.FromUserNavigation.FullName))
+                .ForMember(dest => dest.CreateDate, otp => otp.MapFrom(src => src.CreateDate.Value.ToString("dd'-'MM'-'yyyy")))
+                .ReverseMap();
+         
         }
         
     }
