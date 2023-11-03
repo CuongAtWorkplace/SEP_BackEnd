@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
+
 namespace SEP_BackEndCodeApi
 {
     public class Program
@@ -23,7 +24,7 @@ namespace SEP_BackEndCodeApi
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<DB_SEP490Context>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DB")));
             builder.Services.AddScoped<DB_SEP490Context>();
-
+            builder.Services.AddSignalR();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ICourseRepository, CourseRepository>(); 
             builder.Services.AddScoped<IPostRepository, PostRepository>();
@@ -60,6 +61,8 @@ namespace SEP_BackEndCodeApi
             }
             app.UseCors(option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
+            app.UseRouting();
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
@@ -67,6 +70,12 @@ namespace SEP_BackEndCodeApi
             app.UseAuthentication();
 
             app.MapControllers();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<ChatHub>("/chatHub"); 
+                endpoints.MapControllers();
+            });
 
             app.Run();
         }
