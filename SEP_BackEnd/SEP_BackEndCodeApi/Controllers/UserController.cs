@@ -301,27 +301,85 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
-        //chinh sua thong tin nguoi dung*
-        [HttpPut]
-        public IActionResult EditProfile(User user)
+        //chi tiet nguoi dang nhap
+        [HttpGet("{userId}")]
+        public IActionResult GetUserProfile(int userId)
         {
             try
             {
-                User u = _db.Users.FirstOrDefault(n => n.UserId == user.UserId);
+                var user = _db.Users.FirstOrDefault(x => x.UserId == userId);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        //chinh sua thong tin nguoi dang nhap
+        [HttpPut]
+        public IActionResult EditProfile(EditUserDTO eUser)
+        {
+            try
+            {
+                User u = _db.Users.FirstOrDefault(n => n.UserId == eUser.UserId);
                 if (u is null)
                 {
                     return StatusCode(444, "User is not found");
                 }
                 else
                 {
-                    u.FullName = user.FullName;
-                    u.Phone = user.Phone;
-                    u.Image = user.Image;
-                    u.Description = user.Description;
-                    u.Address = user.Address;
+                    u.FullName = eUser.FullName;
+                    u.Email = eUser.Email;
+                    u.Phone = eUser.Phone;
+                    u.Description = eUser.Description;
+                    u.Address = eUser.Address;
                     _db.Users.Update(u);
                     int result = _db.SaveChanges();
                     return Ok(result);
+                }
+            }
+            catch
+            {
+                return Conflict();
+            }
+        }
+
+        //chinh sua thong tin nguoi dang nhap
+        [HttpPut]
+        public IActionResult ChangePassword(ChangePasswordDTO eUser)
+        {
+            try
+            {
+                User u = _db.Users.FirstOrDefault(n => n.UserId == eUser.UserId);
+                if (u is null)
+                {
+                    return StatusCode(444, "User is not found");
+                }
+                else
+                {
+                    if(eUser.Password != eUser.NewPassword || !eUser.Password.Equals(eUser.NewPassword))
+                    {
+                        if (eUser.NewPassword == eUser.RePassword || eUser.NewPassword.Equals(eUser.RePassword))
+                        {
+                            u.Password = eUser.NewPassword;
+                            _db.Users.Update(u);
+                            int result = _db.SaveChanges();
+                            return Ok(result);
+                        }
+                        else
+                        {
+                            return Conflict();
+                        }
+                    }
+                    else
+                    {
+                        return Conflict();
+                    }
                 }
             }
             catch
