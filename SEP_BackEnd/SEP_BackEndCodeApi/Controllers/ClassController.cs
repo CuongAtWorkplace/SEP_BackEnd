@@ -456,12 +456,12 @@ namespace SEP_BackEndCodeApi.Controllers
         }
 
         //cac lop hoc chua bat dau
-        [HttpGet]
-        public IActionResult GetListEmptyClass()
+        [HttpGet("{courseId}")]
+        public IActionResult GetListEmptyClass(int courseId)
         {
             try
             {
-                var listClass = _db.Classes.Where(x => x.TeacherId == null).ToList();
+                var listClass = _db.Classes.Where(x => x.CourseId == courseId && x.TeacherId == null).ToList();
                 if (listClass == null)
                 {
                     return NotFound();

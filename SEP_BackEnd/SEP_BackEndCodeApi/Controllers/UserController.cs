@@ -362,24 +362,42 @@ namespace SEP_BackEndCodeApi.Controllers
                 }
                 else
                 {
-                    if(eUser.Password != eUser.NewPassword || !eUser.Password.Equals(eUser.NewPassword))
+                    if(eUser.Password != eUser.NewPassword && eUser.NewPassword == eUser.RePassword)
                     {
-                        if (eUser.NewPassword == eUser.RePassword || eUser.NewPassword.Equals(eUser.RePassword))
-                        {
-                            u.Password = eUser.NewPassword;
-                            _db.Users.Update(u);
-                            int result = _db.SaveChanges();
-                            return Ok(result);
-                        }
-                        else
-                        {
-                            return Conflict();
-                        }
+                        u.Password = eUser.NewPassword;
+                        _db.Users.Update(u);
+                        int result = _db.SaveChanges();
+                        return Ok(result);
                     }
                     else
                     {
                         return Conflict();
                     }
+                }
+            }
+            catch
+            {
+                return Conflict();
+            }
+        }
+
+        //chinh sua thong tin nguoi dang nhap
+        [HttpPut]
+        public IActionResult ChangeImage(ChangeImageDTO eUser)
+        {
+            try
+            {
+                User u = _db.Users.FirstOrDefault(n => n.UserId == eUser.UserId);
+                if (u is null)
+                {
+                    return StatusCode(444, "User is not found");
+                }
+                else
+                {
+                    u.Image = eUser.Image;
+                    _db.Users.Update(u);
+                    int result = _db.SaveChanges();
+                    return Ok(result);
                 }
             }
             catch

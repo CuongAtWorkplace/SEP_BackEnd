@@ -33,9 +33,14 @@ namespace DataAccess.DTO
     public class ChangePasswordDTO
     {
         public int UserId { get; set; }
-        public string? Email { get; set; }
         public string? Password { get; set; }
         public string? NewPassword { get; set; }
         public string? RePassword { get; set; }
+    }
+
+    public class ChangeImageDTO
+    {
+        public int UserId { get; set; }
+        public string? Image { get; set; }
     }
 }
