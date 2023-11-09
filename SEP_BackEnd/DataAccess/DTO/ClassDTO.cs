@@ -10,7 +10,7 @@ namespace DataAccess.DTO
     public class ClassDTO
     {
         public int ClassId { get; set; }
-        public string ClassName { get; set; }
+        public string Classname { get; set; }
         public int? TeacherId { get; set; }
         public string? TeacherName { get; set; }
         public int? CourseId { get; set; }
@@ -39,7 +39,7 @@ namespace DataAccess.DTO
     public class EditClassDTO
     {
         public int ClassId { get; set; }
-        public string? ClassName { get; set; }
+        public string? Classname { get; set; }
         public string? Topic { get; set; }
         public int? QuizzeId { get; set; }
         public string? Schedule { get; set; }

@@ -177,7 +177,8 @@ namespace SEP_BackEndCodeApi.Controllers
                 }
                 var result = allClass.Where(u => u.TeacherId == userId).Select(x => new ClassDTO()
                 {
-                    ClassId = x.ClassId, ClassName = x.Classname,
+                    ClassId = x.ClassId,
+                    Classname = x.Classname,
                     TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId, CourseName = x.Course.CourseName,
                     NumberStudent = x.NumberStudent, Topic = x.Topic,
@@ -208,7 +209,8 @@ namespace SEP_BackEndCodeApi.Controllers
                 }
                 var result = allClass.Where(cd => cd.ClassId == classId).Select(x => new ClassDTO()
                 {
-                    ClassId = x.ClassId, ClassName = x.Classname,
+                    ClassId = x.ClassId,
+                    Classname = x.Classname,
                     TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId, CourseName = x.Course.CourseName,
                     NumberStudent = x.NumberStudent, Topic = x.Topic,
@@ -239,7 +241,8 @@ namespace SEP_BackEndCodeApi.Controllers
                 }
                 var result = allClass.OrderBy(ob => ob.CreateDate).Take(5).Select(x => new ClassDTO()
                 {
-                    ClassId = x.ClassId, ClassName = x.Classname,
+                    ClassId = x.ClassId,
+                    Classname = x.Classname,
                     TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId, CourseName = x.Course.CourseName,
                     NumberStudent = x.NumberStudent, Topic = x.Topic,
@@ -270,7 +273,8 @@ namespace SEP_BackEndCodeApi.Controllers
                 }
                 var result = allClass.OrderBy(ob => ob.CreateDate).Take(5).Select(x => new ClassDTO()
                 {
-                    ClassId = x.ClassId, ClassName = x.Classname,
+                    ClassId = x.ClassId,
+                    Classname = x.Classname,
                     TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId, CourseName = x.Course.CourseName,
                     NumberStudent = x.NumberStudent, Topic = x.Topic,
@@ -337,7 +341,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 }
                 else
                 {
-                    c.ClassName = eClass.ClassName;
+                    c.Classname = eClass.Classname;
                     c.Topic = eClass.Topic;
                     //c.QuizzeId = eClass.QuizzeId;
                     c.Schedule = eClass.Schedule;
@@ -362,7 +366,7 @@ namespace SEP_BackEndCodeApi.Controllers
         [HttpGet("{text}")]
         public ActionResult<Class> SearchClass(string text)
         {
-            List<Class> classs = _db.Classes.Where(c => c.ClassName.Contains(text) || c.Topic.Contains(text)).ToList();
+            List<Class> classs = _db.Classes.Where(c => c.Classname.Contains(text) || c.Topic.Contains(text)).ToList();
             if (classs is null) return NotFound();
             else return Ok(classs);
         }
@@ -382,7 +386,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 var result = allClass.Select(x => new ClassDTO()
                 {
                     ClassId = x.ClassId,
-                    ClassName = x.ClassName,
+                    Classname = x.Classname,
                     TeacherId = x.TeacherId,
                     TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId,
@@ -426,7 +430,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 var result = allClass.Where(cd => cd.ClassId == classId).Select(x => new ClassDTO()
                 {
                     ClassId = x.ClassId,
-                    ClassName = x.ClassName,
+                    Classname = x.Classname,
                     TeacherId = x.TeacherId,
                     TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId,
