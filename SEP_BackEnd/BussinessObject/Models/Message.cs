@@ -10,6 +10,7 @@ namespace BussinessObject.Models
         public int? CreateBy { get; set; }
         public string? Content { get; set; }
         public DateTime? CreateDate { get; set; }
+        public string? Photo { get; set; }
 
         public virtual ChatRoom? ChatRoom { get; set; }
         public virtual User? CreateByNavigation { get; set; }

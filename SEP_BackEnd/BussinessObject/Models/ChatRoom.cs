@@ -14,6 +14,8 @@ namespace BussinessObject.Models
         public int ChatRoomId { get; set; }
         public string? ChatRoomName { get; set; }
         public string? Description { get; set; }
+        public bool? IsManagerChat { get; set; }
+        public int? ClassId { get; set; }
 
         public virtual ICollection<Message> Messages { get; set; }
         public virtual ICollection<UserChatRoom> UserChatRooms { get; set; }
