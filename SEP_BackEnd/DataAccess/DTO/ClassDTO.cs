@@ -9,7 +9,6 @@ namespace DataAccess.DTO
 {
     public class ClassDTO
     {
-
         public int ClassId { get; set; }
         public string ClassName { get; set; }
         public int? TeacherId { get; set; }
@@ -36,6 +35,22 @@ namespace DataAccess.DTO
         public virtual Quizze? Quizze { get; set; }
         public virtual User? Teacher { get; set; }
     }
+
+    public class EditClassDTO
+    {
+        public int ClassId { get; set; }
+        public string? ClassName { get; set; }
+        public string? Topic { get; set; }
+        public int? QuizzeId { get; set; }
+        public string? Schedule { get; set; }
+        public string? Fee { get; set; }
+        public string? NumberOfWeek { get; set; }
+        public string? NumberPhone { get; set; }
+        public string? Description { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+    }
+
     public class ClassAllDAO
     {
         public string? ClassName { get; set; }
