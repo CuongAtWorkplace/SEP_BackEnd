@@ -324,6 +324,41 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult GetClassName(int classId) 
+        {
+            try
+            {
+                string nameClass = _db.Classes.Where(x=>x.ClassId == classId).Select(x =>x.Classname).FirstOrDefault();
+                return Ok(nameClass);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult CheckUserFromClass(int userId ,string className)
+        {
+            try
+            {
+                var check = _db.ListStudentClasses.Include(x => x.User).Include(x=>x.Class).Where(x=>x.UserId.Equals(userId) && x.Class.Classname.Equals(className)).FirstOrDefault();
+                if(check != null)
+                {
+                    return Ok("ss");
+                }
+                else
+                {
+                    return NotFound();
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         //chinh sua thong tin lop hoc*
         [HttpPut]
         public IActionResult EditClass(EditClassDTO eClass)
@@ -366,6 +401,7 @@ namespace SEP_BackEndCodeApi.Controllers
             if (classs is null) return NotFound();
             else return Ok(classs);
         }
+
 
         //danh sach tat ca cac lop hoc (manager)*
         [HttpGet]
