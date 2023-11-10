@@ -321,8 +321,40 @@ namespace SEP_BackEndCodeApi.Controllers
                 throw new Exception(ex.Message);
             }
         }
-
-
+        [HttpGet]
+        public IActionResult GetClassName(int classId) 
+        {
+            try
+            {
+                string nameClass = _db.Classes.Where(x=>x.ClassId == classId).Select(x =>x.Classname).FirstOrDefault();
+                return Ok(nameClass);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult CheckUserFromClass(int userId ,string className)
+        {
+            try
+            {
+                var check = _db.ListStudentClasses.Include(x => x.User).Include(x=>x.Class).Where(x=>x.UserId.Equals(userId) && x.Class.Classname.Equals(className)).FirstOrDefault();
+                if(check != null)
+                {
+                    return Ok("ss");
+                }
+                else
+                {
+                    return NotFound();
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
     }
 }
