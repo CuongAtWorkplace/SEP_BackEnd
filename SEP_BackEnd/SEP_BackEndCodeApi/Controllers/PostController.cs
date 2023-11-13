@@ -15,9 +15,9 @@ namespace SEP_BackEndCodeApi.Controllers
         private IConfiguration _config;
         private readonly DB_SEP490Context _db;
         private readonly IPostRepository post;
-       
 
-        public PostController(IPostRepository _post, IConfiguration config, DB_SEP490Context db)
+        private readonly IWebHostEnvironment _env;
+        public PostController(IPostRepository _post, IConfiguration config, DB_SEP490Context db, IWebHostEnvironment env)
         {
             _config = config;
             _db = db;
@@ -245,6 +245,29 @@ namespace SEP_BackEndCodeApi.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex}");
+            }
+        }
+        [HttpPost]
+        public JsonResult SaveFile()
+        {
+            try
+            {
+                var httpRequest = Request.Form;
+                var postedFile = httpRequest.Files[0];
+                string filename = postedFile.FileName;
+                var physicalPath = _env.ContentRootPath + "/Photos/" + filename;
+
+                using (var stream = new FileStream(physicalPath, FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                }
+
+                return new JsonResult(filename);
+            }
+            catch (Exception)
+            {
+
+                return new JsonResult("anonymous.png");
             }
         }
 
