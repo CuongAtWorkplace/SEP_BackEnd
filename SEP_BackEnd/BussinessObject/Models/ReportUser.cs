@@ -6,7 +6,7 @@ namespace BussinessObject.Models
     public partial class ReportUser
     {
         public int ReportUserId { get; set; }
-        public int FromUser { get; set; }
+        public int? FromUser { get; set; }
         public int ToUser { get; set; }
         public string? Description { get; set; }
         public string? Reason { get; set; }
