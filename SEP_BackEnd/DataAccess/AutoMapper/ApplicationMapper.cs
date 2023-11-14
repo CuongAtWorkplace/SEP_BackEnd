@@ -20,8 +20,24 @@ namespace DataAccess.AutoMapper
                 .ForMember(dest => dest.ToAccountName, otp => otp.MapFrom(src => src.FromUserNavigation.FullName))
                 .ForMember(dest => dest.CreateDate, otp => otp.MapFrom(src => src.CreateDate.Value.ToString("dd'-'MM'-'yyyy")))
                 .ReverseMap();
-         
+            CreateMap<AddUserVM, User>()
+                .ForMember(dest => dest.RoleId, opt => opt.MapFrom(x => ConvertRoleNameToRoleId(x.RoleName)))
+                .ForMember(dest => dest.IsBan, opt => opt.MapFrom(x => false))
+                .ForMember(dest => dest.CreateDate, opt => opt.MapFrom(x => DateTime.Now))
+                .ReverseMap();
         }
-        
+
+        private int ConvertRoleNameToRoleId(string roleName)
+        {
+            
+            var roleMapping = new Dictionary<string, int>
+            {
+                { "Teacher", 1 },
+                { "Manager", 3 },
+            };
+
+            return roleMapping.TryGetValue(roleName, out var roleId) ? roleId : 0;
+        }
+
     }
 }

@@ -78,15 +78,15 @@ namespace SEP_BackEndCodeApi.Controllers
         }
 
         [HttpPost("AddNewUser")]
-        public async Task<IActionResult> AddNewUser(UserVM userVM)
+        public async Task<IActionResult> AddNewUser(AddUserVM addUserVM)
         {
             try
             {
-                var result = await _adminRepository.AddUser(userVM);
+                var result = await _adminRepository.AddUser(addUserVM);
                 return Ok();
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
-            
+
         }
 
         [HttpGet("GetTotal")]

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BussinessObject.Models;
 using BussinessObject.ResourceModel.ViewModel;
+using DataAccess.DTO;
 using DataAccess.Repositories.IReporitory;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -22,11 +23,16 @@ namespace DataAccess.Repositories
             _mapper = mapper;
         }
 
-        public async Task<bool> AddUser(UserVM userVM)
+        public async Task<bool> AddUser(AddUserVM addUserVM)
         {
-            var user = _mapper.Map<User>(userVM);
-            _context.Users.Add(user);
-            bool result = await _context.SaveChangesAsync() > 0;
+            var addUser = _mapper.Map<User>(addUserVM);
+            _context.Users.AddAsync(addUser);
+            bool result = true;
+            bool saveChange = true;
+            if (saveChange)
+            {
+                result = await _context.SaveChangesAsync() > 0;
+            }
             return result;
         }
 
@@ -45,11 +51,24 @@ namespace DataAccess.Repositories
 
         public async Task<List<ReportVM>> GetListReport()
         {
-            var reports = await _context.ReportUsers
-                .Include(x => x.FromUserNavigation)
+            var allReport = await _context.ReportUsers
+                .Include(t => t.FromUserNavigation)
                 .ToListAsync();
-            var result = _mapper.Map<List<ReportVM>>(reports);
 
+            var result = allReport.Select(x => new ReportVM()
+            {
+                ReportUserId = x.ReportUserId,
+                FromUser = x.FromUser,
+                FromAccountName = (_context.Users.FirstOrDefault(e => e.UserId == x.FromUser)).FullName,
+                ToUser = x.ToUser,
+                ToAccountName = (_context.Users.FirstOrDefault(e => e.UserId == x.ToUser)).FullName,
+                Description = x.Description,
+                CreateDate = x.CreateDate.Value.ToString("dd'-'MM'-'yyyy"),
+                Reason = x.Reason,
+                EvidenceImage = x.EvidenceImage,
+                IsChecked = x.IsChecked,
+            }).ToList();
+            //return Ok(result);
             return result;
         }
 

@@ -13,7 +13,7 @@ namespace DataAccess.Repositories.IReporitory
         Task<List<UserVM>> GetAllUser();
         Task<User> GetUserById(int Id);
         Task<List<UserVM>> SearchUserByName(string name);
-        Task<bool> AddUser(UserVM user);
+        Task<bool> AddUser(AddUserVM addUserVM);
         Task<User> DeleteUser(int Id);
         Task<List<ReportVM>> GetListReport(); 
         Task<int> GetTotalReport();
