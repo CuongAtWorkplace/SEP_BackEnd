@@ -70,4 +70,24 @@ namespace DataAccess.DTO
         public DateTime? EndDate { get; set; }
         public int? Status { get; set; }
     }
+
+    public class ClassEmptyDTO
+    {
+        public int ClassId { get; set; }
+        public string Classname { get; set; }
+        public int? CourseId { get; set; }
+        public string? CourseName { get; set; }
+        public string? Topic { get; set; }
+        public string? Schedule { get; set; }
+        public string? Fee { get; set; }
+        public string? NumberOfWeek { get; set; }
+        public string? NumberPhone { get; set; }
+        public string? Description { get; set; }
+        public DateTime? CreateDate { get; set; }
+        public int? Status { get; set; }
+        public bool? IsDelete { get; set; }
+        public string? TokenClass { get; set; }
+
+        public virtual Course? Course { get; set; }
+    }
 }

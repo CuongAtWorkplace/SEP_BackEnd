@@ -201,25 +201,67 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                var allClass = _db.Classes.Include(t => t.Teacher).
-                    Include(c => c.Course).Include(q => q.Quizze).ToList();
-                if (allClass == null)
+                Class cl = _db.Classes.FirstOrDefault(cla => cla.ClassId == classId);
+                if (cl.TeacherId == null )
                 {
-                    return NotFound();
+                    var allClass = _db.Classes.Include(c => c.Course).ToList();
+                    if (allClass == null)
+                    {
+                        return NotFound();
+                    }
+                    var result = allClass.Where(cd => cd.ClassId == classId).Select(x => new ClassEmptyDTO()
+                    {
+                        ClassId = x.ClassId,
+                        Classname = x.Classname,
+                        CourseId = x.CourseId,
+                        CourseName = x.Course.CourseName,
+                        Topic = x.Topic,
+                        Schedule = x.Schedule,
+                        Fee = x.Fee,
+                        NumberOfWeek = x.NumberOfWeek,
+                        NumberPhone = x.NumberPhone,
+                        Description = x.Description,
+                        CreateDate = x.CreateDate,
+                        Status = x.Status,
+                        IsDelete = x.IsDelete,
+                        TokenClass = x.TokenClass
+                    }).ToList();
+                    return Ok(result);
                 }
-                var result = allClass.Where(cd => cd.ClassId == classId).Select(x => new ClassDTO()
+                else
                 {
-                    ClassId = x.ClassId,
-                    Classname = x.Classname,
-                    TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
-                    CourseId = x.CourseId, CourseName = x.Course.CourseName,
-                    NumberStudent = x.NumberStudent, Topic = x.Topic,
-                    QuizzeId = x.QuizzeId, QuizzeName = x.Quizze.Title,
-                    Schedule = x.Schedule, Fee = x.Fee, NumberOfWeek = x.NumberOfWeek, NumberPhone = x.NumberPhone, 
-                    Description = x.Description, CreateDate = x.CreateDate, StartDate = x.StartDate, 
-                    EndDate = x.EndDate, Status = x.Status, IsDelete = x.IsDelete, TokenClass = x.TokenClass
-                }).FirstOrDefault();
-                return Ok(result);
+                    var allClass = _db.Classes.Include(t => t.Teacher).
+                    Include(c => c.Course).Include(q => q.Quizze).ToList();
+                    if (allClass == null)
+                    {
+                        return NotFound();
+                    }
+                    var result = allClass.Where(cd => cd.ClassId == classId).Select(x => new ClassDTO()
+                    {
+                        ClassId = x.ClassId,
+                        Classname = x.Classname,
+                        TeacherId = x.TeacherId,
+                        TeacherName = x.Teacher.FullName,
+                        CourseId = x.CourseId,
+                        CourseName = x.Course.CourseName,
+                        NumberStudent = x.NumberStudent,
+                        Topic = x.Topic,
+                        QuizzeId = x.QuizzeId,
+                        QuizzeName = x.Quizze.Title,
+                        Schedule = x.Schedule,
+                        Fee = x.Fee,
+                        NumberOfWeek = x.NumberOfWeek,
+                        NumberPhone = x.NumberPhone,
+                        Description = x.Description,
+                        CreateDate = x.CreateDate,
+                        StartDate = x.StartDate,
+                        EndDate = x.EndDate,
+                        Status = x.Status,
+                        IsDelete = x.IsDelete,
+                        TokenClass = x.TokenClass
+                    }).FirstOrDefault();
+                    return Ok(result);
+                }
             }
             catch (Exception ex)
             {
@@ -465,12 +507,29 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                var listClass = _db.Classes.Where(x => x.CourseId == courseId && x.TeacherId == null).ToList();
-                if (listClass == null)
+                var allClass = _db.Classes.Include(c => c.Course).ToList();
+                if (allClass == null)
                 {
                     return NotFound();
                 }
-                return Ok(listClass);
+                var result = allClass.Where(u => u.CourseId == courseId && u.TeacherId == null).Select(x => new ClassEmptyDTO()
+                {
+                    ClassId = x.ClassId,
+                    Classname = x.Classname,
+                    CourseId = x.CourseId,
+                    CourseName = x.Course.CourseName,
+                    Topic = x.Topic,
+                    Schedule = x.Schedule,
+                    Fee = x.Fee,
+                    NumberOfWeek = x.NumberOfWeek,
+                    NumberPhone = x.NumberPhone,
+                    Description = x.Description,
+                    CreateDate = x.CreateDate,
+                    Status = x.Status,
+                    IsDelete = x.IsDelete,
+                    TokenClass = x.TokenClass
+                }).ToList();
+                return Ok(result);
             }
             catch (Exception ex)
             {
