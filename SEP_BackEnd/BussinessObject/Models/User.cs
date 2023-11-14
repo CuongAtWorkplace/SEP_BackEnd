@@ -11,6 +11,7 @@ namespace BussinessObject.Models
             ListStudentClasses = new HashSet<ListStudentClass>();
             LoginHistories = new HashSet<LoginHistory>();
             Messages = new HashSet<Message>();
+            NoteTeachers = new HashSet<NoteTeacher>();
             NotificationUsers = new HashSet<NotificationUser>();
             Posts = new HashSet<Post>();
             QuizzeCreateByNavigations = new HashSet<Quizze>();
@@ -43,6 +44,7 @@ namespace BussinessObject.Models
         public virtual ICollection<ListStudentClass> ListStudentClasses { get; set; }
         public virtual ICollection<LoginHistory> LoginHistories { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
+        public virtual ICollection<NoteTeacher> NoteTeachers { get; set; }
         public virtual ICollection<NotificationUser> NotificationUsers { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Quizze> QuizzeCreateByNavigations { get; set; }

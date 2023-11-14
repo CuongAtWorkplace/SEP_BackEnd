@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using DataAccess.AutoMapper;
 
+
 namespace SEP_BackEndCodeApi
 {
     public class Program
@@ -26,6 +27,7 @@ namespace SEP_BackEndCodeApi
             builder.Services.AddScoped<DB_SEP490Context>();
 
             builder.Services.AddAutoMapper(typeof(ApplicationMapper));
+            builder.Services.AddSignalR();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ICourseRepository, CourseRepository>(); 
             builder.Services.AddScoped<IPostRepository, PostRepository>();
@@ -63,6 +65,8 @@ namespace SEP_BackEndCodeApi
             }
             app.UseCors(option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
+            app.UseRouting();
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
@@ -70,6 +74,12 @@ namespace SEP_BackEndCodeApi
             app.UseAuthentication();
 
             app.MapControllers();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<ChatHub>("/chatHub"); 
+                endpoints.MapControllers();
+            });
 
             app.Run();
         }

@@ -46,6 +46,7 @@ namespace SEP_BackEndCodeApi.Controllers
             var imageStream = System.IO.File.OpenRead(imagePath);
             return File(imageStream, "image/jpeg"); // Thay đổi kiểu MIME theo định dạng của hình ảnh
         }
+
         [HttpGet]
         public IActionResult GetAllCourse()
         {
@@ -59,6 +60,7 @@ namespace SEP_BackEndCodeApi.Controllers
             }
             
         }
+
         [HttpGet]
         public IActionResult GetCourseById(int courseId) {
             try
@@ -138,6 +140,22 @@ namespace SEP_BackEndCodeApi.Controllers
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        //hien thi toan bo danh sach cac khoa hoc
+        [HttpGet]
+        public IActionResult GetAllCourses()
+        {
+            try
+            {
+                var listCourse = _db.Courses.ToList();
+                return Ok(listCourse);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
         }
 
     }

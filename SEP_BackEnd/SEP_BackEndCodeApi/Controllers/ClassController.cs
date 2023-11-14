@@ -75,7 +75,7 @@ namespace SEP_BackEndCodeApi.Controllers
                         (classObj, course) => new
                         {
                             ClassId = classObj.ClassId,
-                            ClassName = classObj.Classname,
+                            Classname = classObj.ClassName,
                             courseId = classObj.CourseId,
                             CourseName = course.CourseName,
                         })
@@ -93,7 +93,7 @@ namespace SEP_BackEndCodeApi.Controllers
                         (classObj, course) => new
                         {
                             ClassId = classObj.ClassId,
-                            ClassName = classObj.Classname,
+                            Classname = classObj.ClassName,
                             courseId = classObj.CourseId,
                             CourseName = course.CourseName,
                         })
@@ -163,25 +163,24 @@ namespace SEP_BackEndCodeApi.Controllers
             return Ok(listClass);
         }
 
-        [HttpGet("GetAllClassDetail")]
-        public IActionResult GetAllClassDetail()
+        //danh sach lop hoc cua giao vien do
+        [HttpGet("{userId}")]
+        public IActionResult GetTeacherClassList(int userId)
         {
-            //List<ClassDTO> list = new List<ClassDTO>();
             try
             {
                 var allClass = _db.Classes.Include(t => t.Teacher).
-                    Include(c => c.Course).Include(q => q.Quizze).ToList();
+                    Include(c => c.Course).ToList();
                 if (allClass == null)
                 {
                     return NotFound();
                 }
-                var result = allClass.Select(x => new ClassDTO()
+                var result = allClass.Where(u => u.TeacherId == userId).Select(x => new ClassDTO()
                 {
                     ClassId = x.ClassId, ClassName = x.Classname,
                     TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId, CourseName = x.Course.CourseName,
                     NumberStudent = x.NumberStudent, Topic = x.Topic,
-                    QuizzeId = x.QuizzeId, QuizzeName = x.Quizze.Title,
                     Schedule = x.Schedule, Fee = x.Fee, NumberOfWeek = x.NumberOfWeek, NumberPhone = x.NumberPhone,
                     Description = x.Description, CreateDate = x.CreateDate, StartDate = x.StartDate, 
                     EndDate = x.EndDate, Status = x.Status, IsDelete = x.IsDelete, TokenClass = x.TokenClass
@@ -194,14 +193,14 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
-        [HttpGet("ClassDetail/{classId}")]
-        public IActionResult GetClassDetailById(int classId)
+        //chi tiet lop hoc cua giao vien do
+        [HttpGet("{classId}")]
+        public IActionResult GetTeacherClassDetail(int classId)
         {
-            //List<ClassDTO> list = new List<ClassDTO>();
             try
             {
                 var allClass = _db.Classes.Include(t => t.Teacher).
-                    Include(c => c.Course).Include(q => q.Quizze).ToList();
+                    Include(c => c.Course).ToList();
                 if (allClass == null)
                 {
                     return NotFound();
@@ -212,7 +211,6 @@ namespace SEP_BackEndCodeApi.Controllers
                     TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId, CourseName = x.Course.CourseName,
                     NumberStudent = x.NumberStudent, Topic = x.Topic,
-                    QuizzeId = x.QuizzeId, QuizzeName = x.Quizze.Title,
                     Schedule = x.Schedule, Fee = x.Fee, NumberOfWeek = x.NumberOfWeek, NumberPhone = x.NumberPhone, 
                     Description = x.Description, CreateDate = x.CreateDate, StartDate = x.StartDate, 
                     EndDate = x.EndDate, Status = x.Status, IsDelete = x.IsDelete, TokenClass = x.TokenClass
@@ -225,13 +223,14 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
+        //top lop hoc moi
         [HttpGet("GetTopClassByDate")]
         public IActionResult GetTopClassByDate()
         {
             try
             {
                 var allClass = _db.Classes.Include(t => t.Teacher).
-                    Include(c => c.Course).Include(q => q.Quizze).ToList();
+                    Include(c => c.Course).ToList();
                 if (allClass == null)
                 {
                     return NotFound();
@@ -242,7 +241,6 @@ namespace SEP_BackEndCodeApi.Controllers
                     TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId, CourseName = x.Course.CourseName,
                     NumberStudent = x.NumberStudent, Topic = x.Topic,
-                    QuizzeId = x.QuizzeId, QuizzeName = x.Quizze.Title,
                     Schedule = x.Schedule, Fee = x.Fee, NumberOfWeek = x.NumberOfWeek, NumberPhone = x.NumberPhone,
                     Description = x.Description, CreateDate = x.CreateDate, StartDate = x.StartDate, 
                     EndDate = x.EndDate, Status = x.Status, IsDelete = x.IsDelete, TokenClass = x.TokenClass
@@ -255,13 +253,14 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
+        //top lop hoc
         [HttpGet("GetTopClassBy")]
         public IActionResult GetTopClassBy()
         {
             try
             {
                 var allClass = _db.Classes.Include(t => t.Teacher).
-                    Include(c => c.Course).Include(q => q.Quizze).ToList();
+                    Include(c => c.Course).ToList();
                 if (allClass == null)
                 {
                     return NotFound();
@@ -272,7 +271,6 @@ namespace SEP_BackEndCodeApi.Controllers
                     TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId, CourseName = x.Course.CourseName,
                     NumberStudent = x.NumberStudent, Topic = x.Topic,
-                    QuizzeId = x.QuizzeId, QuizzeName = x.Quizze.Title,
                     Schedule = x.Schedule, Fee = x.Fee, NumberOfWeek = x.NumberOfWeek, NumberPhone = x.NumberPhone,
                     Description = x.Description, CreateDate = x.CreateDate, StartDate = x.StartDate,
                     EndDate = x.EndDate, Status = x.Status, IsDelete = x.IsDelete, TokenClass = x.TokenClass
@@ -322,7 +320,186 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult GetClassName(int classId) 
+        {
+            try
+            {
+                string nameClass = _db.Classes.Where(x=>x.ClassId == classId).Select(x =>x.ClassName).FirstOrDefault();
+                return Ok(nameClass);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult CheckUserFromClass(int userId ,string className)
+        {
+            try
+            {
+                var check = _db.ListStudentClasses.Include(x => x.User).Include(x=>x.Class).Where(x=>x.UserId.Equals(userId) && x.Class.ClassName.Equals(className)).FirstOrDefault();
+                if(check != null)
+                {
+                    return Ok("Ok");
+                }
+                else
+                {
+                    return NotFound();
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        //chinh sua thong tin lop hoc*
+        [HttpPut]
+        public IActionResult EditClass(EditClassDTO eClass)
+        {
+            try
+            {
+                Class c = _db.Classes.FirstOrDefault(n => n.ClassId == eClass.ClassId);
+                if (c is null)
+                {
+                    return StatusCode(444, "Class is not found");
+                }
+                else
+                {
+                    c.ClassName = eClass.ClassName;
+                    c.Topic = eClass.Topic;
+                    //c.QuizzeId = eClass.QuizzeId;
+                    c.Schedule = eClass.Schedule;
+                    c.Fee = eClass.Fee;
+                    c.NumberOfWeek = eClass.NumberOfWeek;
+                    c.NumberPhone = eClass.NumberPhone;
+                    c.Description = eClass.Description;
+                    c.StartDate = eClass.StartDate;
+                    c.EndDate = eClass.EndDate;
+                    _db.Classes.Update(c);
+                    int result = _db.SaveChanges();
+                    return Ok(result);
+                }
+            }
+            catch
+            {
+                return Conflict();
+            }
+        }
+
+        //tim kiem lop hoc bang ten hoac chu de*
+        [HttpGet("{text}")]
+        public ActionResult<Class> SearchClass(string text)
+        {
+            List<Class> classs = _db.Classes.Where(c => c.ClassName.Contains(text) || c.Topic.Contains(text)).ToList();
+            if (classs is null) return NotFound();
+            else return Ok(classs);
+        }
 
 
+        //danh sach tat ca cac lop hoc (manager)*
+        [HttpGet]
+        public IActionResult GetListClass()
+        {
+            try
+            {
+                var allClass = _db.Classes.Include(t => t.Teacher).
+                    Include(c => c.Course).ToList();
+                if (allClass == null)
+                {
+                    return NotFound();
+                }
+                var result = allClass.Select(x => new ClassDTO()
+                {
+                    ClassId = x.ClassId,
+                    ClassName = x.ClassName,
+                    TeacherId = x.TeacherId,
+                    TeacherName = x.Teacher.FullName,
+                    CourseId = x.CourseId,
+                    CourseName = x.Course.CourseName,
+                    NumberStudent = x.NumberStudent,
+                    Topic = x.Topic,
+                    Schedule = x.Schedule,
+                    Fee = x.Fee,
+                    NumberOfWeek = x.NumberOfWeek,
+                    NumberPhone = x.NumberPhone,
+                    Description = x.Description,
+                    CreateDate = x.CreateDate,
+                    StartDate = x.StartDate,
+                    EndDate = x.EndDate,
+                    Status = x.Status,
+                    IsDelete = x.IsDelete,
+                    TokenClass = x.TokenClass
+                }).ToList();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        //chi tiet lop hoc (manager)*
+        [HttpGet("{classId}")]
+        public IActionResult GetClassDetail(int classId)
+        {
+            try
+            {
+                var allClass = _db.Classes.Include(t => t.Teacher).
+                    Include(c => c.Course).ToList();
+                if (allClass == null)
+                {
+                    return NotFound();
+                }
+                var result = allClass.Where(cd => cd.ClassId == classId).Select(x => new ClassDTO()
+                {
+                    ClassId = x.ClassId,
+                    ClassName = x.ClassName,
+                    TeacherId = x.TeacherId,
+                    TeacherName = x.Teacher.FullName,
+                    CourseId = x.CourseId,
+                    CourseName = x.Course.CourseName,
+                    NumberStudent = x.NumberStudent,
+                    Topic = x.Topic,
+                    Schedule = x.Schedule,
+                    Fee = x.Fee,
+                    NumberOfWeek = x.NumberOfWeek,
+                    NumberPhone = x.NumberPhone,
+                    Description = x.Description,
+                    CreateDate = x.CreateDate,
+                    StartDate = x.StartDate,
+                    EndDate = x.EndDate,
+                    Status = x.Status,
+                    IsDelete = x.IsDelete,
+                    TokenClass = x.TokenClass
+                }).FirstOrDefault();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        //cac lop hoc chua bat dau
+        [HttpGet("{courseId}")]
+        public IActionResult GetListEmptyClass(int courseId)
+        {
+            try
+            {
+                var listClass = _db.Classes.Where(x => x.CourseId == courseId && x.TeacherId == null).ToList();
+                if (listClass == null)
+                {
+                    return NotFound();
+                }
+                return Ok(listClass);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

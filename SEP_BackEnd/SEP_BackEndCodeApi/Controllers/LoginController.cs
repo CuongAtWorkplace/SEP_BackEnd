@@ -32,7 +32,7 @@ namespace SEP_BackEndCodeApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginDTO login)
+        public IActionResult AuthenticateLogin(LoginDTO login)
         {
             try
             {
@@ -42,14 +42,14 @@ namespace SEP_BackEndCodeApi.Controllers
                     Role role = _db.Roles.Where(u => u.RoleId == user.RoleId).SingleOrDefault();
 
 
-                    // tạo danh sách các claim
+                    
                     var claims = new[]
                     {
-                new Claim("userid", user.UserId.ToString()),
-                new Claim("roleid", user.RoleId.ToString()),
-                new Claim("fullname", user.FullName),
-                new Claim("email", user.Email),
-                new Claim(ClaimTypes.Role,role.RoleName),
+                     new Claim("userid", user.UserId.ToString()),
+                     new Claim("roleid", user.RoleId.ToString()),
+                     new Claim("fullname", user.FullName),
+                     new Claim("email", user.Email),
+                     new Claim(ClaimTypes.Role,role.RoleName),
 
                 // thêm các claim khác tùy ý
             };
@@ -80,6 +80,7 @@ namespace SEP_BackEndCodeApi.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
         [HttpPost]
         [Route("register")]
         public  IActionResult Resigter([FromBody] RegistrationModel registrationModel)

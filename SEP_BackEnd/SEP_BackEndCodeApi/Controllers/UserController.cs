@@ -249,8 +249,9 @@ namespace SEP_BackEndCodeApi.Controllers
            }
         */
 
-        [HttpGet("GetAllStudentInClass/{classId}")]
-        public IActionResult GetAllStudentInClass(int classId)
+        //danh sanh nguoi hoc trong lop do
+        [HttpGet("{classId}")]
+        public IActionResult GetListStudentInClass(int classId)
         {
             try
             {
@@ -281,8 +282,9 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
-        [HttpGet("GetStudentInClassById/{userId}")]
-        public IActionResult GetStudentInClassById(int userId)
+        //chi tiet nguoi hoc trong lop do
+        [HttpGet("{userId}")]
+        public IActionResult GetStudentDetailInClass(int userId)
         {
             try
             {
@@ -296,6 +298,111 @@ namespace SEP_BackEndCodeApi.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        //chi tiet nguoi dang nhap
+        [HttpGet("{userId}")]
+        public IActionResult GetUserProfile(int userId)
+        {
+            try
+            {
+                var user = _db.Users.FirstOrDefault(x => x.UserId == userId);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        //chinh sua thong tin nguoi dang nhap
+        [HttpPut]
+        public IActionResult EditProfile(EditUserDTO eUser)
+        {
+            try
+            {
+                User u = _db.Users.FirstOrDefault(n => n.UserId == eUser.UserId);
+                if (u is null)
+                {
+                    return StatusCode(444, "User is not found");
+                }
+                else
+                {
+                    u.FullName = eUser.FullName;
+                    u.Email = eUser.Email;
+                    u.Phone = eUser.Phone;
+                    u.Description = eUser.Description;
+                    u.Address = eUser.Address;
+                    _db.Users.Update(u);
+                    int result = _db.SaveChanges();
+                    return Ok(result);
+                }
+            }
+            catch
+            {
+                return Conflict();
+            }
+        }
+
+        //chinh sua thong tin nguoi dang nhap
+        [HttpPut]
+        public IActionResult ChangePassword(ChangePasswordDTO eUser)
+        {
+            try
+            {
+                User u = _db.Users.FirstOrDefault(n => n.UserId == eUser.UserId);
+                if (u is null)
+                {
+                    return StatusCode(444, "User is not found");
+                }
+                else
+                {
+                    if(eUser.Password != eUser.NewPassword && eUser.NewPassword == eUser.RePassword)
+                    {
+                        u.Password = eUser.NewPassword;
+                        _db.Users.Update(u);
+                        int result = _db.SaveChanges();
+                        return Ok(result);
+                    }
+                    else
+                    {
+                        return Conflict();
+                    }
+                }
+            }
+            catch
+            {
+                return Conflict();
+            }
+        }
+
+        //chinh sua thong tin nguoi dang nhap
+        [HttpPut]
+        public IActionResult ChangeImage(ChangeImageDTO eUser)
+        {
+            try
+            {
+                User u = _db.Users.FirstOrDefault(n => n.UserId == eUser.UserId);
+                if (u is null)
+                {
+                    return StatusCode(444, "User is not found");
+                }
+                else
+                {
+                    u.Image = eUser.Image;
+                    _db.Users.Update(u);
+                    int result = _db.SaveChanges();
+                    return Ok(result);
+                }
+            }
+            catch
+            {
+                return Conflict();
             }
         }
     }

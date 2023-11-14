@@ -1,6 +1,9 @@
 ﻿using BussinessObject.Models;
+using DataAccess.DTO;
 using DataAccess.Repositories.IReporitory;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 
 namespace SEP_BackEndCodeApi.Controllers
 {
@@ -12,9 +15,9 @@ namespace SEP_BackEndCodeApi.Controllers
         private IConfiguration _config;
         private readonly DB_SEP490Context _db;
         private readonly IPostRepository post;
-       
 
-        public PostController(IPostRepository _post, IConfiguration config, DB_SEP490Context db)
+        private readonly IWebHostEnvironment _env;
+        public PostController(IPostRepository _post, IConfiguration config, DB_SEP490Context db, IWebHostEnvironment env)
         {
             _config = config;
             _db = db;
@@ -133,8 +136,23 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                post.ListCommentPost(postId);
-                return Ok();
+                var comments = _db.UserCommentPosts
+                    .Include(c => c.User)
+                    .Where(c => c.PostId == postId && c.IsActive==true)
+                    .Select(c => new
+                    {
+                        UserFullName = c.User.FullName,
+                        UserCommentPostId = c.UserCommentPostId,
+                        UserId = c.UserId,
+                        PostId = c.PostId,
+                        Content = c.Content,
+                        CreateDate = c.CreateDate ,
+                        LikeAmount = c.LikeAmount 
+                    })
+                    .ToList();
+
+
+                return Ok(comments);
             }
             catch (Exception ex)
             {
@@ -142,12 +160,24 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
         [HttpPost]
-        public IActionResult AddCommentPost(UserCommentPost commentPost)
+        public IActionResult AddCommentPost(CommentDto commentPost)
         {
             try
             {
-                post.AddComment(commentPost);
-                return Ok();
+                UserCommentPost comment = new UserCommentPost
+                {
+                    UserId = commentPost.userId,
+                    PostId = commentPost.postId,
+                    Content = commentPost.content,
+                    CreateDate = DateTime.UtcNow ,
+                    LikeAmount = 0 , 
+                    IsActive = false
+                };
+
+                _db.UserCommentPosts.Add(comment);
+                _db.SaveChanges();
+
+                return Ok(comment);
             }
             catch (Exception ex)
             {
@@ -217,6 +247,29 @@ namespace SEP_BackEndCodeApi.Controllers
                 return StatusCode(500, $"Internal server error: {ex}");
             }
         }
+        [HttpPost]
+        public JsonResult SaveFile()
+        {
+            try
+            {
+                var httpRequest = Request.Form;
+                var postedFile = httpRequest.Files[0];
+                string filename = postedFile.FileName;
+                var physicalPath = _env.ContentRootPath + "/Photos/" + filename;
+
+                using (var stream = new FileStream(physicalPath, FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                }
+
+                return new JsonResult(filename);
+            }
+            catch (Exception)
+            {
+
+                return new JsonResult("anonymous.png");
+            }
+        }
 
 
         [HttpGet("{PostId}")]
@@ -243,6 +296,13 @@ namespace SEP_BackEndCodeApi.Controllers
             var imageStream = System.IO.File.OpenRead(imagePath);
             return File(imageStream, "image/jpeg"); // Thay đổi kiểu MIME theo định dạng của hình ảnh
         }
+        public class CommentDto
+        {
+            public int userId { get; set; }
+            public int postId { get; set; }
+            public string content { get; set; }
+        }
 
+     
     }
 }
