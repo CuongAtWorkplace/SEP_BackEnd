@@ -220,7 +220,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 };
                 _db.Entry<ReportUser>(rp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 _db.SaveChanges();
-                return Ok("ok");
+                return Ok();
             }
             catch (Exception ex)
             {
