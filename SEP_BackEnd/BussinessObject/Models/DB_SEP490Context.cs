@@ -33,6 +33,7 @@ namespace BussinessObject.Models
         public virtual DbSet<QuizzeInClass> QuizzeInClasses { get; set; } = null!;
         public virtual DbSet<QuizzeResult> QuizzeResults { get; set; } = null!;
         public virtual DbSet<ReportUser> ReportUsers { get; set; } = null!;
+        public virtual DbSet<RequestManager> RequestManagers { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<RoomCallVideo> RoomCallVideos { get; set; } = null!;
         public virtual DbSet<StatusClass> StatusClasses { get; set; } = null!;
@@ -131,7 +132,7 @@ namespace BussinessObject.Models
             modelBuilder.Entity<ListStudentClass>(entity =>
             {
                 entity.HasKey(e => e.ListStudentInClassId)
-                    .HasName("PK__ListStud__24915C87CA704E38");
+                    .HasName("PK__ListStud__24915C8727077F72");
 
                 entity.ToTable("ListStudentClass");
 
@@ -151,7 +152,7 @@ namespace BussinessObject.Models
             modelBuilder.Entity<LoginHistory>(entity =>
             {
                 entity.HasKey(e => e.LoginHistory1)
-                    .HasName("PK__LoginHis__31A7DF80E44D28EE");
+                    .HasName("PK__LoginHis__31A7DF80ED02FFCB");
 
                 entity.ToTable("LoginHistory");
 
@@ -185,13 +186,13 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.CreateByNavigation)
                     .WithMany(p => p.Messages)
                     .HasForeignKey(d => d.CreateBy)
-                    .HasConstraintName("FK__Message__CreateB__6E01572D");
+                    .HasConstraintName("FK__Message__CreateB__6FE99F9F");
             });
 
             modelBuilder.Entity<NoteTeacher>(entity =>
             {
                 entity.HasKey(e => e.NoteId)
-                    .HasName("PK__NoteTeac__EACE355FA4173C4A");
+                    .HasName("PK__NoteTeac__EACE355FF58FB273");
 
                 entity.ToTable("NoteTeacher");
 
@@ -205,7 +206,7 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.NoteTeachers)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__NoteTeach__UserI__70DDC3D8");
+                    .HasConstraintName("FK__NoteTeach__UserI__72C60C4A");
             });
 
             modelBuilder.Entity<Notification>(entity =>
@@ -232,7 +233,7 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.Notification)
                     .WithMany(p => p.NotificationUsers)
                     .HasForeignKey(d => d.NotificationId)
-                    .HasConstraintName("FK__Notificat__Notif__71D1E811");
+                    .HasConstraintName("FK__Notificat__Notif__73BA3083");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.NotificationUsers)
@@ -275,7 +276,7 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.Quizze)
                     .WithMany(p => p.Questions)
                     .HasForeignKey(d => d.QuizzeId)
-                    .HasConstraintName("FK__Question__Quizze__778AC167");
+                    .HasConstraintName("FK__Question__Quizze__797309D9");
             });
 
             modelBuilder.Entity<Quizze>(entity =>
@@ -318,13 +319,13 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.Question)
                     .WithMany(p => p.QuizzeAnswers)
                     .HasForeignKey(d => d.QuestionId)
-                    .HasConstraintName("FK__QuizzeAns__Quest__7D439ABD");
+                    .HasConstraintName("FK__QuizzeAns__Quest__00200768");
             });
 
             modelBuilder.Entity<QuizzeInClass>(entity =>
             {
                 entity.HasKey(e => e.QuizzeInClass1)
-                    .HasName("PK__QuizzeIn__C0E4B2E7AA070B9A");
+                    .HasName("PK__QuizzeIn__C0E4B2E7DB341A7E");
 
                 entity.ToTable("QuizzeInClass");
 
@@ -340,7 +341,7 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.Quizze)
                     .WithMany(p => p.QuizzeInClasses)
                     .HasForeignKey(d => d.QuizzeId)
-                    .HasConstraintName("FK__QuizzeInC__Quizz__00200768");
+                    .HasConstraintName("FK__QuizzeInC__Quizz__02084FDA");
             });
 
             modelBuilder.Entity<QuizzeResult>(entity =>
@@ -352,12 +353,12 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.Quizze)
                     .WithMany(p => p.QuizzeResults)
                     .HasForeignKey(d => d.QuizzeId)
-                    .HasConstraintName("FK__QuizzeRes__Quizz__01142BA1");
+                    .HasConstraintName("FK__QuizzeRes__Quizz__02FC7413");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.QuizzeResults)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__QuizzeRes__UserI__02FC7413");
+                    .HasConstraintName("FK__QuizzeRes__UserI__04E4BC85");
             });
 
             modelBuilder.Entity<ReportUser>(entity =>
@@ -379,7 +380,14 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.FromUserNavigation)
                     .WithMany(p => p.ReportUsers)
                     .HasForeignKey(d => d.FromUser)
-                    .HasConstraintName("FK__ReportUse__FromU__04E4BC85");
+                    .HasConstraintName("FK__ReportUse__FromU__06CD04F7");
+            });
+
+            modelBuilder.Entity<RequestManager>(entity =>
+            {
+                entity.ToTable("RequestManager");
+
+                entity.Property(e => e.RequestManagerId).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -392,7 +400,7 @@ namespace BussinessObject.Models
             modelBuilder.Entity<RoomCallVideo>(entity =>
             {
                 entity.HasKey(e => e.RoomId)
-                    .HasName("PK__RoomCall__32863939DA866BB5");
+                    .HasName("PK__RoomCall__328639390FBA8709");
 
                 entity.ToTable("RoomCallVideo");
 
@@ -406,13 +414,13 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.Teacher)
                     .WithMany(p => p.RoomCallVideos)
                     .HasForeignKey(d => d.TeacherId)
-                    .HasConstraintName("FK__RoomCallV__Teach__08B54D69");
+                    .HasConstraintName("FK__RoomCallV__Teach__0A9D95DB");
             });
 
             modelBuilder.Entity<StatusClass>(entity =>
             {
                 entity.HasKey(e => e.StatusId)
-                    .HasName("PK__StatusCl__C8EE20631C74CE62");
+                    .HasName("PK__StatusCl__C8EE2063920B692A");
 
                 entity.ToTable("StatusClass");
 
@@ -442,12 +450,12 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.Feedback)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.FeedbackId)
-                    .HasConstraintName("FK__User__FeedbackId__0A9D95DB");
+                    .HasConstraintName("FK__User__FeedbackId__0C85DE4D");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.RoleId)
-                    .HasConstraintName("FK__User__RoleId__0C85DE4D");
+                    .HasConstraintName("FK__User__RoleId__0E6E26BF");
             });
 
             modelBuilder.Entity<UserChatRoom>(entity =>
@@ -462,7 +470,7 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserChatRooms)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__UserChatR__UserI__10566F31");
+                    .HasConstraintName("FK__UserChatR__UserI__123EB7A3");
             });
 
             modelBuilder.Entity<UserCommentPost>(entity =>
@@ -481,7 +489,7 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserCommentPosts)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__UserComme__UserI__14270015");
+                    .HasConstraintName("FK__UserComme__UserI__160F4887");
             });
 
             OnModelCreatingPartial(modelBuilder);
