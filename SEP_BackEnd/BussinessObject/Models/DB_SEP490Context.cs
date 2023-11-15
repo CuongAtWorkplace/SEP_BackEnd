@@ -67,7 +67,7 @@ namespace BussinessObject.Models
             {
                 entity.ToTable("Class");
 
-                entity.Property(e => e.Classname).HasMaxLength(225);
+                entity.Property(e => e.ClassName).HasMaxLength(225);
 
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
 

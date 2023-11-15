@@ -35,7 +35,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 {
                     ClassAllDAO c = new ClassAllDAO
                     {
-                        ClassName = y.Classname,
+                        ClassName = y.ClassName,
                         TeacherName = y.Teacher.FullName,
                         CourseName = y.Course.CourseName,
                         Topic = y.Topic,
@@ -113,13 +113,13 @@ namespace SEP_BackEndCodeApi.Controllers
         [HttpGet("{name}")]
         public IActionResult GetClassWithCourseAndClassName(String name)
         {
-            var listClass = _db.Classes.Where(x => x.Classname.Contains(name)).ToList();
+            var listClass = _db.Classes.Where(x => x.ClassName.Contains(name)).ToList();
             if (listClass == null)
             {
                 var listClass2 = _db.Classes.Join( _db.Courses,classItem => classItem.CourseId,course => course.CourseId,(classItem, course) => new
          {
              ClassId = classItem.ClassId,
-             ClassName = classItem.Classname,
+             ClassName = classItem.ClassName,
              CourseName = course.CourseName,
              CourseId = classItem.CourseId,
 
@@ -177,7 +177,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 }
                 var result = allClass.Where(u => u.TeacherId == userId).Select(x => new ClassDTO()
                 {
-                    ClassId = x.ClassId, ClassName = x.Classname,
+                    ClassId = x.ClassId, ClassName = x.ClassName,
                     TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId, CourseName = x.Course.CourseName,
                     NumberStudent = x.NumberStudent, Topic = x.Topic,
@@ -207,7 +207,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 }
                 var result = allClass.Where(cd => cd.ClassId == classId).Select(x => new ClassDTO()
                 {
-                    ClassId = x.ClassId, ClassName = x.Classname,
+                    ClassId = x.ClassId, ClassName = x.ClassName,
                     TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId, CourseName = x.Course.CourseName,
                     NumberStudent = x.NumberStudent, Topic = x.Topic,
@@ -237,7 +237,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 }
                 var result = allClass.OrderBy(ob => ob.CreateDate).Take(5).Select(x => new ClassDTO()
                 {
-                    ClassId = x.ClassId, ClassName = x.Classname,
+                    ClassId = x.ClassId, ClassName = x.ClassName,
                     TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId, CourseName = x.Course.CourseName,
                     NumberStudent = x.NumberStudent, Topic = x.Topic,
@@ -267,7 +267,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 }
                 var result = allClass.OrderBy(ob => ob.CreateDate).Take(5).Select(x => new ClassDTO()
                 {
-                    ClassId = x.ClassId, ClassName = x.Classname,
+                    ClassId = x.ClassId, ClassName = x.ClassName,
                     TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId, CourseName = x.Course.CourseName,
                     NumberStudent = x.NumberStudent, Topic = x.Topic,
