@@ -199,9 +199,8 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                var allClass = _db.Classes.Include(t => t.Teacher).
-                    Include(c => c.Course).ToList();
-                if (allClass == null)
+                var cl = _db.Classes.Include(t => t.Teacher).Include(c => c.Course).ToList();
+                if (cl == null)
                 {
                     var allClass = _db.Classes.Include(c => c.Course).ToList();
                     if (allClass == null)
@@ -230,7 +229,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 else
                 {
                     var allClass = _db.Classes.Include(t => t.Teacher).
-                    Include(c => c.Course).Include(q => q.Quizze).ToList();
+                    Include(c => c.Course).ToList();
                     if (allClass == null)
                     {
                         return NotFound();
@@ -399,7 +398,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 }
                 else
                 {
-                    c.Classname = eClass.Classname;
+                    c.ClassName = eClass.ClassName;
                     c.Topic = eClass.Topic;
                     //c.QuizzeId = eClass.QuizzeId;
                     c.Schedule = eClass.Schedule;
@@ -424,7 +423,7 @@ namespace SEP_BackEndCodeApi.Controllers
         [HttpGet("{text}")]
         public ActionResult<Class> SearchClass(string text)
         {
-            List<Class> classs = _db.Classes.Where(c => c.Classname.Contains(text) || c.Topic.Contains(text)).ToList();
+            List<Class> classs = _db.Classes.Where(c => c.ClassName.Contains(text) || c.Topic.Contains(text)).ToList();
             if (classs is null) return NotFound();
             else return Ok(classs);
         }
@@ -445,7 +444,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 var result = allClass.Select(x => new ClassDTO()
                 {
                     ClassId = x.ClassId,
-                    Classname = x.Classname,
+                    ClassName = x.ClassName,
                     TeacherId = x.TeacherId,
                     TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId,
@@ -487,7 +486,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 var result = allClass.Where(cd => cd.ClassId == classId).Select(x => new ClassDTO()
                 {
                     ClassId = x.ClassId,
-                    Classname = x.Classname,
+                    ClassName = x.ClassName,
                     TeacherId = x.TeacherId,
                     TeacherName = x.Teacher.FullName,
                     CourseId = x.CourseId,
@@ -528,7 +527,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 var result = allClass.Where(u => u.CourseId == courseId && u.TeacherId == null).Select(x => new ClassEmptyDTO()
                 {
                     ClassId = x.ClassId,
-                    Classname = x.Classname,
+                    ClassName = x.ClassName,
                     CourseId = x.CourseId,
                     CourseName = x.Course.CourseName,
                     Topic = x.Topic,
