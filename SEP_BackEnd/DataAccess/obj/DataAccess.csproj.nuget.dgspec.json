@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "F:\\FPTU\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\DataAccess\\DataAccess.csproj": {}
+    "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\DataAccess\\DataAccess.csproj": {}
   },
   "projects": {
-    "F:\\FPTU\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj": {
+    "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\FPTU\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj",
+        "projectUniqueName": "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj",
         "projectName": "BussinessObject",
-        "projectPath": "F:\\FPTU\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj",
-        "packagesPath": "C:\\Users\\ducww\\.nuget\\packages\\",
-        "outputPath": "F:\\FPTU\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\obj\\",
+        "projectPath": "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj",
+        "packagesPath": "C:\\Users\\lyxin\\.nuget\\packages\\",
+        "outputPath": "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ducww\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\lyxin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -81,21 +81,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "F:\\FPTU\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\DataAccess\\DataAccess.csproj": {
+    "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\FPTU\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\DataAccess\\DataAccess.csproj",
+        "projectUniqueName": "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\DataAccess\\DataAccess.csproj",
         "projectName": "DataAccess",
-        "projectPath": "F:\\FPTU\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\DataAccess\\DataAccess.csproj",
-        "packagesPath": "C:\\Users\\ducww\\.nuget\\packages\\",
-        "outputPath": "F:\\FPTU\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\DataAccess\\obj\\",
+        "projectPath": "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\DataAccess\\DataAccess.csproj",
+        "packagesPath": "C:\\Users\\lyxin\\.nuget\\packages\\",
+        "outputPath": "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ducww\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\lyxin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -109,8 +109,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "F:\\FPTU\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj": {
-                "projectPath": "F:\\FPTU\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj"
+              "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj": {
+                "projectPath": "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj"
               }
             }
           }
@@ -124,6 +124,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -140,7 +146,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

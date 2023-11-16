@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using DataAccess.AutoMapper;
 
 
 namespace SEP_BackEndCodeApi
@@ -24,6 +25,8 @@ namespace SEP_BackEndCodeApi
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<DB_SEP490Context>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DB")));
             builder.Services.AddScoped<DB_SEP490Context>();
+
+            builder.Services.AddAutoMapper(typeof(ApplicationMapper));
             builder.Services.AddSignalR();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ICourseRepository, CourseRepository>(); 
@@ -44,12 +47,13 @@ namespace SEP_BackEndCodeApi
 
                     };
                 });
-         
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IAdminRepository, AdminManagement>();
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddCors(c =>
             {
                 c.AddPolicy("AllowOrigin", option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
-
 
             var app = builder.Build();
 

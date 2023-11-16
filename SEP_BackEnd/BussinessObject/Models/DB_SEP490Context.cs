@@ -46,7 +46,7 @@ namespace BussinessObject.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("server =(local); database=DB_SEP490;uid=sa;pwd=sa;");
+                optionsBuilder.UseSqlServer("Server=(local);uid=sa;pwd=123456;database=DB_SEP490;Integrated security = True; TrustServerCertificate=True;");
             }
         }
 
@@ -92,17 +92,17 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.Course)
                     .WithMany(p => p.Classes)
                     .HasForeignKey(d => d.CourseId)
-                    .HasConstraintName("FK__Class__CourseId__59063A47");
+                    .HasConstraintName("FK__Class__CourseId__4CA06362");
 
                 entity.HasOne(d => d.StatusNavigation)
                     .WithMany(p => p.Classes)
                     .HasForeignKey(d => d.Status)
-                    .HasConstraintName("FK__Class__Status__5AEE82B9");
+                    .HasConstraintName("FK__Class__Status__5070F446");
 
                 entity.HasOne(d => d.Teacher)
                     .WithMany(p => p.Classes)
                     .HasForeignKey(d => d.TeacherId)
-                    .HasConstraintName("FK__Class__TeacherId__5812160E");
+                    .HasConstraintName("FK__Class__TeacherId__52593CB8");
             });
 
             modelBuilder.Entity<Course>(entity =>
@@ -141,12 +141,12 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.ListStudentClasses)
                     .HasForeignKey(d => d.ClassId)
-                    .HasConstraintName("FK__ListStude__Class__5DCAEF64");
+                    .HasConstraintName("FK__ListStude__Class__5441852A");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.ListStudentClasses)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__ListStude__UserI__5EBF139D");
+                    .HasConstraintName("FK__ListStude__UserI__5629CD9C");
             });
 
             modelBuilder.Entity<LoginHistory>(entity =>
