@@ -199,15 +199,15 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                var cl = _db.Classes.Include(t => t.Teacher).Include(c => c.Course).ToList();
-                if (cl == null)
+                Class cl = _db.Classes.FirstOrDefault(cla => cla.ClassId == classId);
+                if (cl.TeacherId == null)
                 {
                     var allClass = _db.Classes.Include(c => c.Course).ToList();
                     if (allClass == null)
                     {
                         return NotFound();
                     }
-                    var result = allClass.Where(cd => cd.ClassId == classId).Select(x => new ClassEmptyDTO()
+                    var result = allClass.Where(cd => cd.ClassId == classId).Select(x => new ClassDTO()
                     {
                         ClassId = x.ClassId,
                         ClassName = x.ClassName,
@@ -223,13 +223,12 @@ namespace SEP_BackEndCodeApi.Controllers
                         Status = x.Status,
                         IsDelete = x.IsDelete,
                         TokenClass = x.TokenClass
-                    }).ToList();
+                    }).FirstOrDefault();
                     return Ok(result);
                 }
                 else
                 {
-                    var allClass = _db.Classes.Include(t => t.Teacher).
-                    Include(c => c.Course).ToList();
+                    var allClass = _db.Classes.Include(t => t.Teacher).Include(c => c.Course).ToList();
                     if (allClass == null)
                     {
                         return NotFound();

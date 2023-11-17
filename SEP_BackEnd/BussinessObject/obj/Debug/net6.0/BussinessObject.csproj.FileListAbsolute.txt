@@ -26,3 +26,17 @@ D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\BussinessObject\obj\Debug\net6
 D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\BussinessObject\obj\Debug\net6.0\BussinessObject.pdb
 D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\BussinessObject\obj\Debug\net6.0\BussinessObject.genruntimeconfig.cache
 D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\BussinessObject\obj\Debug\net6.0\ref\BussinessObject.dll
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\BussinessObject\bin\Debug\net6.0\BussinessObject.deps.json
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\BussinessObject\bin\Debug\net6.0\BussinessObject.runtimeconfig.json
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\BussinessObject\bin\Debug\net6.0\BussinessObject.dll
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\BussinessObject\bin\Debug\net6.0\BussinessObject.pdb
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\BussinessObject\obj\Debug\net6.0\BussinessObject.csproj.AssemblyReference.cache
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\BussinessObject\obj\Debug\net6.0\BussinessObject.GeneratedMSBuildEditorConfig.editorconfig
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\BussinessObject\obj\Debug\net6.0\BussinessObject.AssemblyInfoInputs.cache
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\BussinessObject\obj\Debug\net6.0\BussinessObject.AssemblyInfo.cs
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\BussinessObject\obj\Debug\net6.0\BussinessObject.csproj.CoreCompileInputs.cache
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\BussinessObject\obj\Debug\net6.0\BussinessObject.dll
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\BussinessObject\obj\Debug\net6.0\refint\BussinessObject.dll
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\BussinessObject\obj\Debug\net6.0\BussinessObject.pdb
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\BussinessObject\obj\Debug\net6.0\BussinessObject.genruntimeconfig.cache
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\BussinessObject\obj\Debug\net6.0\ref\BussinessObject.dll

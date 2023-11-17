@@ -3090,19 +3090,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\lyxin\\.nuget\\packages\\": {}
+    "C:\\Users\\ducww\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\SEP_BackEndCodeApi\\SEP_BackEndCodeApi.csproj",
+      "projectUniqueName": "F:\\FPTU\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\SEP_BackEndCodeApi\\SEP_BackEndCodeApi.csproj",
       "projectName": "SEP_BackEndCodeApi",
-      "projectPath": "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\SEP_BackEndCodeApi\\SEP_BackEndCodeApi.csproj",
-      "packagesPath": "C:\\Users\\lyxin\\.nuget\\packages\\",
-      "outputPath": "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\SEP_BackEndCodeApi\\obj\\",
+      "projectPath": "F:\\FPTU\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\SEP_BackEndCodeApi\\SEP_BackEndCodeApi.csproj",
+      "packagesPath": "C:\\Users\\ducww\\.nuget\\packages\\",
+      "outputPath": "F:\\FPTU\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\SEP_BackEndCodeApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\lyxin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ducww\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3116,11 +3116,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj": {
-              "projectPath": "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj"
+            "F:\\FPTU\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj": {
+              "projectPath": "F:\\FPTU\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\BussinessObject\\BussinessObject.csproj"
             },
-            "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\DataAccess\\DataAccess.csproj": {
-              "projectPath": "D:\\FPTU\\Semester 9\\SWP492\\SEP_BackEnd\\SEP_BackEnd\\DataAccess\\DataAccess.csproj"
+            "F:\\FPTU\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\DataAccess\\DataAccess.csproj": {
+              "projectPath": "F:\\FPTU\\DoAn\\SEP_BackEnd\\SEP_BackEnd\\DataAccess\\DataAccess.csproj"
             }
           }
         }
@@ -3181,7 +3181,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

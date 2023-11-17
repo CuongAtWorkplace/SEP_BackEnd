@@ -25,3 +25,18 @@ D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\Da
 D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
 D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\DataAccess.pdb
 D:\FPTU\Semester 9\SWP492\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\bin\Debug\net6.0\DataAccess.dll
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\bin\Debug\net6.0\DataAccess.pdb
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\bin\Debug\net6.0\BussinessObject.dll
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\bin\Debug\net6.0\BussinessObject.pdb
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\DataAccess.csproj.AssemblyReference.cache
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfoInputs.cache
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfo.cs
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CoreCompileInputs.cache
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CopyComplete
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\DataAccess.dll
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\DataAccess.pdb
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
