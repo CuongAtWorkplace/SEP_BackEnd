@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using DataAccess.AutoMapper;
-
+using Microsoft.Extensions.FileProviders;
 
 namespace SEP_BackEndCodeApi
 {
@@ -80,7 +80,12 @@ namespace SEP_BackEndCodeApi
                 endpoints.MapHub<ChatHub>("/chatHub"); 
                 endpoints.MapControllers();
             });
-
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                   Path.Combine(Directory.GetCurrentDirectory(), "Photos")),
+                RequestPath = "/Photos"
+            });
             app.Run();
         }
     }
