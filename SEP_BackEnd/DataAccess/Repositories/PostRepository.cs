@@ -23,6 +23,8 @@ namespace DataAccess.Repositories
 
         public void HideComment(UserCommentPost commentPost) => PostManagement.Instance.HideComment(commentPost);
 
+        public void UnHideComment(UserCommentPost commentPost) => PostManagement.Instance.UnHideComment(commentPost);
+
         public void Update(Post post)=> PostManagement.Instance.Update(post);
 
         public void UpdatePostActive(Post post) => PostManagement.Instance.UpdatePostActive(post);
@@ -34,5 +36,7 @@ namespace DataAccess.Repositories
         public void AddComment(UserCommentPost commentPost) => PostManagement.Instance.AddComment(commentPost);
 
         public IEnumerable<CommentDTO> ListCommentPost(int postId) => PostManagement.Instance.ListCommentPost(postId);
+
+        public void UpdatePostHide(Post post) => PostManagement.Instance.UpdatePostHide(post);
     }
 }

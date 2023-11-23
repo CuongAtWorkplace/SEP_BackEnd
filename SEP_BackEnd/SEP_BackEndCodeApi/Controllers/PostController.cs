@@ -22,6 +22,7 @@ namespace SEP_BackEndCodeApi.Controllers
             _config = config;
             _db = db;
             post = _post;
+            _env = env;
         }
 
         [HttpGet]
@@ -116,6 +117,19 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
+        [HttpPut]
+        public IActionResult UpdatePostHide(Post postU)
+        {
+            try
+            {
+                post.UpdatePostHide(postU);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
         [HttpPost]
         public IActionResult AddNewPost(Post postadd)
@@ -207,6 +221,33 @@ namespace SEP_BackEndCodeApi.Controllers
             try
             {
                 post.UpdateUnLikePost(Post);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult UpdateHideComment(UserCommentPost Post)
+        {
+            try
+            {
+                post.HideComment(Post);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        [HttpPut]
+        public IActionResult UpdateUnHideComment(UserCommentPost Post)
+        {
+            try
+            {
+                post.UnHideComment(Post);
                 return Ok();
             }
             catch (Exception ex)

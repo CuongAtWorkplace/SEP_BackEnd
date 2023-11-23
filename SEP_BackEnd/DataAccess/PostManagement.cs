@@ -168,6 +168,37 @@ namespace DataAccess
                 throw new Exception(ex.Message);
             }
         }
+        public void UpdatePostHide(Post post)
+        {
+            try
+            {
+                Post PostUpdate = getPostById(post.PostId);
+                if (PostUpdate != null)
+                {
+                    var db = new DB_SEP490Context();
+                    Post PostAdd = new Post
+                    {
+                        PostId = post.PostId,
+                        ContentPost = post.ContentPost,
+                        CreateBy = PostUpdate.CreateBy,
+                        CreateByNavigation = post.CreateByNavigation,
+                        Description = post.Description,
+                        CreateDate = PostUpdate.CreateDate,
+                        Image = post.Image,
+                        LikeAmout = 0,
+                        Title = post.Title,
+                        UserCommentPosts = null,
+                        IsActive = false,
+                    };
+                    db.Entry<Post>(PostAdd).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
         public void UpdateLikePost(Post post)
         {
@@ -284,7 +315,36 @@ namespace DataAccess
                     var db = new DB_SEP490Context();
                 UserCommentPost u = new UserCommentPost
                 {
-
+                    UserCommentPostId = commentPost.UserCommentPostId,
+                    UserId = commentPost.UserId,
+                    PostId = commentPost.PostId,
+                    Content = commentPost.Content,
+                    CreateDate = commentPost.CreateDate,
+                    LikeAmount = commentPost.LikeAmount,
+                    IsActive = false,
+                };
+                    db.Entry<UserCommentPost>(u).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public void UnHideComment(UserCommentPost commentPost)
+        {
+            try
+            {
+                    var db = new DB_SEP490Context();
+                UserCommentPost u = new UserCommentPost
+                {
+                    UserCommentPostId = commentPost.UserCommentPostId,
+                    UserId = commentPost.UserId,
+                    PostId = commentPost.PostId,
+                    Content = commentPost.Content,
+                    CreateDate = commentPost.CreateDate,
+                    LikeAmount = commentPost.LikeAmount,
+                    IsActive = true,
                 };
                     db.Entry<UserCommentPost>(u).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     db.SaveChanges();
