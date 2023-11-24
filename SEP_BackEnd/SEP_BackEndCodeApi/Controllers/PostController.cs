@@ -152,7 +152,7 @@ namespace SEP_BackEndCodeApi.Controllers
             {
                 var comments = _db.UserCommentPosts
                     .Include(c => c.User)
-                    .Where(c => c.PostId == postId && c.IsActive==true)
+                    .Where(c => c.PostId == postId )
                     .Select(c => new
                     {
                         UserFullName = c.User.FullName,
