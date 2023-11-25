@@ -349,7 +349,7 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
-        [HttpPost("UpdateUserPassword/{Email}/{newPassword}")]
+        [HttpPut("UpdateUserPassword/{Email}/{newPassword}")]
         public IActionResult UpdateUserPassword(string Email, string newPassword)
         {
             try

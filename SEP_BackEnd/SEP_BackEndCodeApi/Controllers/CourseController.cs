@@ -47,6 +47,28 @@ namespace SEP_BackEndCodeApi.Controllers
             return File(imageStream, "image/jpeg"); // Thay đổi kiểu MIME theo định dạng của hình ảnh
         }
 
+        [HttpGet("Getqr")]
+        public IActionResult Getqr()
+        {
+            // Lấy thông tin về khóa học dựa trên courseId
+
+          
+
+            // Đường dẫn đầy đủ tới tệp hình ảnh
+            var imagePath = Path.Combine(@"C:\Users\ngoba\OneDrive\Máy tính\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\Photos\3_638364132311632591.jpg");
+
+            // Kiểm tra xem tệp hình ảnh có tồn tại không
+            if (!System.IO.File.Exists(imagePath))
+            {
+                return NotFound(); // Trả về lỗi 404 nếu tệp hình ảnh không tồn tại
+            }
+
+            // Trả về hình ảnh dưới dạng tệp stream
+            var imageStream = System.IO.File.OpenRead(imagePath);
+            return File(imageStream, "image/jpeg"); // Thay đổi kiểu MIME theo định dạng của hình ảnh
+        }
+
+
         [HttpGet]
         public IActionResult GetAllCourse()
         {
