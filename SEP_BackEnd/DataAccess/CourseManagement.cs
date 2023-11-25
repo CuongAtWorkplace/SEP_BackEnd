@@ -105,13 +105,11 @@ namespace DataAccess
         {
             try
             {
-                Course courseNews = getCourseById(course.CourseId);
-                if (courseNews == null)
-                {
+               
                     var db = new DB_SEP490Context();
                     db.Courses.Add(course);
                     db.SaveChanges();
-                }
+                
             }
             catch (Exception ex)
             {
