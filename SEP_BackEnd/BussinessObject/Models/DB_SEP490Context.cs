@@ -37,6 +37,7 @@ namespace BussinessObject.Models
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<RoomCallVideo> RoomCallVideos { get; set; } = null!;
         public virtual DbSet<StatusClass> StatusClasses { get; set; } = null!;
+        public virtual DbSet<UploadedFile> UploadedFiles { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<UserChatRoom> UserChatRooms { get; set; } = null!;
         public virtual DbSet<UserCommentPost> UserCommentPosts { get; set; } = null!;
@@ -92,17 +93,17 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.Course)
                     .WithMany(p => p.Classes)
                     .HasForeignKey(d => d.CourseId)
-                    .HasConstraintName("FK__Class__CourseId__4CA06362");
+                    .HasConstraintName("FK__Class__CourseId__59063A47");
 
                 entity.HasOne(d => d.StatusNavigation)
                     .WithMany(p => p.Classes)
                     .HasForeignKey(d => d.Status)
-                    .HasConstraintName("FK__Class__Status__5070F446");
+                    .HasConstraintName("FK__Class__Status__5AEE82B9");
 
                 entity.HasOne(d => d.Teacher)
                     .WithMany(p => p.Classes)
                     .HasForeignKey(d => d.TeacherId)
-                    .HasConstraintName("FK__Class__TeacherId__52593CB8");
+                    .HasConstraintName("FK__Class__TeacherId__5812160E");
             });
 
             modelBuilder.Entity<Course>(entity =>
@@ -141,12 +142,12 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.ListStudentClasses)
                     .HasForeignKey(d => d.ClassId)
-                    .HasConstraintName("FK__ListStude__Class__5441852A");
+                    .HasConstraintName("FK__ListStude__Class__5DCAEF64");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.ListStudentClasses)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__ListStude__UserI__5629CD9C");
+                    .HasConstraintName("FK__ListStude__UserI__5EBF139D");
             });
 
             modelBuilder.Entity<LoginHistory>(entity =>
@@ -425,6 +426,22 @@ namespace BussinessObject.Models
                 entity.ToTable("StatusClass");
 
                 entity.Property(e => e.StatusName).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<UploadedFile>(entity =>
+            {
+                entity.Property(e => e.FileName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FilePath)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Class)
+                    .WithMany(p => p.UploadedFiles)
+                    .HasForeignKey(d => d.ClassId)
+                    .HasConstraintName("FK__UploadedF__Class__29221CFB");
             });
 
             modelBuilder.Entity<User>(entity =>

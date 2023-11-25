@@ -11,6 +11,7 @@ namespace BussinessObject.Models
             NoteTeachers = new HashSet<NoteTeacher>();
             QuizzeInClasses = new HashSet<QuizzeInClass>();
             RoomCallVideos = new HashSet<RoomCallVideo>();
+            UploadedFiles = new HashSet<UploadedFile>();
         }
 
         public int ClassId { get; set; }
@@ -38,5 +39,6 @@ namespace BussinessObject.Models
         public virtual ICollection<NoteTeacher> NoteTeachers { get; set; }
         public virtual ICollection<QuizzeInClass> QuizzeInClasses { get; set; }
         public virtual ICollection<RoomCallVideo> RoomCallVideos { get; set; }
+        public virtual ICollection<UploadedFile> UploadedFiles { get; set; }
     }
 }
