@@ -50,6 +50,7 @@ namespace SEP_BackEndCodeApi
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IAdminRepository, AdminManagement>();
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<INoteRepository, NoteRepository>();
             builder.Services.AddCors(c =>
             {
                 c.AddPolicy("AllowOrigin", option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
