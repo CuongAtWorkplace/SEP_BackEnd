@@ -95,7 +95,6 @@ namespace DataAccess.Repositories
             int count = await _context.Users.CountAsync();
             return count;
         }
-
         public async Task<UserVM> GetUserById(int Id)
         {
             var users = await _context.Users.FirstOrDefaultAsync(x => x.UserId == Id);
