@@ -18,7 +18,7 @@ namespace BussinessObject.Models
         public int? LikeAmout { get; set; }
         public string? Image { get; set; }
         public DateTime? CreateDate { get; set; }
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         public virtual User? CreateByNavigation { get; set; }
         public virtual ICollection<UserCommentPost> UserCommentPosts { get; set; }

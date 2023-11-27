@@ -3,6 +3,7 @@ using DataAccess.DTO;
 using DataAccess.Repositories.IReporitory;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace SEP_BackEndCodeApi.Controllers
@@ -30,6 +31,34 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             var list = post.GetPostList();
             return Ok(list);
+        }
+        [HttpGet]
+        public IActionResult GetAllPostALL()
+        {
+
+            try
+            {
+                var db = new DB_SEP490Context();
+           
+               var listC = db.Posts.Select(p => new
+                {
+                    p.PostId,
+                    p.CreateBy,
+                    p.Title,
+                    p.Description,
+                    p.ContentPost,
+                    p.LikeAmout,
+                    p.Image,
+                    p.CreateDate,
+                    IsActive = p.IsActive ? "True" : "False" // Tạo một trường mới là IsActive và gán giá trị string dựa trên giá trị boolean
+                }).ToList();
+                return Ok(listC);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+           
         }
 
         [HttpGet]
@@ -155,6 +184,7 @@ namespace SEP_BackEndCodeApi.Controllers
                     .Where(c => c.PostId == postId )
                     .Select(c => new
                     {
+                        
                         UserFullName = c.User.FullName,
                         UserCommentPostId = c.UserCommentPostId,
                         UserId = c.UserId,
@@ -167,6 +197,20 @@ namespace SEP_BackEndCodeApi.Controllers
 
 
                 return Ok(comments);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult GetCommentById(int commentId)
+        {
+            try
+            {
+                UserCommentPost commentPost = _db.UserCommentPosts.Where(x=>x.UserCommentPostId== commentId).FirstOrDefault();   
+                return Ok(commentPost);
             }
             catch (Exception ex)
             {
