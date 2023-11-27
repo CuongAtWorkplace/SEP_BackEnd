@@ -90,5 +90,29 @@ namespace SEP_BackEndCodeApi.Controllers
 
             return File(fileBytes, contentType, fileName);
         }
+        [HttpGet]
+        public IActionResult GetFileByNameInWeb(string fileName)
+        {
+            string directoryPath = Path.Combine(_webHostEnvironment.ContentRootPath, "UploadedFiles");
+            string filePath = Path.Combine(directoryPath, fileName);
+
+            if (!System.IO.File.Exists(filePath))
+                return NotFound("File not found");
+
+            var fileBytes = System.IO.File.ReadAllBytes(filePath);
+            return File(fileBytes, "application/pdf");
+        }
+        [HttpGet]
+        public IActionResult GetImageByName(string fileName)
+        {
+            string directoryPath = Path.Combine(_webHostEnvironment.ContentRootPath, "UploadedFiles");
+            string filePath = Path.Combine(directoryPath, fileName);
+
+            if (!System.IO.File.Exists(filePath))
+                return NotFound("File not found");
+
+            byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
+            return File(fileBytes, "image/jpeg"); // Thay đổi kiểu content type nếu cần thiết
+        }
     }
 }
