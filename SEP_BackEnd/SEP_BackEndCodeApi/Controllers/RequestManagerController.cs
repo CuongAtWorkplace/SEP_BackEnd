@@ -29,6 +29,12 @@ namespace SEP_BackEndCodeApi.Controllers
                 // Thêm chatRoom vào DbSet và lưu thay đổi vào cơ sở dữ liệu
                 _db.ChatRooms.Add(chatRoom);
                 await _db.SaveChangesAsync();
+                var isManagerChatRoomExist = _db.ChatRooms
+                      .FirstOrDefault(c => c.ChatRoomId == chatRoom.ChatRoomId);
+                isManagerChatRoomExist.ClassId = chatRoom.ChatRoomId;
+
+                _db.SaveChanges();
+
 
                 // Trả về ID của chatRoom trong phản hồi với HTTP Status 201 Created
                 return CreatedAtAction(nameof(GetChatRoomById), new { id = chatRoom.ChatRoomId }, chatRoom.ChatRoomId);
@@ -89,9 +95,23 @@ namespace SEP_BackEndCodeApi.Controllers
             {
                 // Kiểm tra xem có ChatRoom nào trong classId có thuộc tính isManagerChat là true không
                 var isManagerChatRoomExist = _db.ChatRooms
-                          .Where(c => c.ChatRoomId == classId);
+                          .FirstOrDefault(c => c.ChatRoomId == classId);
 
-                return Ok(isManagerChatRoomExist);
+                if (isManagerChatRoomExist != null)
+                {
+                    isManagerChatRoomExist.IsManagerChat = true;
+
+                    try
+                    {
+                        _db.SaveChanges();
+                        return Ok(isManagerChatRoomExist);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Xử lý lỗi nếu có
+                    }
+                }
+                return NotFound();
             }
             catch (Exception ex)
             {
