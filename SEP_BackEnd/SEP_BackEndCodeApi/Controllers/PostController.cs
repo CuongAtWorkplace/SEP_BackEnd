@@ -181,7 +181,7 @@ namespace SEP_BackEndCodeApi.Controllers
             {
                 var comments = _db.UserCommentPosts
                     .Include(c => c.User)
-                    .Where(c => c.PostId == postId && c.IsActive==true)
+                    .Where(c => c.PostId == postId )
                     .Select(c => new
                     {
                         
@@ -191,7 +191,8 @@ namespace SEP_BackEndCodeApi.Controllers
                         PostId = c.PostId,
                         Content = c.Content,
                         CreateDate = c.CreateDate ,
-                        LikeAmount = c.LikeAmount 
+                        LikeAmount = c.LikeAmount ,
+                        IsActive =c.IsActive
                     })
                     .ToList();
 
