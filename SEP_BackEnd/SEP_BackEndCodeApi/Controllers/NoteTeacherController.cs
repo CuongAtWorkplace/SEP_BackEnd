@@ -1,8 +1,10 @@
 ﻿using BussinessObject.Models;
 using BussinessObject.ResourceModel.ViewModel;
+using DataAccess.DTO;
 using DataAccess.Repositories.IReporitory;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
 
 namespace SEP_BackEndCodeApi.Controllers
 {
@@ -38,8 +40,22 @@ namespace SEP_BackEndCodeApi.Controllers
         [HttpGet]
         public IActionResult GetNoteInClass(int classId)
         {
-            var list = _note.GetNoteInClass(classId);
-            return Ok(list);
+            NoteTeacher nt = _db.NoteTeachers.FirstOrDefault(n => n.ClassId == classId);
+            if (nt == null)
+            {
+                NoteTeacher noteT = new NoteTeacher
+                {
+                    ClassId = classId
+                };
+                _db.NoteTeachers.Add(noteT);
+                _db.SaveChanges();
+                return Ok(noteT);
+            }
+            else
+            {
+                var list = _db.NoteTeachers.FirstOrDefault(n => n.ClassId == classId);
+                return Ok(list);
+            }
         }
         [HttpGet]
         public IActionResult GetNoteOrderDate(int userId)
@@ -58,6 +74,32 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             _note.AddNewNoteTeacher(noteTeacher);
             return Ok();
+        }
+
+        [HttpPut]
+        public IActionResult UpdateNoteTeachers(NoteDTO noteTeacher)
+        {
+            try
+            {
+                NoteTeacher c = _db.NoteTeachers.FirstOrDefault(n => n.NoteId == noteTeacher.NoteId);
+                if (c is null)
+                {
+                    return StatusCode(444, "Note is not found");
+                }
+                else
+                {
+                    c.UserId = noteTeacher.UserId;
+                    c.ClassId = noteTeacher.ClassId;
+                    c.Content = noteTeacher.Content;
+                    _db.NoteTeachers.Update(c);
+                    int result = _db.SaveChanges();
+                    return Ok(result);
+                }
+            }
+            catch
+            {
+                return Conflict();
+            }
         }
 
     }
