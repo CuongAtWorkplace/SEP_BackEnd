@@ -40,7 +40,9 @@ namespace SEP_BackEndCodeApi.Controllers
             {
                 var db = new DB_SEP490Context();
            
-               var listC = db.Posts.Select(p => new
+               var listC = db.Posts
+                    .OrderBy(p => p.PostId) // Sort by PostId in ascending order
+                    .Select(p => new
                 {
                     p.PostId,
                     p.CreateBy,
@@ -184,7 +186,6 @@ namespace SEP_BackEndCodeApi.Controllers
                     .Where(c => c.PostId == postId )
                     .Select(c => new
                     {
-                        
                         UserFullName = c.User.FullName,
                         UserCommentPostId = c.UserCommentPostId,
                         UserId = c.UserId,
@@ -245,12 +246,36 @@ namespace SEP_BackEndCodeApi.Controllers
 
 
         [HttpPut]
-        public IActionResult UpdateLikePost(Post Post)
+        public IActionResult UpdateLikePost(int Post)
         {
             try
             {
                 post.UpdateLikePost(Post);
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult UpdateLikeComment(int CommentId)
+        {
+            try
+            {
+                var db = new DB_SEP490Context();
+
+                UserCommentPost PostUpdate = db.UserCommentPosts.FirstOrDefault(c => c.UserCommentPostId == CommentId);
+
+                if (PostUpdate != null)
+                {
+                    PostUpdate.LikeAmount = PostUpdate.LikeAmount + 1;
+                    db.SaveChanges();
+                    return Ok();
+                }
+                return NotFound();
+
             }
             catch (Exception ex)
             {
