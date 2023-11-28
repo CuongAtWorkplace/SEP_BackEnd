@@ -236,8 +236,6 @@ namespace SEP_BackEndCodeApi.Controllers
         //danh sach lop hoc cua giao vien do
         [HttpGet("{userId}")]
         public IActionResult GetTeacherClassList(int userId)
-        // [HttpGet("GetAllClassDetail")]
-        // public IActionResult GetAllClassDetail()
         {
             //List<ClassDTO> list = new List<ClassDTO>();
             try
@@ -248,7 +246,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 {
                     return NotFound();
                 }
-                var result = allClass.Select(x => new ClassDTO()
+                var result = allClass.Where(u => u.TeacherId == userId).Select(x => new ClassDTO()
                 {
                     ClassId = x.ClassId, ClassName = x.ClassName,
                     TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
@@ -266,8 +264,9 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
-        [HttpGet("ClassDetail/{classId}")]
-        public IActionResult GetClassDetailById(int classId)
+        //chi tiet lop hoc cua giao vien do
+        [HttpGet("{classId}")]
+        public IActionResult GetTeacherClassDetail(int classId)
         {
             //List<ClassDTO> list = new List<ClassDTO>();
             try
@@ -325,6 +324,7 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
+        //top lop hoc moi
         [HttpGet("GetTopClassByDate")]
         public IActionResult GetTopClassByDate()
         {
@@ -354,6 +354,7 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
+        //top lop hoc
         [HttpGet("GetTopClassBy")]
         public IActionResult GetTopClassBy()
         {
@@ -382,6 +383,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpPut]
         public IActionResult UpdateClassManager(Class classUpdate)
         {
@@ -418,6 +420,84 @@ namespace SEP_BackEndCodeApi.Controllers
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        [HttpGet]
+        public IActionResult GetClassName(int classId)
+        {
+            try
+            {
+                string nameClass = _db.Classes.Where(x => x.ClassId == classId).Select(x => x.ClassName).FirstOrDefault();
+                return Ok(nameClass);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult CheckUserFromClass(int userId, string className)
+        {
+            try
+            {
+                var check = _db.ListStudentClasses.Include(x => x.User).Include(x => x.Class).Where(x => x.UserId.Equals(userId) && x.Class.ClassName.Equals(className)).FirstOrDefault();
+                if (check != null)
+                {
+                    return Ok("Ok");
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        //chinh sua thong tin lop hoc*
+        [HttpPut]
+        public IActionResult EditClass(EditClassDTO eClass)
+        {
+            try
+            {
+                Class c = _db.Classes.FirstOrDefault(n => n.ClassId == eClass.ClassId);
+                if (c is null)
+                {
+                    return StatusCode(444, "Class is not found");
+                }
+                else
+                {
+                    c.ClassName = eClass.ClassName;
+                    c.Topic = eClass.Topic;
+                    //c.QuizzeId = eClass.QuizzeId;
+                    c.Schedule = eClass.Schedule;
+                    c.Fee = eClass.Fee;
+                    c.NumberOfWeek = eClass.NumberOfWeek;
+                    c.NumberPhone = eClass.NumberPhone;
+                    c.Description = eClass.Description;
+                    c.StartDate = eClass.StartDate;
+                    c.EndDate = eClass.EndDate;
+                    _db.Classes.Update(c);
+                    int result = _db.SaveChanges();
+                    return Ok(result);
+                }
+            }
+            catch
+            {
+                return Conflict();
+            }
+        }
+
+        //tim kiem lop hoc bang ten hoac chu de*
+        [HttpGet("{text}")]
+        public ActionResult<Class> SearchClass(string text)
+        {
+            List<Class> classs = _db.Classes.Where(c => c.ClassName.Contains(text) || c.Topic.Contains(text)).ToList();
+            if (classs is null) return NotFound();
+            else return Ok(classs);
         }
 
         //danh sach tat ca cac lop hoc (manager)*

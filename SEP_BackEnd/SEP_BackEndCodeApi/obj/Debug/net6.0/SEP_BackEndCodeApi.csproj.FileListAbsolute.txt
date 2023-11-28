@@ -236,3 +236,11 @@ F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\obj\Debug\net6.0\refint\
 F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\obj\Debug\net6.0\SEP_BackEndCodeApi.pdb
 F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\obj\Debug\net6.0\SEP_BackEndCodeApi.genruntimeconfig.cache
 F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\obj\Debug\net6.0\ref\SEP_BackEndCodeApi.dll
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\bin\Debug\net6.0\BouncyCastle.Cryptography.dll
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\bin\Debug\net6.0\MailKit.dll
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\bin\Debug\net6.0\MimeKit.dll
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\bin\Debug\net6.0\System.Formats.Asn1.dll
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\bin\Debug\net6.0\System.Text.Encoding.CodePages.dll
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
+F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Text.Encoding.CodePages.dll
