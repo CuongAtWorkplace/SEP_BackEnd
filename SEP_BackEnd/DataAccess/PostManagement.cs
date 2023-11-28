@@ -200,31 +200,22 @@ namespace DataAccess
             }
         }
 
-        public void UpdateLikePost(Post post)
+        public void UpdateLikePost(int post)
         {
             try
             {
-                Post PostUpdate = getPostById(post.PostId);
-                if (PostUpdate != null)
-                {
                     var db = new DB_SEP490Context();
-                    Post PostAdd = new Post
+
+                    Post PostUpdate = db.Posts.FirstOrDefault(c => c.PostId == post);
+
+                    if (PostUpdate != null)
                     {
-                        PostId = post.PostId,
-                        ContentPost = post.ContentPost,
-                        CreateBy = post.CreateBy,
-                        CreateByNavigation = post.CreateByNavigation,
-                        Description = post.Description,
-                        CreateDate = post.CreateDate,
-                        Image = post.Image,
-                        LikeAmout = post.LikeAmout + 1,
-                        Title = post.Title,
-                        UserCommentPosts = null,
-                        IsActive = true,
-                    };
-                    db.Entry<Post>(post).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    PostUpdate.LikeAmout = PostUpdate.LikeAmout + 1;
+
+
                     db.SaveChanges();
                 }
+               
             }
             catch (Exception ex)
             {

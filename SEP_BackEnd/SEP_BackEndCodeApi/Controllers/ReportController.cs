@@ -292,7 +292,6 @@ namespace SEP_BackEndCodeApi.Controllers
             {
                 Feedback feedback1 = new Feedback
                 {
-                    FeedbackId = feedback.FeedbackId,
                     FromUserId = feedback.FromUserId,
                     Rating = feedback.Rating,
                     Description = feedback.Description,
@@ -309,8 +308,9 @@ namespace SEP_BackEndCodeApi.Controllers
             {
                 throw new Exception(ex.Message);
             }
-
         }
+
+
         [HttpPut]
         public IActionResult AddIsDeleteFeedback(Feedback feedback)
         {

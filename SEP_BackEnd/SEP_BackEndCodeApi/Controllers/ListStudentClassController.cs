@@ -115,8 +115,16 @@ namespace SEP_BackEndCodeApi.Controllers
 
                 // Lấy tất cả các lớp học có classId nằm trong danh sách classroom
                 var classes = _db.Classes
-                    .Where(c => classroom.Contains(c.ClassId))
-                    .ToList();
+         .Where(c => classroom.Contains(c.ClassId))
+         .Select(c => new
+         {
+             classId = c.ClassId,
+             classname = c.ClassName,
+             courseId = c.CourseId,
+             courseName = c.Course.CourseName // Giả sử có mối quan hệ giữa Class và Course
+         })
+         .ToList();
+
 
                 // Trả về danh sách các lớp học
                 return Ok(classes);

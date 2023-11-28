@@ -29,7 +29,7 @@ namespace DataAccess.Repositories
 
         public void UpdatePostActive(Post post) => PostManagement.Instance.UpdatePostActive(post);
 
-        public void UpdateLikePost(Post post) => PostManagement.Instance.UpdateLikePost(post);
+        public void UpdateLikePost(int post) => PostManagement.Instance.UpdateLikePost(post);
 
         public void UpdateUnLikePost(Post post) => PostManagement.Instance.UpdateUnLikePost(post);
 

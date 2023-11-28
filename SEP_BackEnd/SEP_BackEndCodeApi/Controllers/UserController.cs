@@ -349,6 +349,33 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
+        [HttpPut("UpdateUserPassword/{Email}/{newPassword}")]
+        public IActionResult UpdateUserPassword(string Email, string newPassword)
+        {
+            try
+            {
+                var user = _db.Users.FirstOrDefault(u => u.Email == Email);
+
+                if (user == null)
+                {
+                    return NotFound("User not found");
+                }
+
+               
+                    // Cập nhật mật khẩu trong cơ sở dữ liệu
+                    user.Password = newPassword;
+                    _db.SaveChanges();
+
+                    return Ok("Password updated successfully");
+                
+            }
+            catch (Exception ex)
+            {
+                // Log lỗi nếu có
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         //chinh sua thong tin nguoi dang nhap
         [HttpPut]
         public IActionResult ChangePassword(ChangePasswordDTO eUser)

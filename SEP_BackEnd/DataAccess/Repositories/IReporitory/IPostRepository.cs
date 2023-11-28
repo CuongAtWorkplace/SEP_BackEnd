@@ -18,7 +18,7 @@ namespace DataAccess.Repositories.IReporitory
         void Update(Post post);
         void UpdatePostActive(Post post);
         void UpdatePostHide(Post post);
-        void UpdateLikePost(Post post);
+        void UpdateLikePost(int post);
         void UpdateUnLikePost(Post post);
         void AddComment(UserCommentPost commentPost);
         IEnumerable<CommentDTO> ListCommentPost(int postId);
