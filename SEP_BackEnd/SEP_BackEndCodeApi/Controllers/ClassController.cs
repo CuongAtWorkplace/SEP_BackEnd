@@ -440,7 +440,8 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                var check = _db.ListStudentClasses.Include(x => x.User).Include(x => x.Class).Where(x => x.UserId.Equals(userId) && x.Class.ClassName.Equals(className)).FirstOrDefault();
+                var check = _db.ListStudentClasses.Include(x => x.User).Include(x => x.Class)
+                    .Where(x => x.UserId.Equals(userId) && x.Class.ClassName.Equals(className) || x.Class.TeacherId == userId ).FirstOrDefault();
                 if (check != null)
                 {
                     return Ok("Ok");
