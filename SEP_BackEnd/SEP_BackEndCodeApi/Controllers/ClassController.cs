@@ -113,13 +113,22 @@ namespace SEP_BackEndCodeApi.Controllers
         [HttpGet("{name}")]
         public IActionResult GetClassWithCourseAndClassName(String name)
         {
-            var listClass = _db.Classes.Where(x => x.ClassName.Contains(name)).ToList();
+            var listClass = _db.Classes.Where(x => x.ClassName.Contains(name))
+                 .Select(classItem => new
+                 {
+                     ClassId = classItem.ClassId,
+                     Classname = classItem.ClassName,
+                     CourseName = classItem.Course.CourseName, // Assuming there's a navigation property named "Course"
+                     CourseId = classItem.CourseId,
+                     // Add other fields as needed
+                 })
+                .ToList();
             if (listClass == null)
             {
                 var listClass2 = _db.Classes.Join( _db.Courses,classItem => classItem.CourseId,course => course.CourseId,(classItem, course) => new
          {
              ClassId = classItem.ClassId,
-             ClassName = classItem.ClassName,
+             Classname = classItem.ClassName,
              CourseName = course.CourseName,
              CourseId = classItem.CourseId,
 
@@ -138,13 +147,33 @@ namespace SEP_BackEndCodeApi.Controllers
         public IActionResult GetClassByDate(string Order)
         {
             if (Order.Equals("ascend")) {
-                var listClass = _db.Classes.OrderBy(x => x.CreateDate).ToList();
+                var listClass = _db.Classes
+                    .OrderBy(x => x.CreateDate)
+                     .Select(classItem => new
+                     {
+                         ClassId = classItem.ClassId,
+                         Classname = classItem.ClassName,
+                         CourseName = classItem.Course.CourseName, // Assuming there's a navigation property named "Course"
+                         CourseId = classItem.CourseId,
+                         // Add other fields as needed
+                     })
+                    .ToList();
                 return Ok(listClass);
             }
 
             if (Order.Equals("descend"))
             {
-                    var listClass = _db.Classes.OrderByDescending(x => x.CreateDate).ToList();
+                    var listClass = _db.Classes
+                    .OrderByDescending(x => x.CreateDate)
+                     .Select(classItem => new
+                     {
+                         ClassId = classItem.ClassId,
+                         Classname = classItem.ClassName,
+                         CourseName = classItem.Course.CourseName, // Assuming there's a navigation property named "Course"
+                         CourseId = classItem.CourseId,
+                         // Add other fields as needed
+                     })
+                    .ToList();
                 return Ok(listClass);
             }
             return Ok();
@@ -496,7 +525,8 @@ namespace SEP_BackEndCodeApi.Controllers
         [HttpGet("{text}")]
         public ActionResult<Class> SearchClass(string text)
         {
-            List<Class> classs = _db.Classes.Where(c => c.ClassName.Contains(text) || c.Topic.Contains(text)).ToList();
+            List<Class> classs = _db.Classes.Where(c => c.ClassName.Contains(text) || c.Topic.Contains(text))
+                .ToList();
             if (classs is null) return NotFound();
             else return Ok(classs);
         }
