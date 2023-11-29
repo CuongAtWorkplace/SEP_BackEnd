@@ -97,7 +97,9 @@ namespace DataAccess.Repositories
         }
         public async Task<UserVM> GetUserById(int Id)
         {
-            var users = await _context.Users.FirstOrDefaultAsync(x => x.UserId == Id);
+            var users = await _context.Users
+                .Include(x => x.Role)
+                .FirstOrDefaultAsync(x => x.UserId == Id);
             if (users != null)
             {
                 var result = _mapper.Map<UserVM>(users);
