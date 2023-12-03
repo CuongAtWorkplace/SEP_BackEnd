@@ -17,8 +17,6 @@ namespace DataAccess.DTO
         public string? CourseName { get; set; }
         public int? NumberStudent { get; set; }
         public string? Topic { get; set; }
-        public int? QuizzeId { get; set; }
-        public string? QuizzeName { get; set; }
         public string? Schedule { get; set; }
         public string? Fee { get; set; }
         public string? NumberOfWeek { get; set; }
@@ -41,7 +39,6 @@ namespace DataAccess.DTO
         public int ClassId { get; set; }
         public string? ClassName { get; set; }
         public string? Topic { get; set; }
-        public int? QuizzeId { get; set; }
         public string? Schedule { get; set; }
         public string? Fee { get; set; }
         public string? NumberOfWeek { get; set; }

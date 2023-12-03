@@ -1,4 +1,5 @@
 ﻿using BussinessObject.Models;
+using BussinessObject.ResourceModel.ViewModel;
 using DataAccess.DTO;
 using DataAccess.Repositories.IReporitory;
 using Microsoft.AspNetCore.Mvc;
@@ -473,7 +474,6 @@ namespace SEP_BackEndCodeApi.Controllers
                 {
                     c.ClassName = eClass.ClassName;
                     c.Topic = eClass.Topic;
-                    //c.QuizzeId = eClass.QuizzeId;
                     c.Schedule = eClass.Schedule;
                     c.Fee = eClass.Fee;
                     c.NumberOfWeek = eClass.NumberOfWeek;
