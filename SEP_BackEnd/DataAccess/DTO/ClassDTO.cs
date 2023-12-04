@@ -56,6 +56,12 @@ namespace DataAccess.DTO
         public int TeacherId { get; set; }
     }
 
+    public class RequestClassTypeDTO
+    {
+        public int RequestClassId { get; set; }
+        public bool Type { get; set; }
+    }
+
     public class ClassAllDAO
     {
         public string? ClassName { get; set; }

@@ -33,6 +33,7 @@ namespace BussinessObject.Models
         public virtual DbSet<QuizzeInClass> QuizzeInClasses { get; set; } = null!;
         public virtual DbSet<QuizzeResult> QuizzeResults { get; set; } = null!;
         public virtual DbSet<ReportUser> ReportUsers { get; set; } = null!;
+        public virtual DbSet<RequestClass> RequestClasses { get; set; } = null!;
         public virtual DbSet<RequestManager> RequestManagers { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<RoomCallVideo> RoomCallVideos { get; set; } = null!;
@@ -47,7 +48,7 @@ namespace BussinessObject.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=DUCTRAN\\SQLEXPRESS;uid=sa;pwd=2001;database=DB_SEP490;Integrated security = True; TrustServerCertificate=True;");
+                optionsBuilder.UseSqlServer("Server=(local);Database=DB_SEP490;Trusted_Connection=True;");
             }
         }
 
@@ -384,6 +385,21 @@ namespace BussinessObject.Models
                     .HasConstraintName("FK__ReportUse__FromU__06CD04F7");
             });
 
+            modelBuilder.Entity<RequestClass>(entity =>
+            {
+                entity.ToTable("RequestClass");
+
+                entity.HasOne(d => d.Class)
+                    .WithMany(p => p.RequestClasses)
+                    .HasForeignKey(d => d.ClassId)
+                    .HasConstraintName("FK__RequestCl__Class__3D2915A8");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.RequestClasses)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK__RequestCl__UserI__3C34F16F");
+            });
+
             modelBuilder.Entity<RequestManager>(entity =>
             {
                 entity.ToTable("RequestManager");
@@ -430,13 +446,9 @@ namespace BussinessObject.Models
 
             modelBuilder.Entity<UploadedFile>(entity =>
             {
-                entity.Property(e => e.FileName)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
+                entity.Property(e => e.FileName).HasMaxLength(255);
 
-                entity.Property(e => e.FilePath)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
+                entity.Property(e => e.FilePath).HasMaxLength(255);
 
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.UploadedFiles)
