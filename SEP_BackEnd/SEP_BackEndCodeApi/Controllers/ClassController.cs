@@ -491,7 +491,30 @@ namespace SEP_BackEndCodeApi.Controllers
                 return Conflict();
             }
         }
+        [HttpPut]
+        public IActionResult RequestClass(RequestClassDTO rClass)
+        {
+            try
+            {
+                Class c = _db.Classes.FirstOrDefault(n => n.ClassId == rClass.ClassId);
+                if (c is null)
+                {
+                    return StatusCode(444, "Class is not found ");
+                }
+                else
+                {
 
+                    c.TeacherId = rClass.TeacherId;
+                    _db.Classes.Update(c);
+                    int result = _db.SaveChanges();
+                    return Ok(result);
+                }
+            }
+            catch
+            {
+                return Conflict();
+            }
+        }
         //tim kiem lop hoc bang ten hoac chu de*
         [HttpGet("{text}")]
         public ActionResult<Class> SearchClass(string text)
