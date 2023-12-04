@@ -491,7 +491,30 @@ namespace SEP_BackEndCodeApi.Controllers
                 return Conflict();
             }
         }
+        [HttpPut]
+        public IActionResult RequestClass(RequestClassDTO rClass)
+        {
+            try
+            {
+                Class c = _db.Classes.FirstOrDefault(n => n.ClassId == rClass.ClassId);
+                if (c is null)
+                {
+                    return StatusCode(444, "Class is not found found ");
+                }
+                else
+                {
 
+                    c.TeacherId = rClass.TeacherId;
+                    _db.Classes.Update(c);
+                    int result = _db.SaveChanges();
+                    return Ok(result);
+                }
+            }
+            catch
+            {
+                return Conflict();
+            }
+        }
         //tim kiem lop hoc bang ten hoac chu de*
         [HttpGet("{text}")]
         public ActionResult<Class> SearchClass(string text)
@@ -614,6 +637,63 @@ namespace SEP_BackEndCodeApi.Controllers
                     TokenClass = x.TokenClass
                 }).ToList();
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost]
+        public IActionResult CreateRequestClassManager(RequestClass requestClass)
+        {
+            try
+            {
+                RequestClass list = new RequestClass
+                {
+                    RequestClassId = requestClass.RequestClassId,
+                    ClassId = requestClass.ClassId,
+                    UserId = requestClass.UserId,
+                    Type = null
+                };
+                _db.RequestClasses.Add(list);
+                _db.SaveChanges();
+                return Ok(1);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult ListRequestClassManager()
+        {
+            try
+            {
+                var list = _db.RequestClasses.Where(x=>x.Type == null).ToList();
+                return Ok(list);
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPut]
+        public IActionResult UpdateTypeClassRequest(RequestClassTypeDTO requestClass)
+        {
+            try
+            {
+                RequestClass Rclass = _db.RequestClasses.FirstOrDefault(x =>x.RequestClassId== requestClass.RequestClassId);
+                if (Rclass is null)
+                {
+                    return StatusCode(444, "Class is not found found ");
+                }
+                else
+                {
+
+                    Rclass.Type = requestClass.Type;
+                    _db.RequestClasses.Update(Rclass);
+                    int result = _db.SaveChanges();
+                    return Ok(result);
+                }
             }
             catch (Exception ex)
             {

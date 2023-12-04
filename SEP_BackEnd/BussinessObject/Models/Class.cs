@@ -10,6 +10,7 @@ namespace BussinessObject.Models
             ListStudentClasses = new HashSet<ListStudentClass>();
             NoteTeachers = new HashSet<NoteTeacher>();
             QuizzeInClasses = new HashSet<QuizzeInClass>();
+            RequestClasses = new HashSet<RequestClass>();
             RoomCallVideos = new HashSet<RoomCallVideo>();
             UploadedFiles = new HashSet<UploadedFile>();
         }
@@ -38,6 +39,7 @@ namespace BussinessObject.Models
         public virtual ICollection<ListStudentClass> ListStudentClasses { get; set; }
         public virtual ICollection<NoteTeacher> NoteTeachers { get; set; }
         public virtual ICollection<QuizzeInClass> QuizzeInClasses { get; set; }
+        public virtual ICollection<RequestClass> RequestClasses { get; set; }
         public virtual ICollection<RoomCallVideo> RoomCallVideos { get; set; }
         public virtual ICollection<UploadedFile> UploadedFiles { get; set; }
     }
