@@ -50,6 +50,11 @@ namespace DataAccess.DTO
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
     }
+    public class RequestClassDTO
+    {
+        public int ClassId { get; set; }
+        public int TeacherId { get; set; }
+    }
 
     public class ClassAllDAO
     {
