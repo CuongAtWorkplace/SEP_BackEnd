@@ -52,7 +52,7 @@ namespace DataAccess.DTO
     }
     public class RequestClassDTO
     {
-        public int ClassId { get; set; }
+        public int ClassId { get; set;  }
         public int TeacherId { get; set; }
     }
 

@@ -499,7 +499,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 Class c = _db.Classes.FirstOrDefault(n => n.ClassId == rClass.ClassId);
                 if (c is null)
                 {
-                    return StatusCode(444, "Class is not found");
+                    return StatusCode(444, "Class is not found ");
                 }
                 else
                 {
