@@ -669,9 +669,33 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                var list = _db.RequestClasses.Where(x=>x.Type == null).ToList();
+                var list = _db.RequestClasses
+                    .Include(x=>x.User)
+                    .Include(x=>x.Class)
+                    .Where(x=>x.Type == null)
+                    .Select(x => new ListRequestClassDTO
+                    {
+                        RequestClassId=x.RequestClassId,
+                        ClassId = x.RequestClassId,
+                        ClassName= x.Class.ClassName,
+                        TeacherId = x.UserId,
+                        TeacherName=x.User.FullName,
+                    } );
                 return Ok(list);
             }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetRequestClassManager(int requestId)
+        {
+            try
+            {
+                var list = await _db.RequestClasses.Where(x =>x.RequestClassId == requestId).FirstOrDefaultAsync() ;
+                return Ok(list);
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }

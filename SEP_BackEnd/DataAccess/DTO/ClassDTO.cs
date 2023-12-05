@@ -55,12 +55,21 @@ namespace DataAccess.DTO
         public int ClassId { get; set;  }
         public int TeacherId { get; set; }
     }
+    public class ListRequestClassDTO
+    {
+        public int RequestClassId { get; set; }
+        public int ClassId { get; set; }
+        public string TeacherName { get; set; }
+        public int? TeacherId { get; set; }
+        public string ClassName { get; set; }
+    }
 
     public class RequestClassTypeDTO
     {
         public int RequestClassId { get; set; }
         public bool Type { get; set; }
     }
+
 
     public class ClassAllDAO
     {
