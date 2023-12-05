@@ -326,55 +326,25 @@ namespace SEP_BackEndCodeApi.Controllers
         }
 
         //top lop hoc moi
-        [HttpGet("GetTopClassByDate")]
+        [HttpGet]
         public IActionResult GetTopClassByDate()
         {
             try
             {
-                var allClass = _db.Classes.Include(t => t.Teacher).
-                    Include(c => c.Course).ToList();
+                var allClass = _db.Classes.Include(t => t.Teacher).Include(c => c.Course).ToList();
                 if (allClass == null)
                 {
                     return NotFound();
                 }
-                var result = allClass.OrderBy(ob => ob.CreateDate).Take(5).Select(x => new ClassDTO()
+                var result = allClass.Where(x => x.Teacher != null && x.Course != null)
+                    .OrderByDescending(ob => ob.CreateDate).Take(5).Select(x => new ClassDTO()
                 {
                     ClassId = x.ClassId, ClassName = x.ClassName,
-                    TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
-                    CourseId = x.CourseId, CourseName = x.Course.CourseName,
+                    TeacherId = x.TeacherId, TeacherName = x.Teacher?.FullName,
+                    CourseId = x.CourseId, CourseName = x.Course?.CourseName,
                     NumberStudent = x.NumberStudent, Topic = x.Topic,
                     Schedule = x.Schedule, Fee = x.Fee, NumberOfWeek = x.NumberOfWeek, NumberPhone = x.NumberPhone,
                     Description = x.Description, CreateDate = x.CreateDate, StartDate = x.StartDate, 
-                    EndDate = x.EndDate, Status = x.Status, IsDelete = x.IsDelete, TokenClass = x.TokenClass
-                }).ToList();
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        //top lop hoc
-        [HttpGet("GetTopClassBy")]
-        public IActionResult GetTopClassBy()
-        {
-            try
-            {
-                var allClass = _db.Classes.Include(t => t.Teacher).
-                    Include(c => c.Course).ToList();
-                if (allClass == null)
-                {
-                    return NotFound();
-                }
-                var result = allClass.OrderBy(ob => ob.CreateDate).Take(5).Select(x => new ClassDTO()
-                {
-                    ClassId = x.ClassId, ClassName = x.ClassName,
-                    TeacherId = x.TeacherId, TeacherName = x.Teacher.FullName,
-                    CourseId = x.CourseId, CourseName = x.Course.CourseName,
-                    NumberStudent = x.NumberStudent, Topic = x.Topic,
-                    Schedule = x.Schedule, Fee = x.Fee, NumberOfWeek = x.NumberOfWeek, NumberPhone = x.NumberPhone,
-                    Description = x.Description, CreateDate = x.CreateDate, StartDate = x.StartDate,
                     EndDate = x.EndDate, Status = x.Status, IsDelete = x.IsDelete, TokenClass = x.TokenClass
                 }).ToList();
                 return Ok(result);
@@ -618,6 +588,30 @@ namespace SEP_BackEndCodeApi.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult RequestClass(RequestClassDTO rClass)
+        {
+            try
+            {
+                Class c = _db.Classes.FirstOrDefault(n => n.ClassId == rClass.ClassId);
+                if (c is null)
+                {
+                    return StatusCode(444, "Class is not found ");
+                }
+                else
+                {
+                    c.TeacherId = rClass.TeacherId;
+                    _db.Classes.Update(c);
+                    int result = _db.SaveChanges();
+                    return Ok(result);
+                }
+            }
+            catch
+            {
+                return Conflict();
             }
         }
     }
