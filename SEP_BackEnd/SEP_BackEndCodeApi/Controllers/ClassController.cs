@@ -461,7 +461,30 @@ namespace SEP_BackEndCodeApi.Controllers
                 return Conflict();
             }
         }
+        [HttpPut]
+        public IActionResult RequestClass(RequestClassDTO rClass)
+        {
+            try
+            {
+                Class c = _db.Classes.FirstOrDefault(n => n.ClassId == rClass.ClassId);
+                if (c is null)
+                {
+                    return StatusCode(444, "Class is not found found ");
+                }
+                else
+                {
 
+                    c.TeacherId = rClass.TeacherId;
+                    _db.Classes.Update(c);
+                    int result = _db.SaveChanges();
+                    return Ok(result);
+                }
+            }
+            catch
+            {
+                return Conflict();
+            }
+        }
         //tim kiem lop hoc bang ten hoac chu de*
         [HttpGet("{text}")]
         public ActionResult<Class> SearchClass(string text)
@@ -590,28 +613,85 @@ namespace SEP_BackEndCodeApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        [HttpPut]
-        public IActionResult RequestClass(RequestClassDTO rClass)
+        [HttpPost]
+        public IActionResult CreateRequestClassManager(RequestClass requestClass)
         {
             try
             {
-                Class c = _db.Classes.FirstOrDefault(n => n.ClassId == rClass.ClassId);
-                if (c is null)
+                RequestClass list = new RequestClass
                 {
-                    return StatusCode(444, "Class is not found ");
+                    RequestClassId = requestClass.RequestClassId,
+                    ClassId = requestClass.ClassId,
+                    UserId = requestClass.UserId,
+                    Type = null
+                };
+                _db.RequestClasses.Add(list);
+                _db.SaveChanges();
+                return Ok(1);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult ListRequestClassManager()
+        {
+            try
+            {
+                var list = _db.RequestClasses
+                    .Include(x=>x.User)
+                    .Include(x=>x.Class)
+                    .Where(x=>x.Type == null)
+                    .Select(x => new ListRequestClassDTO
+                    {
+                        RequestClassId=x.RequestClassId,
+                        ClassId = x.RequestClassId,
+                        ClassName= x.Class.ClassName,
+                        TeacherId = x.UserId,
+                        TeacherName=x.User.FullName,
+                    } );
+                return Ok(list);
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetRequestClassManager(int requestId)
+        {
+            try
+            {
+                var list = await _db.RequestClasses.Where(x =>x.RequestClassId == requestId).FirstOrDefaultAsync() ;
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPut]
+        public IActionResult UpdateTypeClassRequest(RequestClassTypeDTO requestClass)
+        {
+            try
+            {
+                RequestClass Rclass = _db.RequestClasses.FirstOrDefault(x =>x.RequestClassId== requestClass.RequestClassId);
+                if (Rclass is null)
+                {
+                    return StatusCode(444, "Class is not found found ");
                 }
                 else
                 {
-                    c.TeacherId = rClass.TeacherId;
-                    _db.Classes.Update(c);
+
+                    Rclass.Type = requestClass.Type;
+                    _db.RequestClasses.Update(Rclass);
                     int result = _db.SaveChanges();
                     return Ok(result);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                return Conflict();
+                return BadRequest(ex.Message);
             }
         }
     }
