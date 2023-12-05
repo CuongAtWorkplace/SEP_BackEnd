@@ -108,11 +108,5 @@ namespace DataAccess.DTO
         public virtual Course? Course { get; set; }
     }
 
-    public class RequestClassDTO
-    {
-        public int ClassId { get; set; }
-        public int TeacherId { get; set; }
-    }
-
 
 }
