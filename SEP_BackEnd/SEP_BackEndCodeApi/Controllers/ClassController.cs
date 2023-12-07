@@ -379,12 +379,9 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                var checkClass = _db.Classes.Where(x => x.ClassId == classCreate.ClassId).FirstOrDefault();
-                if (checkClass == null)
-                {
                     _db.Classes.Add(classCreate);
                     _db.SaveChanges();
-                }
+                
                 return Ok();
             }
             catch (Exception ex)
