@@ -57,7 +57,7 @@ namespace SEP_BackEndCodeApi.Controllers
             }
 
             // Đường dẫn đầy đủ tới tệp hình ảnh
-            var imagePath = Path.Combine(@"F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\Photos\", user.Image);
+            var imagePath = Path.Combine(@"C:\Users\ngoba\OneDrive\Máy tính\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\Photos\", user.Image);
 
             // Kiểm tra xem tệp hình ảnh có tồn tại không
             if (!System.IO.File.Exists(imagePath))
@@ -90,7 +90,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 }
 
                 // Đường dẫn đầy đủ để lưu trữ tệp ảnh trên máy chủ
-                var imagePath = Path.Combine(@"F:\FPTU\DoAn\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\Photos\", $"{UserID}_{DateTime.UtcNow.Ticks}.jpg");
+                var imagePath = Path.Combine(@"C:\Users\ngoba\OneDrive\Máy tính\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\Photos\", $"{UserID}_{DateTime.UtcNow.Ticks}.jpg");
 
                 // Lưu tệp ảnh trên máy chủ
                 using (var stream = new FileStream(imagePath, FileMode.Create))

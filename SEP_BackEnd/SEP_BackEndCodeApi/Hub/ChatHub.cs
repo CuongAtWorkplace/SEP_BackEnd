@@ -7,4 +7,15 @@ public class ChatHub : Hub
     {
         await Clients.All.SendAsync("ReceiveMessage", newMessage);
     }
+    public override Task OnConnectedAsync()
+    {
+        // Handle connected logic
+        return base.OnConnectedAsync();
+    }
+
+    public override Task OnDisconnectedAsync(Exception exception)
+    {
+        // Handle disconnected logic
+        return base.OnDisconnectedAsync(exception);
+    }
 }
