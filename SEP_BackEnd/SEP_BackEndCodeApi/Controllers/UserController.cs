@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using static System.Net.Mime.MediaTypeNames;
 using System.Net;
 using System.Numerics;
+using BussinessObject.ResourceModel.ViewModel;
+using AutoMapper;
 
 namespace SEP_BackEndCodeApi.Controllers
 {
@@ -18,13 +20,15 @@ namespace SEP_BackEndCodeApi.Controllers
         private readonly DB_SEP490Context _db;
         private readonly IUserRepository user;
         private readonly ILogger<UserController> _logger;
+        private readonly IMapper _mapper;
 
-        public UserController(IUserRepository _user, IConfiguration config, DB_SEP490Context db, ILogger<UserController> logger)
+        public UserController(IUserRepository _user, IConfiguration config, DB_SEP490Context db, ILogger<UserController> logger, IMapper mapper)
         {
             _config = config;
             _db = db;
             user = _user;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet("GetUserById/{UserID}")]
@@ -248,6 +252,22 @@ namespace SEP_BackEndCodeApi.Controllers
                }
            }
         */
+
+        [HttpGet("GetListLeaner")]
+        public IActionResult GetListLeaner()
+        {
+            try
+            {
+                List<User> users = _db.Users.Where(x => x.RoleId == 2).ToList();
+                var result = _mapper.Map<List<UserVM>>(users);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
+        }
 
         //danh sanh nguoi hoc trong lop do
         [HttpGet("{classId}")]

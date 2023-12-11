@@ -95,11 +95,20 @@ namespace DataAccess.Repositories
             int count = await _context.Users.CountAsync();
             return count;
         }
-
-        public async Task<User> GetUserById(int Id)
+        public async Task<UserVM> GetUserById(int Id)
         {
-            var users = await _context.Users.FirstOrDefaultAsync(x => x.UserId == Id);
-            return users;
+            var users = await _context.Users
+                .Include(x => x.Role)
+                .FirstOrDefaultAsync(x => x.UserId == Id);
+            if (users != null)
+            {
+                var result = _mapper.Map<UserVM>(users);
+                return result;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<List<UserVM>> SearchUserByName(string name)

@@ -71,6 +71,63 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
+        // Hàm lấy ChatRoom bởi isManagerChat
+        [HttpGet()]
+        public async Task<IActionResult> GetChatRoomByisManagerChat(bool check)
+        {
+            try
+            {
+                // Lấy chatRoom từ cơ sở dữ liệu bằng ID
+                var chatRoom = await _db.ChatRooms.Where(x => x.IsManagerChat == check).ToListAsync();
+
+                // Kiểm tra xem chatRoom có tồn tại hay không
+                if (chatRoom == null)
+                {
+                    return NotFound(); // Trả về HTTP Status 404 Not Found nếu không tìm thấy chatRoom
+                }
+
+                // Trả về thông tin của chatRoom
+                return Ok(chatRoom);
+            }
+            catch (Exception ex)
+            {
+                // Trả về lỗi nếu có lỗi xảy ra
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPut]
+        public IActionResult UpdateChatRoomIsManagerChat(ChatRoom chatRoom)
+        {
+            try
+            {
+                var check = _db.ChatRooms.Where(x=>x.ChatRoomId == chatRoom.ChatRoomId).FirstOrDefault();
+                if(check == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    ChatRoom chat = new ChatRoom
+                    {
+                        ChatRoomId = chatRoom.ChatRoomId,
+                        ChatRoomName = chatRoom.ChatRoomName,
+                        Description = chatRoom.Description,
+                        IsManagerChat = true,
+                        ClassId = chatRoom.ClassId,
+                    };
+                    _db.Entry<ChatRoom>(chat).State= Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    _db.SaveChanges();
+                    return Ok();
+                }
+
+            }catch(Exception ex)
+            {
+                 return   StatusCode(500, "Internal server error");
+            }
+        }
+
+
         [HttpGet("CheckManagerChatRoom/{classId}")]
         public IActionResult CheckManagerChatRoom(int classId)
         {

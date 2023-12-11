@@ -14,7 +14,10 @@ namespace DataAccess.AutoMapper
         public ApplicationMapper() 
         {
             CreateMap<User, UserVM>()
-                .ForMember(x => x.Status, otp => otp.MapFrom(x => x.IsBan ?? true ? "Ban" : "Active"));
+                .ForMember(x => x.Status, otp => otp.MapFrom(x => x.IsBan ?? true ? "Ban" : "Active"))
+                .ForMember(x => x.RoleName, otp => otp.MapFrom(src => src.Role.RoleName))
+                .ForMember(x => x.CreateDate, otp => otp.MapFrom(src => src.CreateDate.Value.ToString("dd'-'MM'-'yyyy")))
+                .ReverseMap();
             CreateMap<ReportUser, ReportVM>()
                 .ForMember(dest => dest.FromAccountName, otp => otp.MapFrom(src => src.FromUserNavigation.FullName))
                 .ForMember(dest => dest.ToAccountName, otp => otp.MapFrom(src => src.FromUserNavigation.FullName))
@@ -26,6 +29,8 @@ namespace DataAccess.AutoMapper
                 .ForMember(dest => dest.IsBan, opt => opt.MapFrom(x => false))
                 .ForMember(dest => dest.CreateDate, opt => opt.MapFrom(x => DateTime.Now))
                 .ReverseMap();
+            //CreateMap<UserVM, Role>()
+            //    .ForMember(x => x.RoleName, otp => otp.MapFrom(src => src.RoleName));
         }
 
         private int ConvertRoleNameToRoleId(string roleName)

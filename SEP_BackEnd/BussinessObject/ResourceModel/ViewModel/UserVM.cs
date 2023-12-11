@@ -15,6 +15,8 @@ namespace BussinessObject.ResourceModel.ViewModel
         public string? Image { get; set; }
         public string? Address { get; set; }
         public decimal? Balance { get; set; }
+        public string? RoleName { get; set; }
+        public string? CreateDate { get; set; }
         public string? Status { get; set; }
     }
 }

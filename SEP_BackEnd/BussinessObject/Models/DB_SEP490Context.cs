@@ -26,6 +26,7 @@ namespace BussinessObject.Models
         public virtual DbSet<NoteTeacher> NoteTeachers { get; set; } = null!;
         public virtual DbSet<Notification> Notifications { get; set; } = null!;
         public virtual DbSet<NotificationUser> NotificationUsers { get; set; } = null!;
+        public virtual DbSet<PaymentHistory> PaymentHistories { get; set; } = null!;
         public virtual DbSet<Post> Posts { get; set; } = null!;
         public virtual DbSet<Question> Questions { get; set; } = null!;
         public virtual DbSet<Quizze> Quizzes { get; set; } = null!;
@@ -33,6 +34,7 @@ namespace BussinessObject.Models
         public virtual DbSet<QuizzeInClass> QuizzeInClasses { get; set; } = null!;
         public virtual DbSet<QuizzeResult> QuizzeResults { get; set; } = null!;
         public virtual DbSet<ReportUser> ReportUsers { get; set; } = null!;
+        public virtual DbSet<RequestClass> RequestClasses { get; set; } = null!;
         public virtual DbSet<RequestManager> RequestManagers { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<RoomCallVideo> RoomCallVideos { get; set; } = null!;
@@ -47,7 +49,7 @@ namespace BussinessObject.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=DUCTRAN\\SQLEXPRESS;uid=sa;pwd=2001;database=DB_SEP490;Integrated security = True; TrustServerCertificate=True;");
+                optionsBuilder.UseSqlServer("Server=(local);Database=DB_SEP490;Trusted_Connection=True;");
             }
         }
 
@@ -113,8 +115,6 @@ namespace BussinessObject.Models
                 entity.Property(e => e.CourseName).HasMaxLength(50);
 
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Description).HasMaxLength(225);
 
                 entity.Property(e => e.Image).HasMaxLength(225);
             });
@@ -240,6 +240,23 @@ namespace BussinessObject.Models
                     .WithMany(p => p.NotificationUsers)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK__Notificat__UserI__45F365D3");
+            });
+
+            modelBuilder.Entity<PaymentHistory>(entity =>
+            {
+                entity.ToTable("PaymentHistory");
+
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.FromUserNavigation)
+                    .WithMany(p => p.PaymentHistoryFromUserNavigations)
+                    .HasForeignKey(d => d.FromUser)
+                    .HasConstraintName("FK__PaymentHi__FromU__625A9A57");
+
+                entity.HasOne(d => d.ToUserNavigation)
+                    .WithMany(p => p.PaymentHistoryToUserNavigations)
+                    .HasForeignKey(d => d.ToUser)
+                    .HasConstraintName("FK__PaymentHi__ToUse__634EBE90");
             });
 
             modelBuilder.Entity<Post>(entity =>
@@ -384,6 +401,21 @@ namespace BussinessObject.Models
                     .HasConstraintName("FK__ReportUse__FromU__06CD04F7");
             });
 
+            modelBuilder.Entity<RequestClass>(entity =>
+            {
+                entity.ToTable("RequestClass");
+
+                entity.HasOne(d => d.Class)
+                    .WithMany(p => p.RequestClasses)
+                    .HasForeignKey(d => d.ClassId)
+                    .HasConstraintName("FK__RequestCl__Class__3D2915A8");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.RequestClasses)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK__RequestCl__UserI__3C34F16F");
+            });
+
             modelBuilder.Entity<RequestManager>(entity =>
             {
                 entity.ToTable("RequestManager");
@@ -430,13 +462,9 @@ namespace BussinessObject.Models
 
             modelBuilder.Entity<UploadedFile>(entity =>
             {
-                entity.Property(e => e.FileName)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
+                entity.Property(e => e.FileName).HasMaxLength(255);
 
-                entity.Property(e => e.FilePath)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
+                entity.Property(e => e.FilePath).HasMaxLength(255);
 
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.UploadedFiles)

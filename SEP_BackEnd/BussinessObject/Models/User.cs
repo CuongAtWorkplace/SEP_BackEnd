@@ -13,11 +13,14 @@ namespace BussinessObject.Models
             Messages = new HashSet<Message>();
             NoteTeachers = new HashSet<NoteTeacher>();
             NotificationUsers = new HashSet<NotificationUser>();
+            PaymentHistoryFromUserNavigations = new HashSet<PaymentHistory>();
+            PaymentHistoryToUserNavigations = new HashSet<PaymentHistory>();
             Posts = new HashSet<Post>();
             QuizzeCreateByNavigations = new HashSet<Quizze>();
             QuizzeModifiedByNavigations = new HashSet<Quizze>();
             QuizzeResults = new HashSet<QuizzeResult>();
             ReportUsers = new HashSet<ReportUser>();
+            RequestClasses = new HashSet<RequestClass>();
             RoomCallVideos = new HashSet<RoomCallVideo>();
             UserChatRooms = new HashSet<UserChatRoom>();
             UserCommentPosts = new HashSet<UserCommentPost>();
@@ -46,11 +49,14 @@ namespace BussinessObject.Models
         public virtual ICollection<Message> Messages { get; set; }
         public virtual ICollection<NoteTeacher> NoteTeachers { get; set; }
         public virtual ICollection<NotificationUser> NotificationUsers { get; set; }
+        public virtual ICollection<PaymentHistory> PaymentHistoryFromUserNavigations { get; set; }
+        public virtual ICollection<PaymentHistory> PaymentHistoryToUserNavigations { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Quizze> QuizzeCreateByNavigations { get; set; }
         public virtual ICollection<Quizze> QuizzeModifiedByNavigations { get; set; }
         public virtual ICollection<QuizzeResult> QuizzeResults { get; set; }
         public virtual ICollection<ReportUser> ReportUsers { get; set; }
+        public virtual ICollection<RequestClass> RequestClasses { get; set; }
         public virtual ICollection<RoomCallVideo> RoomCallVideos { get; set; }
         public virtual ICollection<UserChatRoom> UserChatRooms { get; set; }
         public virtual ICollection<UserCommentPost> UserCommentPosts { get; set; }

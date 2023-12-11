@@ -17,8 +17,6 @@ namespace DataAccess.DTO
         public string? CourseName { get; set; }
         public int? NumberStudent { get; set; }
         public string? Topic { get; set; }
-        public int? QuizzeId { get; set; }
-        public string? QuizzeName { get; set; }
         public string? Schedule { get; set; }
         public string? Fee { get; set; }
         public string? NumberOfWeek { get; set; }
@@ -41,7 +39,6 @@ namespace DataAccess.DTO
         public int ClassId { get; set; }
         public string? ClassName { get; set; }
         public string? Topic { get; set; }
-        public int? QuizzeId { get; set; }
         public string? Schedule { get; set; }
         public string? Fee { get; set; }
         public string? NumberOfWeek { get; set; }
@@ -50,6 +47,26 @@ namespace DataAccess.DTO
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
     }
+    public class RequestClassDTO
+    {
+        public int ClassId { get; set;  }
+        public int TeacherId { get; set; }
+    }
+    public class ListRequestClassDTO
+    {
+        public int RequestClassId { get; set; }
+        public int ClassId { get; set; }
+        public string TeacherName { get; set; }
+        public int? TeacherId { get; set; }
+        public string ClassName { get; set; }
+    }
+
+    public class RequestClassTypeDTO
+    {
+        public int RequestClassId { get; set; }
+        public bool Type { get; set; }
+    }
+
 
     public class ClassAllDAO
     {
@@ -90,4 +107,6 @@ namespace DataAccess.DTO
 
         public virtual Course? Course { get; set; }
     }
+
+
 }

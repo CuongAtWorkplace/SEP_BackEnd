@@ -1,6 +1,8 @@
 ﻿using BussinessObject.Models;
+using DataAccess.DTO;
 using DataAccess.Repositories.IReporitory;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace SEP_BackEndCodeApi.Controllers
@@ -177,7 +179,25 @@ namespace SEP_BackEndCodeApi.Controllers
             {
                 throw new Exception(ex.Message);
             }
+        }
 
+        //top khoa hoc moi
+        [HttpGet]
+        public IActionResult GetTopCourseByDate()
+        {
+            try
+            {
+                var result = _db.Courses.OrderByDescending(ob => ob.CreateDate).Take(5).ToList();
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
     }
