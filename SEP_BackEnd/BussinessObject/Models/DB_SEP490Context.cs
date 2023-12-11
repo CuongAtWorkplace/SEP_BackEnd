@@ -26,6 +26,7 @@ namespace BussinessObject.Models
         public virtual DbSet<NoteTeacher> NoteTeachers { get; set; } = null!;
         public virtual DbSet<Notification> Notifications { get; set; } = null!;
         public virtual DbSet<NotificationUser> NotificationUsers { get; set; } = null!;
+        public virtual DbSet<PaymentHistory> PaymentHistories { get; set; } = null!;
         public virtual DbSet<Post> Posts { get; set; } = null!;
         public virtual DbSet<Question> Questions { get; set; } = null!;
         public virtual DbSet<Quizze> Quizzes { get; set; } = null!;
@@ -114,8 +115,6 @@ namespace BussinessObject.Models
                 entity.Property(e => e.CourseName).HasMaxLength(50);
 
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Description).HasMaxLength(225);
 
                 entity.Property(e => e.Image).HasMaxLength(225);
             });
@@ -241,6 +240,23 @@ namespace BussinessObject.Models
                     .WithMany(p => p.NotificationUsers)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK__Notificat__UserI__45F365D3");
+            });
+
+            modelBuilder.Entity<PaymentHistory>(entity =>
+            {
+                entity.ToTable("PaymentHistory");
+
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.FromUserNavigation)
+                    .WithMany(p => p.PaymentHistoryFromUserNavigations)
+                    .HasForeignKey(d => d.FromUser)
+                    .HasConstraintName("FK__PaymentHi__FromU__625A9A57");
+
+                entity.HasOne(d => d.ToUserNavigation)
+                    .WithMany(p => p.PaymentHistoryToUserNavigations)
+                    .HasForeignKey(d => d.ToUser)
+                    .HasConstraintName("FK__PaymentHi__ToUse__634EBE90");
             });
 
             modelBuilder.Entity<Post>(entity =>
