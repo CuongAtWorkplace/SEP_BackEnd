@@ -206,6 +206,7 @@ namespace SEP_BackEndCodeApi.Controllers
         }
 
         //danh sach lop hoc cua giao vien do, viewclass
+
         [HttpGet]
         public IActionResult GetClassListForTeacher(int userId)
         {
