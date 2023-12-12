@@ -27,32 +27,12 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                List<ClassAllDAO> listAllClass = new List<ClassAllDAO>();
+               
+                var list = _db.Classes.ToList();
 
-                var listJoinUsersClass = _db.Users.Include(x => x.Classes).ToList();
-                var listJoinClasCourse = _db.Classes.Include(o => o.Course).Include(o => o.Teacher).ToList();
+              
 
-                foreach (var y in listJoinClasCourse)
-                {
-                    ClassAllDAO c = new ClassAllDAO
-                    {
-                        ClassName = y.ClassName,
-                        TeacherName = y.Teacher.FullName,
-                        CourseName = y.Course.CourseName,
-                        Topic = y.Topic,
-                        Fee = y.Fee,
-                        NumberOfWeek = y.NumberOfWeek,
-                        CreateDate = y.CreateDate,
-                        Schedule = y.Schedule,
-                        NumberPhone = y.NumberPhone,
-                        StartDate = y.StartDate,
-                        EndDate = y.EndDate,
-                        Status = y.Status,
-                    };
-                    listAllClass.Add(c);
-                }
-
-                return Ok(listAllClass);
+                return Ok(list);
             }
             catch(Exception ex)
             {
@@ -60,6 +40,9 @@ namespace SEP_BackEndCodeApi.Controllers
             }
            
         }
+
+      
+
 
         [HttpGet("GetAllClass/{Num}")]
         public IActionResult GetAllClassWithCourse(int Num)
@@ -223,19 +206,19 @@ namespace SEP_BackEndCodeApi.Controllers
         }
 
         //danh sach lop hoc cua giao vien do, viewclass
-        [HttpGet("{userId}")]
-        public IActionResult GetClassListForRole(int userId)
+       
+        [HttpGet]
+        public IActionResult GetClassListForRole(int userId, int roleId)
         {
             try
             {
-                User us = _db.Users.FirstOrDefault(u => u.UserId == userId);
                 var allClass = _db.Classes.Include(t => t.Teacher).
                     Include(c => c.Course).ToList();
                 if (allClass == null)
                 {
                     return NotFound();
                 }
-                if (us.RoleId == 1)
+                if (roleId == 1)
                 {
                     var result = allClass.Where(u => u.TeacherId == userId).Select(x => new ClassDTO()
                     {
@@ -488,7 +471,27 @@ namespace SEP_BackEndCodeApi.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        [HttpGet]
+        public IActionResult CheckUserFromClassInBoxChat(int userId, int boxchat)
+        {
+            try
+            {
+                var check = _db.ListStudentClasses.Where(x => x.UserId == userId && x.ClassId == boxchat).FirstOrDefault();
+                if (check != null)
+                {
+                    return Ok("Ok");
+                }
+                else
+                {
+                    return NotFound();
+                }
 
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         [HttpPut]
         public IActionResult RequestClass(RequestClassDTO rClass)
         {

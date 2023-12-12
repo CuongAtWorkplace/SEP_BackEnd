@@ -29,7 +29,7 @@ namespace SEP_BackEndCodeApi
             builder.Services.AddAutoMapper(typeof(ApplicationMapper));
             builder.Services.AddSignalR();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<ICourseRepository, CourseRepository>(); 
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddScoped<IPostRepository, PostRepository>();
             //builder.Services.AddScoped<IClassRepository, ClassRepository>();
 
@@ -51,10 +51,20 @@ namespace SEP_BackEndCodeApi
             builder.Services.AddScoped<IAdminRepository, AdminManagement>();
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddScoped<INoteRepository, NoteRepository>();
-            builder.Services.AddCors(c =>
+
+
+            builder.Services.AddCors(options =>
             {
-                c.AddPolicy("AllowOrigin", option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+                options.AddPolicy("AllowOrigin", builder =>
+                    builder
+                        .WithOrigins("https://5f3d-2405-4802-ff-b5f0-e4e8-53a1-46ea-b29a.ngrok-free.app")  // Add your client origin(s)
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                );
             });
+
+
 
             var app = builder.Build();
 
@@ -64,9 +74,10 @@ namespace SEP_BackEndCodeApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            app.UseCors(option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseRouting();
+
+            app.UseCors(option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseHttpsRedirection();
 
@@ -78,9 +89,13 @@ namespace SEP_BackEndCodeApi
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<ChatHub>("/chatHub"); 
+                endpoints.MapHub<ChatHub>("/chatHub").RequireCors("AllowOrigin");
                 endpoints.MapControllers();
             });
+
+            app.UseCors("AllowOrigin"); // Make sure this is placed before UseRouting
+
+
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
