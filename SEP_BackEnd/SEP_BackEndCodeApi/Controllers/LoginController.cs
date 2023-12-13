@@ -1,16 +1,36 @@
 ﻿using BussinessObject.Models;
 using DataAccess.DTO;
 using DataAccess.Repositories.IReporitory;
+using FFImageLoading.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace SEP_BackEndCodeApi.Controllers
 {
+    public class MD5Helper
+    {
+        public static string GetMD5Hash(string input)
+        {
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
 
-    [Route("api/[controller]")]
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("x2"));
+                }
+                return sb.ToString();
+            }
+        }
+    }
+
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class LoginController : ControllerBase
     {
@@ -26,7 +46,8 @@ namespace SEP_BackEndCodeApi.Controllers
 
         private User AuthenticateUser(string email, string password)
         {
-            User _user = _db.Users.FirstOrDefault(x => x.Email.Equals(email) && x.Password.Equals(password));
+            string hashedPassword = MD5Helper.GetMD5Hash(password);
+            User _user = _db.Users.FirstOrDefault(x => x.Email.Equals(email) && x.Password.Equals(hashedPassword));
 
             return _user;
         }
@@ -65,6 +86,43 @@ namespace SEP_BackEndCodeApi.Controllers
             return Unauthorized();
         }
 
+
+        [HttpPost]
+        public IActionResult Resigter([FromBody] RegistrationModel registrationModel)
+        {
+            try
+            {
+                var checkUser = _user.GetUserByEmail(registrationModel.Email);
+                if (checkUser != null)
+                {
+                    return BadRequest(new { Message = "Tên người dùng đã tồn tại." });
+                }
+                string encodedPassword = MD5Helper.GetMD5Hash(registrationModel.Password);
+                User user = new User
+                {
+
+                    Email = registrationModel.Email,
+                    FullName = registrationModel.FullName,
+                    Password = encodedPassword,
+                    Address = registrationModel.Address,
+                    Description = registrationModel.Description,
+                    Phone = registrationModel.Phone,
+                    FeedbackId = 1,
+                    Image = null,
+                    IsBan = false,
+                    RoleId = 1,
+                    Token = null
+                };
+                _user.AddNew(user);
+
+                // Trả về thông tin đăng ký thành công
+                return Ok(new { Message = "Đăng ký thành công" });
+            }
+                catch (Exception ex)
+            {
+                return BadRequest(new { Message = "Đăng ký thất bại", Error = ex.Message });
+            }
+        }
         private string GenerateToken(Claim[] claims)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
@@ -81,42 +139,6 @@ namespace SEP_BackEndCodeApi.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        [HttpPost]
-        [Route("register")]
-        public  IActionResult Resigter([FromBody] RegistrationModel registrationModel)
-        {
-            try
-            {
-                var checkUser = _user.GetUserByEmail(registrationModel.Email);
-                if (checkUser != null)
-                {
-                    return BadRequest(new { Message = "Tên người dùng đã tồn tại." });
-                }
-                User user = new User
-                {
-                    Email = registrationModel.Email,
-                    FullName = registrationModel.FullName,
-                    Password = registrationModel.Password,
-                    Address = registrationModel.Address,
-                    Description = registrationModel.Description,
-                    Phone = registrationModel.Phone,
-                    FeedbackId = 1,
-                    Image = null,
-                    IsBan = false,
-                    RoleId = 1,
-                    Token = null
-                };
-               _user.AddNew(user);
-
-                // Trả về thông tin đăng ký thành công
-                return Ok(new { Message = "Đăng ký thành công" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Message = "Đăng ký thất bại", Error = ex.Message });
-            }
-            return Ok();
-        }
         public class RegistrationModel
         {
             public string Email { get; set; }
