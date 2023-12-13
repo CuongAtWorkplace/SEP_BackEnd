@@ -59,7 +59,9 @@ namespace SEP_BackEndCodeApi.Controllers
                             Classname = classObj.ClassName,
                             courseId = classObj.CourseId,
                             CourseName = course.CourseName,
+                            teacherId = classObj.TeacherId,
                         })
+                        .Where(result => result.teacherId != null) // Filter where TeacherId is not null
                     .ToList();
             }
             else
@@ -77,7 +79,10 @@ namespace SEP_BackEndCodeApi.Controllers
                             Classname = classObj.ClassName,
                             courseId = classObj.CourseId,
                             CourseName = course.CourseName,
+                            teacherId = classObj.TeacherId,
                         })
+                                            .Where(result => result.teacherId != null) // Filter where TeacherId is not null
+
                     .ToList();
             }
 
@@ -256,29 +261,36 @@ namespace SEP_BackEndCodeApi.Controllers
                 {
                     return NotFound();
                 }
-                var result = allClass.Where(cd => cd.ClassId == classId).Select(x => new ClassDTO()
+                if(classId == null)
                 {
-                    ClassId = x.ClassId,
-                    ClassName = x.ClassName,
-                    TeacherId = x.TeacherId,
-                    TeacherName = x.Teacher.FullName,
-                    CourseId = x.CourseId,
-                    CourseName = x.Course.CourseName,
-                    NumberStudent = x.NumberStudent,
-                    Topic = x.Topic,
-                    Schedule = x.Schedule,
-                    Fee = x.Fee,
-                    NumberOfWeek = x.NumberOfWeek,
-                    NumberPhone = x.NumberPhone,
-                    Description = x.Description,
-                    CreateDate = x.CreateDate,
-                    StartDate = x.StartDate,
-                    EndDate = x.EndDate,
-                    Status = x.Status,
-                    IsDelete = x.IsDelete,
-                    TokenClass = x.TokenClass
-                }).FirstOrDefault();
-                return Ok(result);
+                    return NotFound();
+                }
+                else
+                {
+                    var result = allClass.Where(cd => cd.ClassId == classId).Select(x => new ClassDTO()
+                    {
+                        ClassId = x.ClassId,
+                        ClassName = x.ClassName,
+                        TeacherId = x.TeacherId,
+                        TeacherName = x.Teacher?.FullName,
+                        CourseId = x.CourseId,
+                        CourseName = x.Course.CourseName,
+                        NumberStudent = x.NumberStudent,
+                        Topic = x.Topic,
+                        Schedule = x.Schedule,
+                        Fee = x.Fee,
+                        NumberOfWeek = x.NumberOfWeek,
+                        NumberPhone = x.NumberPhone,
+                        Description = x.Description,
+                        CreateDate = x.CreateDate,
+                        StartDate = x.StartDate,
+                        EndDate = x.EndDate,
+                        Status = x.Status,
+                        IsDelete = x.IsDelete,
+                        TokenClass = x.TokenClass
+                    }).FirstOrDefault();
+                    return Ok(result);
+                }
             }
             catch (Exception ex)
             {
@@ -411,7 +423,7 @@ namespace SEP_BackEndCodeApi.Controllers
             try
             {
                 var check = _db.ListStudentClasses.Include(x => x.User).Include(x => x.Class)
-                    .Where(x => x.UserId.Equals(userId) && x.Class.ClassName.Equals(className) || x.Class.TeacherId == userId ).FirstOrDefault();
+                    .Where(x => (x.UserId.Equals(userId) && x.Class.ClassName.Equals(className) )|| (x.Class.TeacherId == userId && x.Class.ClassName.Equals(className))).FirstOrDefault();
                 if (check != null)
                 {
                     return Ok("Ok");
@@ -675,26 +687,26 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
-        //kiem tra giao vien co trong lop
-        [HttpGet]
-        public IActionResult CheckTeacherFromClass(int userId, int classId)
-        {
-            try
-            {
-                var check = _db.Classes.FirstOrDefault(x => x.TeacherId.Equals(userId) && x.ClassId.Equals(classId));
-                if (check != null)
-                {
-                    return Ok("Ok");
-                }
-                else
-                {
-                    return NotFound();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+        ////kiem tra giao vien co trong lop
+        //[HttpGet]
+        //public IActionResult CheckTeacherFromClass(int userId, int classId)
+        //{
+        //    try
+        //    {
+        //        var check = _db.Classes.FirstOrDefault(x => x.TeacherId == userId && x.ClassId == classId);
+        //        if (check != null)
+        //        {
+        //            return Ok("Ok");
+        //        }
+        //        else
+        //        {
+        //            return NotFound();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
     }
 }

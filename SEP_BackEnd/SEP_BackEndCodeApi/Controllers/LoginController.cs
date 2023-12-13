@@ -1,7 +1,7 @@
 ﻿using BussinessObject.Models;
 using DataAccess.DTO;
 using DataAccess.Repositories.IReporitory;
-using FFImageLoading.Helpers;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
