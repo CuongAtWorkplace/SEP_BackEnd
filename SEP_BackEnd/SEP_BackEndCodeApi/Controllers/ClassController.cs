@@ -41,9 +41,6 @@ namespace SEP_BackEndCodeApi.Controllers
            
         }
 
-      
-
-
         [HttpGet("GetAllClass/{Num}")]
         public IActionResult GetAllClassWithCourse(int Num)
         {
@@ -428,6 +425,29 @@ namespace SEP_BackEndCodeApi.Controllers
             {
                 var check = _db.ListStudentClasses.Include(x => x.User).Include(x => x.Class)
                     .Where(x => x.UserId.Equals(userId) && x.Class.ClassName.Equals(className) || x.Class.TeacherId == userId ).FirstOrDefault();
+                if (check != null)
+                {
+                    return Ok("Ok");
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+        [HttpGet]
+        public IActionResult CheckTeacherFromClass(int userId)
+        {
+            try
+            {
+                var check = _db.Classes.Where(x=>x.TeacherId == userId).FirstOrDefault();
                 if (check != null)
                 {
                     return Ok("Ok");
