@@ -467,7 +467,10 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                var check = _db.ListStudentClasses.Where(x => x.UserId == userId && x.ClassId == boxchat).FirstOrDefault();
+                var check = _db.ListStudentClasses.Include(x => x.User).Include(x => x.Class)
+                            .Where(x => (x.UserId.Equals(userId) && x.ClassId.Equals(boxchat)) 
+                             || (x.Class.TeacherId == userId && x.ClassId == boxchat)).FirstOrDefault();
+
                 if (check != null)
                 {
                     return Ok("Ok");
