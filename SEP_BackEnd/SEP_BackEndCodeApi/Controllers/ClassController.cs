@@ -194,7 +194,7 @@ namespace SEP_BackEndCodeApi.Controllers
         }
 
         //danh sach lop hoc cua giao vien do, viewclass
-        [HttpGet]
+        [HttpGet("{userId}")]
         public IActionResult GetClassListForTeacher(int userId)
         {
             try
@@ -618,6 +618,28 @@ namespace SEP_BackEndCodeApi.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        //kiem tra giao vien co trong lop
+        [HttpGet]
+        public IActionResult CheckTeacherFromClass(int userId, int classId)
+        {
+            try
+            {
+                var check = _db.Classes.FirstOrDefault(x => x.TeacherId.Equals(userId) && x.ClassId.Equals(classId));
+                if (check != null)
+                {
+                    return Ok("Ok");
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }
