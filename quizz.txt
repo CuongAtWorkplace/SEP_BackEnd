@@ -1,0 +1,142 @@
+--> Học sinh
+quizz :
+-add quizz vào luôn trong class khi tạo class
+-sau khi add quizz , thì hiện trong class detail 
+-giáo viên tạo quizz 
+tạo meeting room :
+ 
+class detail : sẽ có thông tin , giáo viên , giờ giấc 
+, 
+
+học sinh sẽ có một màn hình để truy cập cái meet online đó 
+
+- Học sinh có màn hình thanh toán
+
+- Xem lịch học trong màn hình profile
+
+- View quizz in class
+
+- Màn hình chat
+
+- Màn hình class detail sẽ có các thông tin cơ bản giống như coursera . Sau khi ấn vào tên giảng viên sẽ ra các thông tin của giảng viên đó và feedback về giảng viên đó . 
+
+- Sau khi khóa học tự kết thúc , sẽ ra ở trên notification . 
+
+-Các màn hình học sinh 
+
+   ->Màn hình chính 
+         -> Các màn hình nhỏ của các course đề xuất 
+
+         -> Các lớp đã tham gia 
+               -> Màn hình Class detail
+                      -> Màn hình chat
+                      -> Lại có nút để report 
+                      -> Màn hình call video 
+                            -> Thấy một màn hình hiển thị giáo viên 
+                             -> Một màn hình share nội dung 
+                             -> Các thanh điềuu hướng như out lớp , mic,... 
+                             
+ lên admin 
+         -> Nút để nhắn tin với manager
+   ->Màn hình Post
+         -> sẽ có các bài post và comment 
+         -> Tạo bài post
+   ->Màn hình notify
+   -> Màn hình Setting 
+          -> Màn hình Profile
+ 
+
+ 
+--> Teacher 
+
+- Màn hình hiển thị ra tất cả các lớp mà giáo viên phụ trách . Sau khi ấn vào từng lớp sẽ ra màn hình class detail  .
+
+- Một màn hình Profile . Trong màn hình profile ấn vào view balance sẽ hiển thị ra các thao tác về balance . 
+
+- Một màn hình notification . notify thông báo mở lớp 
+, notify về balance , notify về class Khi ấn vào notify đó sẽ nhảy đến màn hình tương ứng, notification về feedback
+- Sẽ có một màn hình ở đó quản lí tất cả các quizz
+
+---Các màn hình giáo viên 
+    
+->  Một màn hình hiển thị các course sẵn có
+          -> Một màn hình để hiển thị các lớp theo course và trạng thái chờ
+                    -> Giaso viên có thể thấy class detail của tg ứng và đăng kí giảng dạy 
+                                 -> Sau khi đăng kí giảng dạy giáo viên đc yêu cầu điền form thông tin của lớp đấy . 
+     
+-> Một màn hình hiển thị các lớp đã tham gia
+          -> ấn vào các lớp sẽ ra class detail
+                      -> Lại có nút để report lên admin                
+                      -> màn hình tạo meet cho giáo viên  
+                           -> Sẽ có một cái layout to để mà hiển thị thông tin cần share 
+                           -> Tất cả đều bật cam mình layout của cam nó chạy dọc ở phía cuối màn và có thể next đến hết lớp 
+                      
+         -> Nút để nhắn tin với manager
+         
+    -> Một màn hình settings
+           -> Màn hình Profile     
+                  -> Màn hình view Balance 
+    -> Một màn notification 
+    -> Một Màn hình quizz
+
+    -> Nút để nhắn tin với manager
+--> Manager
+
+-học sinh sau khi vào lớp sẽ có các trạng thái :   change (đổi lớp), Ban học sinh . Manager là người chuyển trạng thái . 
+Manager cần có các lịch và trong đó có các lớp . 
+
+Manager vào detail class , rồi sẽ có list student trong đó rồi chuyển trạng thái . 
+
+
+
+- Tạo ra một kênh chat riêng .
+
+- Manager cần có một màn hình ở đó hiển thị ra tất cả những thắc mắc của cả học sinh và giáo viên , 
+khi manager giải quyết 1 vấn đề thì manager khác k thể vào đc vấn đề đó nữa
+ 
+- Tạo Course 
+
+- Xem đc lịch trong đó có slot của tất cả các class
+
+-Màn hình Manger quản lí post có thể ẩn và ẩn comment , view nó ra nũa
+
+
+------- Màn hình manager :
+-> sẽ có màn hình lịch có các lớp 
+    -> Sẽ có các class detail  
+        -> Màn hình về list học viên trong lớp 
+-> Sẽ có các màn hình 
+-> Màn hình quản lí học viên 
+-> Màn hình quản lí giáo viên 
+-> Màn hình quản lí các report từ học sinh và giáo viên 
+-> Màn hình quản lí tất các course
+-> Màn hình quản lí lớp (thêm , chỉnh sửa trạng thái của cái lớp đó , ...).
+      -> Có thể tạo thêm lớp chưa đủ thông tin ở trong course 
+-> Màn hình quản lí các comment
+-> Màn hình quản lí các post
+-> Màn hình Settings
+
+
+
+--> Admin 
+Nút report hiện ra một bảng có các thông tin cần thiết 
+
+Gửi lên cho admin xét duyệt
+
+-Admin phải có màn hình  user để có thể active hoặc in active 
+
+- user sort by role : teacher , learner , manager
+- Tạo ra tài khoản mới cho teacher , manager
+- Thống kê tài khoản mới  , số tiền nhận đc  ,... 
+
+----------------- Màn hình admin 
+
+-> Màn hình dashboard 
+-> Một màn hình tất cả user
+     -> Có màn hình tạo new user 
+-> Màn hình Settings
+-> Tiếp nhận đọc report
+
+
+
+

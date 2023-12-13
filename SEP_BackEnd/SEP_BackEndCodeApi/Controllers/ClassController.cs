@@ -27,32 +27,12 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                List<ClassAllDAO> listAllClass = new List<ClassAllDAO>();
+               
+                var list = _db.Classes.ToList();
 
-                var listJoinUsersClass = _db.Users.Include(x => x.Classes).ToList();
-                var listJoinClasCourse = _db.Classes.Include(o => o.Course).Include(o => o.Teacher).ToList();
+              
 
-                foreach (var y in listJoinClasCourse)
-                {
-                    ClassAllDAO c = new ClassAllDAO
-                    {
-                        ClassName = y.ClassName,
-                        TeacherName = y.Teacher.FullName,
-                        CourseName = y.Course.CourseName,
-                        Topic = y.Topic,
-                        Fee = y.Fee,
-                        NumberOfWeek = y.NumberOfWeek,
-                        CreateDate = y.CreateDate,
-                        Schedule = y.Schedule,
-                        NumberPhone = y.NumberPhone,
-                        StartDate = y.StartDate,
-                        EndDate = y.EndDate,
-                        Status = y.Status,
-                    };
-                    listAllClass.Add(c);
-                }
-
-                return Ok(listAllClass);
+                return Ok(list);
             }
             catch(Exception ex)
             {
@@ -114,13 +94,22 @@ namespace SEP_BackEndCodeApi.Controllers
         [HttpGet("{name}")]
         public IActionResult GetClassWithCourseAndClassName(String name)
         {
-            var listClass = _db.Classes.Where(x => x.ClassName.Contains(name)).ToList();
+            var listClass = _db.Classes.Where(x => x.ClassName.Contains(name))
+                 .Select(classItem => new
+                 {
+                     ClassId = classItem.ClassId,
+                     Classname = classItem.ClassName,
+                     CourseName = classItem.Course.CourseName, // Assuming there's a navigation property named "Course"
+                     CourseId = classItem.CourseId,
+                     // Add other fields as needed
+                 })
+                .ToList();
             if (listClass == null)
             {
                 var listClass2 = _db.Classes.Join( _db.Courses,classItem => classItem.CourseId,course => course.CourseId,(classItem, course) => new
          {
              ClassId = classItem.ClassId,
-             ClassName = classItem.ClassName,
+             Classname = classItem.ClassName,
              CourseName = course.CourseName,
              CourseId = classItem.CourseId,
 
@@ -139,13 +128,33 @@ namespace SEP_BackEndCodeApi.Controllers
         public IActionResult GetClassByDate(string Order)
         {
             if (Order.Equals("ascend")) {
-                var listClass = _db.Classes.OrderBy(x => x.CreateDate).ToList();
+                var listClass = _db.Classes
+                    .OrderBy(x => x.CreateDate)
+                     .Select(classItem => new
+                     {
+                         ClassId = classItem.ClassId,
+                         Classname = classItem.ClassName,
+                         CourseName = classItem.Course.CourseName, // Assuming there's a navigation property named "Course"
+                         CourseId = classItem.CourseId,
+                         // Add other fields as needed
+                     })
+                    .ToList();
                 return Ok(listClass);
             }
 
             if (Order.Equals("descend"))
             {
-                    var listClass = _db.Classes.OrderByDescending(x => x.CreateDate).ToList();
+                    var listClass = _db.Classes
+                    .OrderByDescending(x => x.CreateDate)
+                     .Select(classItem => new
+                     {
+                         ClassId = classItem.ClassId,
+                         Classname = classItem.ClassName,
+                         CourseName = classItem.Course.CourseName, // Assuming there's a navigation property named "Course"
+                         CourseId = classItem.CourseId,
+                         // Add other fields as needed
+                     })
+                    .ToList();
                 return Ok(listClass);
             }
             return Ok();
@@ -205,6 +214,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 {
                     return NotFound();
                 }
+
                 var result = allClass.Where(u => u.TeacherId == userId).Select(x => new ClassDTO()
                 {
                     ClassId = x.ClassId,
@@ -418,6 +428,49 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
+
+        [HttpGet]
+        public IActionResult CheckTeacherFromClass(int userId)
+        {
+            try
+            {
+                var check = _db.Classes.Where(x=>x.TeacherId == userId).FirstOrDefault();
+                if (check != null)
+                {
+                    return Ok("Ok");
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult CheckUserFromClassInBoxChat(int userId, int boxchat)
+        {
+            try
+            {
+                var check = _db.ListStudentClasses.Where(x => x.UserId == userId && x.ClassId == boxchat).FirstOrDefault();
+                if (check != null)
+                {
+                    return Ok("Ok");
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         [HttpPut]
         public IActionResult RequestClass(RequestClassDTO rClass)
         {
@@ -447,7 +500,8 @@ namespace SEP_BackEndCodeApi.Controllers
         [HttpGet("{text}")]
         public ActionResult<Class> SearchClass(string text)
         {
-            List<Class> classs = _db.Classes.Where(c => c.ClassName.Contains(text) || c.Topic.Contains(text)).ToList();
+            List<Class> classs = _db.Classes.Where(c => c.ClassName.Contains(text) || c.Topic.Contains(text))
+                .ToList();
             if (classs is null) return NotFound();
             else return Ok(classs);
         }
