@@ -36,6 +36,23 @@ namespace DataAccess.Repositories
             return result;
         }
 
+        public async Task<bool> CheckEmailExist(string email)
+        {
+            try
+            {
+                // Kiểm tra xem có người dùng nào có email tương ứng không
+                var userWithEmail = await _context.Users.AnyAsync(x => x.Email == email);
+
+                return userWithEmail;
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi, bạn có thể ném một ngoại lệ hoặc ghi log tùy thuộc vào yêu cầu của bạn
+                Console.WriteLine($"Error checking email existence: {ex.Message}");
+                return false;
+            }
+        }
+
         public Task<User> DeleteUser(int Id)
         {
             throw new NotImplementedException();

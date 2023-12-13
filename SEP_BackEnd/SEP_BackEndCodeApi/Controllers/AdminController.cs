@@ -115,5 +115,22 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
+        [HttpGet("checkemail")]
+        public async Task<IActionResult> CheckEmailExistence([FromQuery] string email)
+        {
+            try
+            {
+                var emailExists = await _adminRepository.CheckEmailExist(email);
+
+                return Ok(new { Exists = emailExists });
+            }
+            catch (Exception ex)
+            {
+                // Handle error
+                return BadRequest(ex.Message);
+            }
+        }
+
+
     }
 }
