@@ -20,6 +20,7 @@ namespace DataAccess.Repositories.IReporitory
         Task<int> GetTotalUser();
         Task<int> GetTotalPost();
         Task<int> GetTotalCourse();
+        Task<bool> CheckEmailExist(string email);
 
     }
 }
