@@ -106,8 +106,9 @@ namespace SEP_BackEndCodeApi.Controllers
                      Classname = classItem.ClassName,
                      CourseName = classItem.Course.CourseName, // Assuming there's a navigation property named "Course"
                      CourseId = classItem.CourseId,
-                     // Add other fields as needed
+                     teacherId = classItem.TeacherId,
                  })
+                                         .Where(result => result.teacherId != null) // Filter where TeacherId is not null
                 .ToList();
             if (listClass == null)
             {
@@ -141,8 +142,10 @@ namespace SEP_BackEndCodeApi.Controllers
                          Classname = classItem.ClassName,
                          CourseName = classItem.Course.CourseName, // Assuming there's a navigation property named "Course"
                          CourseId = classItem.CourseId,
-                         // Add other fields as needed
+                         teacherId = classItem.TeacherId,
                      })
+                      .Where(result => result.teacherId != null) // Filter where TeacherId is not null
+
                     .ToList();
                 return Ok(listClass);
             }
@@ -157,8 +160,10 @@ namespace SEP_BackEndCodeApi.Controllers
                          Classname = classItem.ClassName,
                          CourseName = classItem.Course.CourseName, // Assuming there's a navigation property named "Course"
                          CourseId = classItem.CourseId,
-                         // Add other fields as needed
+                         teacherId = classItem.TeacherId,
                      })
+                                           .Where(result => result.teacherId != null) // Filter where TeacherId is not null
+
                     .ToList();
                 return Ok(listClass);
             }
@@ -687,6 +692,44 @@ namespace SEP_BackEndCodeApi.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        //kiem tra class name da ton tai chua
+        [HttpGet]
+        public IActionResult CheckClassName(string className)
+        {
+            try
+            {
+                var check = _db.Classes.FirstOrDefault(x => !(!x.ClassName.Equals(className) || !x.ClassName.Contains(className)));
+                if (check is not null)
+                {
+                    return NotFound();
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        //kiem tra course name da ton tai chua
+        [HttpGet]
+        public IActionResult CheckCourseName(string courseName)
+        {
+            try
+            {
+                var check = _db.Courses.FirstOrDefault(x => !(!x.CourseName.Equals(courseName) || !x.CourseName.Contains(courseName)));
+                if (check is not null)
+                {
+                    return NotFound();
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
 

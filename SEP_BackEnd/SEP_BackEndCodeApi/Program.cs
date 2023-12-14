@@ -57,7 +57,7 @@ namespace SEP_BackEndCodeApi
             {
                 options.AddPolicy("AllowOrigin", builder =>
                     builder
-                        .WithOrigins("https://5f3d-2405-4802-ff-b5f0-e4e8-53a1-46ea-b29a.ngrok-free.app")  // Add your client origin(s)
+                        .WithOrigins("https://pretty-loved-tadpole.ngrok.app")  // Add your client origin(s)
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()
