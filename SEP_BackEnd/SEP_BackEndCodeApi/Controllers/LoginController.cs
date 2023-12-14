@@ -47,9 +47,13 @@ namespace SEP_BackEndCodeApi.Controllers
         private User AuthenticateUser(string email, string password)
         {
             string hashedPassword = MD5Helper.GetMD5Hash(password);
-            User _user = _db.Users.FirstOrDefault(x => x.Email.Equals(email) && x.Password.Equals(hashedPassword));
+            User _user = _db.Users.Where(x => x.Email.Equals(email) && x.Password.Equals(hashedPassword) && x.IsBan != true).FirstOrDefault(); ;
+            if(_user != null )
+            {
+                return _user;
+            }
 
-            return _user;
+            return null;
         }
 
         [HttpPost]
@@ -110,7 +114,7 @@ namespace SEP_BackEndCodeApi.Controllers
                     FeedbackId = 1,
                     Image = null,
                     IsBan = false,
-                    RoleId = 1,
+                    RoleId = 2,
                     Token = null
                 };
                 _user.AddNew(user);

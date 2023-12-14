@@ -36,7 +36,7 @@ namespace DataAccess
             try
             {
                 var db = new DB_SEP490Context();
-                list = db.Posts.ToList();
+                list = db.Posts.Where(a => a.IsActive== true).ToList();
             }
             catch (Exception ex)
             {
