@@ -35,7 +35,7 @@ namespace SEP_BackEndCodeApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddPayment(PaymentHistory paymentHistory)
+        public IActionResult AddPayment(PaymentHistory paymentHistory )
         {
             try
             {

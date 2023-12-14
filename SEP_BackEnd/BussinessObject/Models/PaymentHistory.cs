@@ -8,6 +8,7 @@ namespace BussinessObject.Models
         public int Id { get; set; }
         public int? FromUser { get; set; }
         public int? ToUser { get; set; }
+        public int? TotalMoney { get; set; }
         public DateTime? CreateDate { get; set; }
         public bool? Type { get; set; }
 
