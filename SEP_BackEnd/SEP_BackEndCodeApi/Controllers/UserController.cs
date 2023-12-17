@@ -452,5 +452,31 @@ namespace SEP_BackEndCodeApi.Controllers
                 return Conflict();
             }
         }
+
+        //chinh sua thong tin nguoi dang nhap
+        [HttpPut]
+        public IActionResult ChangeIsBanUser(User user)
+        {
+            try
+            {
+                User u = _db.Users.FirstOrDefault(n => n.UserId == user.UserId);
+                if (u is null)
+                {
+                    return StatusCode(444, "User is not found");
+                }
+                else
+                {
+                    u.IsBan = user.IsBan;
+                    _db.Users.Update(u);
+                    int result = _db.SaveChanges();
+                    return Ok(result);
+                }
+            }
+            catch
+            {
+                return Conflict();
+            }
+        }
+
     }
 }

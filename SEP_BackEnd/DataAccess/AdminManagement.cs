@@ -139,6 +139,24 @@ namespace DataAccess.Repositories
             return list;
         }
 
+        public async Task<List<PaymentHistoryVM>> GetListPayMent()
+        {
+            var allPayMent = await _context.PaymentHistories
+                .Include(t => t.FromUserNavigation)
+                .ToListAsync();
+
+            var result = allPayMent.Select(x => new PaymentHistoryVM()
+            {
+                Id = x.Id,
+                FromUser = x.FromUserNavigation.FullName,
+                ToUser= x.FromUserNavigation.FullName,
+                TotalMoney = x.TotalMoney,
+                CreateDate = x.CreateDate.Value.ToString("dd'-'MM'-'yyyy"),
+                Type = x.Type,
+            }).ToList();
+            //return Ok(result);
+            return result;
+        }
 
     }
 }

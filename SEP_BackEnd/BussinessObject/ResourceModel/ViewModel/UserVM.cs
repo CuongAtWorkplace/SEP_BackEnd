@@ -19,4 +19,14 @@ namespace BussinessObject.ResourceModel.ViewModel
         public string? CreateDate { get; set; }
         public string? Status { get; set; }
     }
+    public class PaymentHistoryVM
+    {
+        public int Id { get; set; }
+        public string FromUser { get; set; }
+        public string ToUser { get; set; }
+        public int? TotalMoney { get; set; }
+        public  string CreateDate { get; set; }
+        public bool? Type { get;set; } 
+    }
+
 }
