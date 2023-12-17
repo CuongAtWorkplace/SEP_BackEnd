@@ -21,6 +21,7 @@ namespace DataAccess.Repositories.IReporitory
         Task<int> GetTotalPost();
         Task<int> GetTotalCourse();
         Task<bool> CheckEmailExist(string email);
+        Task<List<PaymentHistoryVM>> GetListPayMent();
 
     }
 }
