@@ -37,8 +37,8 @@ namespace SEP_BackEndCodeApi.Controllers
         private IConfiguration _config;
         private readonly DB_SEP490Context _db;
         private readonly IUserRepository _user;
-       public LoginController(IUserRepository user,IConfiguration config , DB_SEP490Context db) 
-        { 
+        public LoginController(IUserRepository user, IConfiguration config, DB_SEP490Context db)
+        {
             _config = config;
             _db = db;
             _user = user;
@@ -48,7 +48,7 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             string hashedPassword = MD5Helper.GetMD5Hash(password);
             User _user = _db.Users.Where(x => x.Email.Equals(email) && x.Password.Equals(hashedPassword) && x.IsBan != true).FirstOrDefault(); ;
-            if(_user != null )
+            if (_user != null)
             {
                 return _user;
             }
@@ -67,7 +67,7 @@ namespace SEP_BackEndCodeApi.Controllers
                     Role role = _db.Roles.Where(u => u.RoleId == user.RoleId).SingleOrDefault();
 
 
-                    
+
                     var claims = new[]
                     {
                      new Claim("userid", user.UserId.ToString()),
@@ -83,11 +83,24 @@ namespace SEP_BackEndCodeApi.Controllers
                     return Ok(new { token });
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
             return Unauthorized();
+        }
+        [HttpGet]
+        [Route("api/CheckLearnerEmail")]
+        public IActionResult CheckLearnerEmail([FromQuery] string email)
+        {
+            var checkUser = _db.Users.FirstOrDefault(x => x.Email.Equals(email) && x.RoleId == 2);
+
+            if (checkUser != null)
+            {
+                return Ok(new { exists = true, message = "Email exists with the correct role." });
+            }
+
+            return Ok(new { exists = false, message = "Email does not exist or does not have the correct role." });
         }
 
 
@@ -99,7 +112,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 var checkUser = _user.GetUserByEmail(registrationModel.Email);
                 if (checkUser != null)
                 {
-                    return BadRequest(new { Message = "Tên người dùng đã tồn tại." });
+                    return BadRequest(new { Message = "Email is used by other user" });
                 }
                 string encodedPassword = MD5Helper.GetMD5Hash(registrationModel.Password);
                 User user = new User

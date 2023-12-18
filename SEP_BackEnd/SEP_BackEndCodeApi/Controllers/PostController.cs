@@ -207,6 +207,36 @@ namespace SEP_BackEndCodeApi.Controllers
         }
 
         [HttpGet]
+        public IActionResult ListCommentPost2(int postId)
+        {
+            try
+            {
+                var comments = _db.UserCommentPosts
+                    .Include(c => c.User)
+                    .Where(c => c.PostId == postId && c.IsActive == true)
+                    .Select(c => new
+                    {
+                        UserFullName = c.User.FullName,
+                        UserCommentPostId = c.UserCommentPostId,
+                        UserId = c.UserId,
+                        PostId = c.PostId,
+                        Content = c.Content,
+                        CreateDate = c.CreateDate,
+                        LikeAmount = c.LikeAmount,
+                        IsActive = c.IsActive
+                    })
+                    .ToList();
+
+
+                return Ok(comments);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet]
         public IActionResult GetCommentById(int commentId)
         {
             try

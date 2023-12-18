@@ -140,7 +140,31 @@ namespace SEP_BackEndCodeApi.Controllers
 
             return Ok();
         }
-    
+
+
+        [HttpPut("UpdateBalanceStudentPurchase/{balance}/{UserID}")]
+        public IActionResult UpdateBalanceStudentPurchase(long balance, int UserID)
+        {
+            var user = _db.Users.FirstOrDefault(x => x.UserId == UserID && x.RoleId == 2);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+            user.Balance += balance; // Trừ đi balance mới từ balance hiện tại
+
+            try
+            {
+                _db.SaveChanges(); // Lưu thay đổi vào cơ sở dữ liệu
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi khi lưu vào cơ sở dữ liệu nếu cần
+                return BadRequest("Lỗi khi cập nhật balance: " + ex.Message);
+            }
+
+            return Ok();
+        }
 
         [HttpGet("GetStudentById/{UserID}")]
         public IActionResult GetStudentById(int UserID)
@@ -374,6 +398,7 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
+                string password = MD5Helper.GetMD5Hash(newPassword);
                 var user = _db.Users.FirstOrDefault(u => u.Email == Email);
 
                 if (user == null)
@@ -381,13 +406,13 @@ namespace SEP_BackEndCodeApi.Controllers
                     return NotFound("User not found");
                 }
 
-               
-                    // Cập nhật mật khẩu trong cơ sở dữ liệu
-                    user.Password = newPassword;
-                    _db.SaveChanges();
 
-                    return Ok("Password updated successfully");
-                
+                // Cập nhật mật khẩu trong cơ sở dữ liệu
+                user.Password = password;
+                _db.SaveChanges();
+
+                return Ok("Password updated successfully");
+
             }
             catch (Exception ex)
             {
@@ -395,6 +420,8 @@ namespace SEP_BackEndCodeApi.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+       
 
         //chinh sua thong tin nguoi dang nhap
         [HttpPut]
@@ -409,9 +436,10 @@ namespace SEP_BackEndCodeApi.Controllers
                 }
                 else
                 {
-                    if(eUser.Password != eUser.NewPassword && eUser.NewPassword == eUser.RePassword)
+                    if (u.Password == eUser.Password)
                     {
-                        u.Password = eUser.NewPassword;
+                        string encodedPassword = MD5Helper.GetMD5Hash(eUser.NewPassword);
+                        u.Password = encodedPassword;
                         _db.Users.Update(u);
                         int result = _db.SaveChanges();
                         return Ok(result);
@@ -427,7 +455,6 @@ namespace SEP_BackEndCodeApi.Controllers
                 return Conflict();
             }
         }
-
         //chinh sua thong tin nguoi dang nhap
         [HttpPut]
         public IActionResult ChangeImage(ChangeImageDTO eUser)
