@@ -472,9 +472,7 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                var check = _db.ListStudentClasses.Include(x => x.User).Include(x => x.Class)
-                            .Where(x => (x.UserId.Equals(userId) && x.ClassId.Equals(boxchat)) 
-                             || (x.Class.TeacherId == userId && x.ClassId == boxchat)).FirstOrDefault();
+                var check = _db.Classes.Where(x=>x.ClassId == boxchat && x.TeacherId == userId) .FirstOrDefault();
 
                 if (check != null)
                 {
@@ -489,6 +487,29 @@ namespace SEP_BackEndCodeApi.Controllers
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+        [HttpDelete]
+        public IActionResult DeleteStudentInClass(int classId, int studentId)
+        {
+            try
+            {
+                ListStudentClass listStudentClass = _db.ListStudentClasses.Where(x => x.ClassId == classId && x.UserId == studentId).FirstOrDefault();
+                if (listStudentClass is null)
+                {
+                    return StatusCode(444, "Student is not found found ");
+                }
+                else
+                {
+
+                    _db.ListStudentClasses.Remove(listStudentClass);
+                    int result = _db.SaveChanges();
+                    return Ok(result);
+                }
+            }
+            catch
+            {
+                return Conflict();
             }
         }
         [HttpPut]
