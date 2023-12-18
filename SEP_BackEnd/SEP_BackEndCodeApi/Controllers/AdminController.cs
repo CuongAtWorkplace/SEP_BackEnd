@@ -46,8 +46,21 @@ namespace SEP_BackEndCodeApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+            [HttpGet("GetListPaymentHistory")]
+            public async Task<IActionResult> GetListPaymentHistory()
+            {
+                try
+                {
+                    var list = await _adminRepository.GetListPayMent();
+                    return Ok(list);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
 
-        [HttpGet("GetUserById/{Id}")]
+            [HttpGet("GetUserById/{Id}")]
         public async Task<IActionResult> GetUserById(int Id)
         {
             try

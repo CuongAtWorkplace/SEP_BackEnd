@@ -39,7 +39,10 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
+                User u = _db.Users.FirstOrDefault(x => x.UserId == paymentHistory.ToUser);
                 _db.PaymentHistories.Add(paymentHistory);
+                u.Balance += paymentHistory.TotalMoney;
+                _db.Users.Update(u);
                 _db.SaveChanges();
                 return Ok();
             }catch(Exception ex)
