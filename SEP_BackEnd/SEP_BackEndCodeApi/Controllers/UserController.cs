@@ -505,5 +505,32 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
+        [HttpPut]
+        public IActionResult ChangePasswordAdmin(ChangePasswordAdminDTO eUser)
+        {
+            try
+            {
+                User u = _db.Users.FirstOrDefault(n => n.UserId == eUser.UserId);
+                if (u is null)
+                {
+                    return StatusCode(444, "User is not found");
+                }
+                else
+                {
+                   
+                        string encodedPassword = MD5Helper.GetMD5Hash(eUser.Password);
+                        u.Password = encodedPassword;
+                        _db.Users.Update(u);
+                        int result = _db.SaveChanges();
+                        return Ok(result);
+                   
+                }
+            }
+            catch
+            {
+                return Conflict();
+            }
+        }
+
     }
 }
