@@ -126,6 +126,7 @@ namespace SEP_BackEndCodeApi.Controllers
                     Phone = registrationModel.Phone,
                     FeedbackId = 1,
                     Image = null,
+                    Balance = 0,
                     IsBan = false,
                     RoleId = 2,
                     Token = null
