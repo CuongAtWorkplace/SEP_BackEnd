@@ -434,8 +434,16 @@ namespace SEP_BackEndCodeApi.Controllers
             {
                     _db.Classes.Add(classCreate);
                     _db.SaveChanges();
-                
-                return Ok();
+
+                var classLast = _db.Classes.OrderByDescending(x => x.CreateDate).FirstOrDefault();
+                if(classLast != null)
+                {
+                    return Ok(classLast.ClassId);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
             catch (Exception ex)
             {
