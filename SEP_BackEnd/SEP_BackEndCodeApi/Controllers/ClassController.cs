@@ -464,15 +464,17 @@ namespace SEP_BackEndCodeApi.Controllers
                 throw new Exception(ex.Message);
             }
         }
-
+        //&& x.Class.ClassName.Equals(className)
         [HttpGet]
         public IActionResult CheckUserFromClass(int userId, string className)
         {
             try
             {
                 var check = _db.ListStudentClasses.Include(x => x.User).Include(x => x.Class)
-                    .Where(x => (x.UserId.Equals(userId) && x.Class.ClassName.Equals(className) )|| (x.Class.TeacherId == userId && x.Class.ClassName.Equals(className))).FirstOrDefault();
-                if (check != null)
+                    .Where(x => (x.UserId.Equals(userId) && x.Class.ClassName.Equals(className))).FirstOrDefault();
+
+                var checkTeacher = _db.Classes.Where(y => (y.TeacherId == userId && y.ClassName.Equals(className))).FirstOrDefault();
+                if (check != null || checkTeacher != null)
                 {
                     return Ok("Ok");
                 }
@@ -513,7 +515,7 @@ namespace SEP_BackEndCodeApi.Controllers
         [HttpGet]
         public IActionResult CheckUserFromClassInBoxChat(int userId, int boxchat)
         {
-            try
+            try 
             {
                 var check = _db.Classes.Where(x=>x.ClassId == boxchat && x.TeacherId == userId) .FirstOrDefault();
 
