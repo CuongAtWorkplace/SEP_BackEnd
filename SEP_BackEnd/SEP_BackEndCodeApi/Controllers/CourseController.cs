@@ -57,7 +57,7 @@ namespace SEP_BackEndCodeApi.Controllers
           
 
             // Đường dẫn đầy đủ tới tệp hình ảnh
-            var imagePath = Path.Combine(@"C:\Users\ngoba\OneDrive\Máy tính\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\Photos\3_638364132311632591.jpg");
+            var imagePath = Path.Combine(@"C:\Users\ngoba\OneDrive\Máy tính\SEP_BackEnd\SEP_BackEnd\SEP_BackEndCodeApi\Photos\Qr.jpg");
 
             // Kiểm tra xem tệp hình ảnh có tồn tại không
             if (!System.IO.File.Exists(imagePath))

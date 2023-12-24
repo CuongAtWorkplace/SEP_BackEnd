@@ -95,12 +95,12 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             var checkUser = _db.Users.FirstOrDefault(x => x.Email.Equals(email) && x.RoleId == 2);
 
-            if (checkUser != null)
+            if (checkUser == null)
             {
-                return Ok(new { exists = true, message = "Email exists with the correct role." });
+                return BadRequest();
             }
 
-            return Ok(new { exists = false, message = "Email does not exist or does not have the correct role." });
+            return Ok();
         }
 
 
