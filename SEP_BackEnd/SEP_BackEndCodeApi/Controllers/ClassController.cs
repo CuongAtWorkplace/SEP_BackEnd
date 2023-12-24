@@ -40,6 +40,41 @@ namespace SEP_BackEndCodeApi.Controllers
             }
            
         }
+        [HttpGet]
+        public IActionResult GetAllClassManage()
+        {
+            try
+            {
+                List<ClassAllDAO> listAllClass = new List<ClassAllDAO>();
+                var list = _db.Classes.Include(x => x.Teacher).Include(x => x.Course).ToList();
+                foreach (var y in list)
+                {
+                    ClassAllDAO c = new ClassAllDAO
+                    {
+                        ClassName = y.ClassName,
+                        TeacherName = y.Teacher?.FullName,
+                        CourseName = y.Course.CourseName,
+                        Topic = y.Topic,
+                        Fee = y.Fee,
+                        NumberOfWeek = y.NumberOfWeek,
+                        CreateDate = y.CreateDate,
+                        Schedule = y.Schedule,
+                        NumberPhone = y.NumberPhone,
+                        StartDate = y.StartDate,
+                        EndDate = y.EndDate,
+                        Status = y.Status,
+                    };
+                    listAllClass.Add(c);
+                }
+
+
+                return Ok(listAllClass);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
         [HttpGet]
         public IActionResult GetAllClassManage()
@@ -434,8 +469,16 @@ namespace SEP_BackEndCodeApi.Controllers
             {
                     _db.Classes.Add(classCreate);
                     _db.SaveChanges();
-                
-                return Ok();
+
+                var classLast = _db.Classes.OrderByDescending(x => x.CreateDate).FirstOrDefault();
+                if(classLast != null)
+                {
+                    return Ok(classLast.ClassId);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
             catch (Exception ex)
             {

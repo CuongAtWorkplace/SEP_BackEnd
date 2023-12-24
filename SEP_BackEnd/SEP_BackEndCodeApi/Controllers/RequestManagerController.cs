@@ -45,7 +45,29 @@ namespace SEP_BackEndCodeApi.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        [HttpPost]
+        public async Task<IActionResult> CreateChatRoomManage([FromBody] ChatRoom chatRoom)
+        {
+            try
+            {
+                // Kiểm tra tính hợp lệ của đối tượng chatRoom, kiểm tra null và các điều kiện khác nếu cần
+                if (chatRoom == null)
+                {
+                    return BadRequest("Invalid chat room data");
+                }
 
+                // Thêm chatRoom vào DbSet và lưu thay đổi vào cơ sở dữ liệu
+                _db.ChatRooms.Add(chatRoom);
+                await _db.SaveChangesAsync();
+               
+                return CreatedAtAction(nameof(GetChatRoomById), new { id = chatRoom.ChatRoomId }, chatRoom.ChatRoomId);
+            }
+            catch (Exception ex)
+            {
+                // Trả về lỗi nếu có lỗi xảy ra
+                return StatusCode(500, "Internal server error");
+            }
+        }
         // Hàm lấy ChatRoom bởi ID
         [HttpGet("{id}")]
         public async Task<IActionResult> GetChatRoomById(int id)
@@ -71,27 +93,26 @@ namespace SEP_BackEndCodeApi.Controllers
             }
         }
 
-        // Hàm lấy ChatRoom bởi isManagerChat
+    
         [HttpGet()]
         public async Task<IActionResult> GetChatRoomByisManagerChat(bool check)
         {
             try
             {
-                // Lấy chatRoom từ cơ sở dữ liệu bằng ID
+               
                 var chatRoom = await _db.ChatRooms.Where(x => x.IsManagerChat == check).ToListAsync();
 
-                // Kiểm tra xem chatRoom có tồn tại hay không
+              
                 if (chatRoom == null)
                 {
-                    return NotFound(); // Trả về HTTP Status 404 Not Found nếu không tìm thấy chatRoom
+                    return NotFound(); 
                 }
 
-                // Trả về thông tin của chatRoom
+
                 return Ok(chatRoom);
             }
             catch (Exception ex)
             {
-                // Trả về lỗi nếu có lỗi xảy ra
                 return StatusCode(500, "Internal server error");
             }
         }
