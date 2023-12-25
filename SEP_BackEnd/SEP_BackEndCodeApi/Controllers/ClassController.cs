@@ -46,7 +46,7 @@ namespace SEP_BackEndCodeApi.Controllers
             try
             {
                 List<ClassAllDAO> listAllClass = new List<ClassAllDAO>();
-                var list = _db.Classes.Include(x => x.Teacher).Include(x => x.Course).OrderBy(x=>x.CreateDate).ToList();
+                var list = _db.Classes.Include(x => x.Teacher).Include(x => x.Course).OrderByDescending(x=>x.CreateDate).ToList();
                 foreach (var y in list)
                 {
                     ClassAllDAO c = new ClassAllDAO
@@ -795,8 +795,8 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                var check = _db.Classes.FirstOrDefault(x => x.ClassName.Equals(className));
-                if (check != null)
+                var check = _db.Classes.Any(x => x.ClassName.Equals(className));
+                if (check)
                 {
                     return Ok();
                 }
