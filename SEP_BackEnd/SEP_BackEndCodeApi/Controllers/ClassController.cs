@@ -57,6 +57,7 @@ namespace SEP_BackEndCodeApi.Controllers
                         Topic = y.Topic,
                         Fee = y.Fee,
                         NumberOfWeek = y.NumberOfWeek,
+                        NumberStudent = y.NumberStudent,
                         CreateDate = y.CreateDate,
                         Schedule = y.Schedule,
                         NumberPhone = y.NumberPhone,
@@ -518,8 +519,9 @@ namespace SEP_BackEndCodeApi.Controllers
             try 
             {
                 var check = _db.Classes.Where(x=>x.ClassId == boxchat && x.TeacherId == userId) .FirstOrDefault();
+                var checkManage = _db.Users.Where(y=>y.UserId== userId).FirstOrDefault();
 
-                if (check != null)
+                if (check != null || checkManage.RoleId == 3 )
                 {
                     return Ok("Ok");
                 }
