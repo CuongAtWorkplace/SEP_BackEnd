@@ -143,13 +143,14 @@ namespace DataAccess.Repositories
         {
             var allPayMent = await _context.PaymentHistories
                 .Include(t => t.FromUserNavigation)
+                .Include(t => t.ToUserNavigation)
                 .ToListAsync();
 
             var result = allPayMent.Select(x => new PaymentHistoryVM()
             {
                 Id = x.Id,
                 FromUser = x.FromUserNavigation.FullName,
-                ToUser= x.FromUserNavigation.FullName,
+                ToUser= x.ToUserNavigation.FullName,
                 TotalMoney = x.TotalMoney,
                 CreateDate = x.CreateDate.Value.ToString("dd'-'MM'-'yyyy"),
                 Type = x.Type,
