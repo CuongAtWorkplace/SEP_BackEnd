@@ -113,7 +113,6 @@ namespace DataAccess
                         Email = user.Email,
                         Password = user.Password,
                         Phone = user.Phone,
-                        RoleId = 1,
                         IsBan = false,
                         Image = user.Image,
                     };
@@ -148,6 +147,7 @@ namespace DataAccess
                         Phone = user.Phone,
                         RoleId = 2,
                         IsBan = false,
+                        Balance = 0,
                         Image = null,
                     };
                     db.Users.Add(u);

@@ -57,6 +57,7 @@ namespace SEP_BackEndCodeApi.Controllers
                         Topic = y.Topic,
                         Fee = y.Fee,
                         NumberOfWeek = y.NumberOfWeek,
+                        NumberStudent = y.NumberStudent,
                         CreateDate = y.CreateDate,
                         Schedule = y.Schedule,
                         NumberPhone = y.NumberPhone,
@@ -499,15 +500,17 @@ namespace SEP_BackEndCodeApi.Controllers
                 throw new Exception(ex.Message);
             }
         }
-
+        //&& x.Class.ClassName.Equals(className)
         [HttpGet]
         public IActionResult CheckUserFromClass(int userId, string className)
         {
             try
             {
                 var check = _db.ListStudentClasses.Include(x => x.User).Include(x => x.Class)
-                    .Where(x => (x.UserId.Equals(userId) && x.Class.ClassName.Equals(className) )|| (x.Class.TeacherId == userId && x.Class.ClassName.Equals(className))).FirstOrDefault();
-                if (check != null)
+                    .Where(x => (x.UserId.Equals(userId) && x.Class.ClassName.Equals(className))).FirstOrDefault();
+
+                var checkTeacher = _db.Classes.Where(y => (y.TeacherId == userId && y.ClassName.Equals(className))).FirstOrDefault();
+                if (check != null || checkTeacher != null)
                 {
                     return Ok("Ok");
                 }
@@ -548,11 +551,12 @@ namespace SEP_BackEndCodeApi.Controllers
         [HttpGet]
         public IActionResult CheckUserFromClassInBoxChat(int userId, int boxchat)
         {
-            try
+            try 
             {
                 var check = _db.Classes.Where(x=>x.ClassId == boxchat && x.TeacherId == userId) .FirstOrDefault();
+                var checkManage = _db.Users.Where(y=>y.UserId== userId).FirstOrDefault();
 
-                if (check != null)
+                if (check != null || checkManage.RoleId == 3 )
                 {
                     return Ok("Ok");
                 }
