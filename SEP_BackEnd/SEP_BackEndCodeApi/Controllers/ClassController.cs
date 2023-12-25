@@ -463,8 +463,34 @@ namespace SEP_BackEndCodeApi.Controllers
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
-            }
+            }   
         }
+
+        //[HttpGet]
+        //public async Task<IActionResult> CheckClassName(string className)
+        //{
+        //    try
+        //    {
+        //        //var nameClass = _db.Classes.Where(x => x.ClassName.Equals(className)).FirstOrDefault();
+        //        var nameClassCheck = await _db.Classes.AnyAsync(x => x.ClassName == className);
+
+        //        if (nameClassCheck != null)
+        //        {
+        //            return Ok(nameClassCheck);
+        //        }
+        //        else
+        //        {
+        //            return NotFound();
+        //        }
+                
+               
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
+
         //&& x.Class.ClassName.Equals(className)
         [HttpGet]
         public IActionResult CheckUserFromClass(int userId, string className)
@@ -769,12 +795,16 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                var check = _db.Classes.FirstOrDefault(x => !(!x.ClassName.Equals(className) || !x.ClassName.Contains(className)));
-                if (check is not null)
+                var check = _db.Classes.FirstOrDefault(x => x.ClassName.Equals(className));
+                if (check != null)
+                {
+                    return Ok();
+                }
+                else
                 {
                     return NotFound();
                 }
-                return Ok();
+               
             }
             catch (Exception ex)
             {
@@ -824,3 +854,4 @@ namespace SEP_BackEndCodeApi.Controllers
         //}
     }
 }
+ 
