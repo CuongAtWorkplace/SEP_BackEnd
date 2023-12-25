@@ -46,7 +46,7 @@ namespace SEP_BackEndCodeApi.Controllers
             try
             {
                 List<ClassAllDAO> listAllClass = new List<ClassAllDAO>();
-                var list = _db.Classes.Include(x => x.Teacher).Include(x => x.Course).ToList();
+                var list = _db.Classes.Include(x => x.Teacher).Include(x => x.Course).OrderBy(x=>x.CreateDate).ToList();
                 foreach (var y in list)
                 {
                     ClassAllDAO c = new ClassAllDAO
@@ -734,7 +734,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 var list = _db.RequestClasses
                     .Include(x=>x.User)
                     .Include(x=>x.Class)
-                    .Where(x=>x.Type == null)
+                    .Where(x=>x.Type == null && x.Class.TeacherId == null)
                     .Select(x => new ListRequestClassDTO
                     {
                         RequestClassId=x.RequestClassId,

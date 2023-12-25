@@ -50,5 +50,22 @@ namespace SEP_BackEndCodeApi.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        [HttpPost]
+        public IActionResult LessPayment(PaymentHistory paymentHistory)
+        {
+            try
+            {
+                User u = _db.Users.FirstOrDefault(x => x.UserId == paymentHistory.ToUser);
+                _db.PaymentHistories.Add(paymentHistory);
+                u.Balance -= paymentHistory.TotalMoney;
+                _db.Users.Update(u);
+                _db.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
