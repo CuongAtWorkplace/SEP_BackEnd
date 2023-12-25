@@ -146,7 +146,7 @@ namespace DataAccess
                         Email = user.Email,
                         Password = user.Password,
                         Phone = user.Phone,
-                        RoleId = 1,
+                        RoleId = 2,
                         IsBan = false,
                         Image = null,
                     };

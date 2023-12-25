@@ -131,7 +131,9 @@ namespace SEP_BackEndCodeApi.Controllers
                     RoleId = 2,
                     Token = null
                 };
-                _user.AddNew(user);
+
+                _db.Users.Add(user);
+                _db.SaveChanges();
 
                 // Trả về thông tin đăng ký thành công
                 return Ok(new { Message = "Đăng ký thành công" });
