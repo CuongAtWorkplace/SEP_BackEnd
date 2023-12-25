@@ -18,13 +18,19 @@ namespace SEP_BackEndCodeApi.Controllers
         private readonly IPostRepository post;
 
         private readonly IWebHostEnvironment _env;
-        public PostController(IPostRepository _post, IConfiguration config, DB_SEP490Context db, IWebHostEnvironment env)
+        //public PostController(IPostRepository _post, IConfiguration config, DB_SEP490Context db, IWebHostEnvironment env)
+        //{
+        //    _config = config;
+        //    _db = db;
+        //    post = _post;
+        //    _env = env;
+        //}
+
+        public PostController(IPostRepository _post)
         {
-            _config = config;
-            _db = db;
             post = _post;
-            _env = env;
         }
+
 
         [HttpGet]
         public IActionResult GetAllPost()
