@@ -11,17 +11,25 @@ namespace SEP_BackEndCodeApi.Controllers
     [ApiController]
     public class CourseController : Controller
     {
-        private IConfiguration _config;
+        
         private readonly DB_SEP490Context _db;
         private readonly ICourseRepository _course;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+      
 
-        public CourseController(ICourseRepository course, IConfiguration config, DB_SEP490Context db, IWebHostEnvironment webHostEnvironment)
+        //public CourseController(ICourseRepository course, DB_SEP490Context db)
+        //{
+          
+        //    _db = db;
+        //    _course = course;
+          
+        //}
+
+        public CourseController(ICourseRepository course)
         {
-            _config = config;
-            _db = db;
+
+          
             _course = course;
-            _webHostEnvironment = webHostEnvironment;
+
         }
 
         [HttpGet("GetImage/{courseId}")]

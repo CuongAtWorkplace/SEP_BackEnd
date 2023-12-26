@@ -46,7 +46,7 @@ namespace SEP_BackEndCodeApi.Controllers
             try
             {
                 List<ClassAllDAO> listAllClass = new List<ClassAllDAO>();
-                var list = _db.Classes.Include(x => x.Teacher).Include(x => x.Course).ToList();
+                var list = _db.Classes.Include(x => x.Teacher).Include(x => x.Course).OrderByDescending(x=>x.CreateDate).ToList();
                 foreach (var y in list)
                 {
                     ClassAllDAO c = new ClassAllDAO
@@ -498,8 +498,34 @@ namespace SEP_BackEndCodeApi.Controllers
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
-            }
+            }   
         }
+
+        //[HttpGet]
+        //public async Task<IActionResult> CheckClassName(string className)
+        //{
+        //    try
+        //    {
+        //        //var nameClass = _db.Classes.Where(x => x.ClassName.Equals(className)).FirstOrDefault();
+        //        var nameClassCheck = await _db.Classes.AnyAsync(x => x.ClassName == className);
+
+        //        if (nameClassCheck != null)
+        //        {
+        //            return Ok(nameClassCheck);
+        //        }
+        //        else
+        //        {
+        //            return NotFound();
+        //        }
+                
+               
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
+
         //&& x.Class.ClassName.Equals(className)
         [HttpGet]
         public IActionResult CheckUserFromClass(int userId, string className)
@@ -743,7 +769,7 @@ namespace SEP_BackEndCodeApi.Controllers
                 var list = _db.RequestClasses
                     .Include(x=>x.User)
                     .Include(x=>x.Class)
-                    .Where(x=>x.Type == null)
+                    .Where(x=>x.Type == null && x.Class.TeacherId == null)
                     .Select(x => new ListRequestClassDTO
                     {
                         RequestClassId=x.RequestClassId,
@@ -804,12 +830,16 @@ namespace SEP_BackEndCodeApi.Controllers
         {
             try
             {
-                var check = _db.Classes.FirstOrDefault(x => !(!x.ClassName.Equals(className) || !x.ClassName.Contains(className)));
-                if (check is not null)
+                var check = _db.Classes.Any(x => x.ClassName.Equals(className));
+                if (check)
+                {
+                    return Ok();
+                }
+                else
                 {
                     return NotFound();
                 }
-                return Ok();
+               
             }
             catch (Exception ex)
             {
@@ -859,3 +889,4 @@ namespace SEP_BackEndCodeApi.Controllers
         //}
     }
 }
+ 
