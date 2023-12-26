@@ -64,6 +64,7 @@ namespace SEP_BackEndCodeApi.Controllers
                         StartDate = y.StartDate,
                         EndDate = y.EndDate,
                         Status = y.Status,
+                        ClassId = y.ClassId,
                     };
                     listAllClass.Add(c);
                 }
@@ -519,12 +520,13 @@ namespace SEP_BackEndCodeApi.Controllers
 
 
         [HttpGet]
-        public IActionResult CheckTeacherFromClass(int userId)
+        public IActionResult CheckTeacherFromClass(int userId ,int classId)
         {
             try
             {
-                var check = _db.Classes.Where(x=>x.TeacherId == userId).FirstOrDefault();
-                if (check != null)
+                var check = _db.Classes.Where(x=>x.TeacherId == userId && x.ClassId == classId).FirstOrDefault();
+                var checkUser = _db.Users.Where(x => x.UserId == userId && x.RoleId == 3).FirstOrDefault();
+                if (check != null || checkUser != null)
                 {
                     return Ok("Ok");
                 }
