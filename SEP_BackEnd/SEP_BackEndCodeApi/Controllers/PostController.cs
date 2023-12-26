@@ -261,7 +261,7 @@ namespace SEP_BackEndCodeApi.Controllers
                     Content = commentPost.content,
                     CreateDate = DateTime.UtcNow ,
                     LikeAmount = 0 , 
-                    IsActive = false
+                    IsActive = true
                 };
 
                 _db.UserCommentPosts.Add(comment);
